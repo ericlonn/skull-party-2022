@@ -8,11 +8,26 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "BaseState",
+"language": "GDScript",
+"path": "res://scripts/states/BaseState.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/Player.gd"
+} ]
+_global_script_class_icons={
+"BaseState": "",
+"Player": ""
+}
+
 [application]
 
-config/name="Platformer"
+config/name="skull-party-2022"
 run/main_scene="res://Level1.tscn"
-config/icon="res://icon.png"
 
 [display]
 
@@ -21,7 +36,7 @@ window/size/height=1080
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/imjp94.yafsm/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [input]
 
@@ -46,6 +61,11 @@ debug_button={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777351,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
+attack={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777238,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [physics]
 
@@ -53,4 +73,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_clear_color=Color( 0.05, 0.05, 0.05, 1 )
+environment/default_clear_color=Color( 0.396078, 0.396078, 0.396078, 1 )
