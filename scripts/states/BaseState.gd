@@ -9,7 +9,9 @@ enum State {
 	Run,
 	Fall,
 	Jump,
-	Attack
+	Attack,
+	Stunned,
+	Wall_Slide
 }
 
 export (String) var animation_name
@@ -18,7 +20,7 @@ export (String) var animation_name
 var player: Player
 
 func enter() -> void:
-	player.animations.play(animation_name)
+	pass
 
 func exit() -> void:
 	pass

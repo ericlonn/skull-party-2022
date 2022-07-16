@@ -1,15 +1,29 @@
 extends BaseState
 
 func enter():
-	player.apply_jump()
-	player.sprite.play("jump")
+	if player.is_wall_on_right and player.move_direction == 1:
+		player.apply_jump(player.wall_jump_x_force * -1)
+	elif player.is_wall_on_left and player.move_direction == -1:
+		player.apply_jump(player.wall_jump_x_force)
+	else:
+		player.apply_jump()
+	player.animator.play("jump")
 
 func process(delta: float):
-	if player.is_on_floor():	
+	if player.stun_triggered:
+		return State.Stunned
+	
+	if player.is_on_floor():
 		if player.jump_buffer.time_left > 0:
 			return State.Jump
 		else:
 			return State.Idle
+	
+	if player.is_wall_on_right and player.move_direction == 1:
+		return State.Wall_Slide
+	
+	if player.is_wall_on_left and player.move_direction == -1:
+		return State.Wall_Slide
 	
 	if player.attack_pressed:
 		return State.Attack
@@ -23,7 +37,6 @@ func physics_process(delta: float):
 	player.apply_gravity(delta)
 	player.apply_x_movement(delta)
 	player.orient_character()
-	player.calculate_applied_force(delta)
 	player.apply_velocity()
 	
 	return State.Null

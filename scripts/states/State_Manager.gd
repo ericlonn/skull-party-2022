@@ -7,7 +7,9 @@ onready var states = {
 	BaseState.State.Run: $run,
 	BaseState.State.Fall: $fall,
 	BaseState.State.Jump: $jump,
-	BaseState.State.Attack: $attack
+	BaseState.State.Attack: $attack,
+	BaseState.State.Stunned: $stunned,
+	BaseState.State.Wall_Slide: $wall_slide
 }
 
 var current_state: BaseState
@@ -33,7 +35,6 @@ func init(player: Player) -> void:
 # handling state changes as needed
 func process(delta: float) -> void:
 	var new_state = current_state.process(delta)
-	print(new_state as String)
 	if new_state != BaseState.State.Null:
 		change_state(new_state)
 		

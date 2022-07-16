@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/skull_idle-sheet.png-7f4582282844d3d7fe9d53afeb691244.stex"
+path="res://.import/skull_run_color.png-68090683aeecc83f02427080e7a48f24.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/skull_idle-sheet.png"
-dest_files=[ "res://.import/skull_idle-sheet.png-7f4582282844d3d7fe9d53afeb691244.stex" ]
+source_file="res://sprites/player/skull_run_color.png"
+dest_files=[ "res://.import/skull_run_color.png-68090683aeecc83f02427080e7a48f24.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
