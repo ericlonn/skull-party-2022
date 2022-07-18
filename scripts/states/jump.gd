@@ -1,10 +1,10 @@
 extends BaseState
 
 func enter():
-	if player.is_wall_on_right and player.move_direction == 1:
-		player.apply_jump(player.wall_jump_x_force * -1)
-	elif player.is_wall_on_left and player.move_direction == -1:
-		player.apply_jump(player.wall_jump_x_force)
+	if player.is_wall_on_right and player.move_direction >= 0:
+		player.apply_jump(-1)
+	elif player.is_wall_on_left and player.move_direction <= 0:
+		player.apply_jump(1)
 	else:
 		player.apply_jump()
 	player.animator.play("jump")

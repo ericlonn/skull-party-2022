@@ -27,7 +27,7 @@ func process(delta):
 	if player.is_wall_on_right == false and wall_slide_x_dir == 1:
 		return State.Idle
 	
-	if player.move_direction != wall_slide_x_dir:
+	if player.move_direction == -wall_slide_x_dir:
 		return State.Idle
 	
 	if player.is_on_floor():
@@ -36,6 +36,10 @@ func process(delta):
 	if player.jump_pressed:
 		player.position.x += -5 * wall_slide_x_dir
 		return State.Jump
+	
+	if player.attack_pressed:
+		player.flip_orientation()
+		return State.Attack
 	
 	return State.Null
 

@@ -30,6 +30,7 @@ func process(delta: float):
 		if player.jump_buffer.time_left > 0:
 			return State.Jump
 		else:
+			player.orientation.squash()
 			return State.Idle
 	
 	if player.attack_pressed:

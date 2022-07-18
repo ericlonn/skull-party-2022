@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://scripts/states/attack.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
@@ -25,7 +25,11 @@
 [ext_resource path="res://sprites/player/skull_jump_color.png" type="Texture" id=23]
 [ext_resource path="res://sprites/player/skull_slide_normal.png" type="Texture" id=24]
 [ext_resource path="res://sprites/player/skull_wallslide_color.png" type="Texture" id=25]
-[ext_resource path="res://wall_slide.gd" type="Script" id=26]
+[ext_resource path="res://scripts/states/wall_slide.gd" type="Script" id=26]
+[ext_resource path="res://scenes/SpriteEcho.tscn" type="PackedScene" id=27]
+[ext_resource path="res://scripts/SpriteEchoGenerator.gd" type="Script" id=28]
+[ext_resource path="res://scenes/Orientation.gd" type="Script" id=29]
+[ext_resource path="res://PowerSkull.tscn" type="PackedScene" id=30]
 
 [sub_resource type="CapsuleShape2D" id=20]
 radius = 46.0
@@ -138,12 +142,12 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 5, 11 ) ]
+"values": [ Vector2( 12, -74 ) ]
 }
 
 [sub_resource type="Animation" id=15]
 resource_name = "fall"
-length = 0.466666
+length = 0.5
 loop = true
 step = 0.0333333
 tracks/0/type = "value"
@@ -153,10 +157,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.466667 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0, 19 ]
+"values": [ 0, 29 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:texture")
@@ -192,7 +196,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 5 ]
+"values": [ 6 ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath(".:vframes")
@@ -204,7 +208,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 4 ]
+"values": [ 5 ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath(".:position")
@@ -216,7 +220,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 3, 9 ) ]
+"values": [ Vector2( 6, -61 ) ]
 }
 
 [sub_resource type="Animation" id=16]
@@ -294,7 +298,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 12, -11 ) ]
+"values": [ Vector2( 12, -73 ) ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -371,7 +375,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.266666 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -10, 8 ), Vector2( -6, -14 ) ]
+"values": [ Vector2( -10, -54 ), Vector2( -6, -76 ) ]
 }
 
 [sub_resource type="Animation" id=18]
@@ -449,7 +453,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 27, -10 ) ]
+"values": [ Vector2( 27, -72 ) ]
 }
 
 [sub_resource type="Animation" id=19]
@@ -527,7 +531,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -4, -11 ) ]
+"values": [ Vector2( -4, -73 ) ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -605,7 +609,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, -11 ) ]
+"values": [ Vector2( 0, -73 ) ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -682,7 +686,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -13, -10 ) ]
+"values": [ Vector2( -13, -72 ) ]
 }
 
 [sub_resource type="Animation" id=27]
@@ -760,7 +764,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -27, 6 ) ]
+"values": [ Vector2( -27, -56 ) ]
 }
 
 [node name="Player" type="KinematicBody2D" groups=["players"]]
@@ -775,11 +779,13 @@ jump_height = 300.0
 jump_time_to_peak = 0.4
 jump_time_to_descent = 0.3
 wall_slide_gravity_modifier = 0.3
+powerskull_scene = ExtResource( 30 )
 
 [node name="PhysicsColliderShape" type="CollisionShape2D" parent="."]
 shape = SubResource( 20 )
 
 [node name="CollisionDetector" type="Area2D" parent="."]
+collision_layer = 256
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector"]
@@ -804,10 +810,22 @@ rect_pivot_offset = Vector2( 100, 0 )
 custom_fonts/font = ExtResource( 3 )
 align = 1
 
+[node name="SpriteEchoGenerator" type="Node2D" parent="."]
+script = ExtResource( 28 )
+spawn_time = 0.01
+fade_time = 0.25
+SpriteEchoScene = ExtResource( 27 )
+
 [node name="Orientation" type="Node2D" parent="."]
+position = Vector2( 0, 62 )
+script = ExtResource( 29 )
+squash_amount = 0.15
+squash_speed = 0.1
+stretch_amount = 0.2
+stretch_speed = 0.1
 
 [node name="SlideParticles" type="Particles2D" parent="Orientation"]
-position = Vector2( -52, 62 )
+position = Vector2( -52, 0 )
 emitting = false
 amount = 40
 lifetime = 0.25
@@ -815,18 +833,17 @@ local_coords = false
 process_material = SubResource( 26 )
 
 [node name="Punch" type="Area2D" parent="Orientation"]
-visible = false
 monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Orientation/Punch"]
-position = Vector2( 65, -12 )
+position = Vector2( 65, -74 )
 rotation = 1.5708
 shape = SubResource( 13 )
 
 [node name="Sprite" type="Sprite" parent="Orientation"]
 material = SubResource( 22 )
-position = Vector2( 5, 11 )
+position = Vector2( 12, -74 )
 scale = Vector2( 0.572266, 0.572266 )
 texture = ExtResource( 19 )
 normal_map = ExtResource( 22 )
@@ -843,6 +860,8 @@ anims/run = SubResource( 19 )
 anims/slide = SubResource( 23 )
 anims/stunned = SubResource( 21 )
 anims/wall_slide = SubResource( 27 )
+
+[node name="SquashStretch" type="Tween" parent="Orientation"]
 
 [node name="JumpBuffer" type="Timer" parent="."]
 wait_time = 0.1

@@ -29,6 +29,10 @@ _global_script_class_icons={
 config/name="skull-party-2022"
 run/main_scene="res://Level1.tscn"
 
+[autoload]
+
+Rules="*res://scripts/autoload/Rules.gd"
+
 [display]
 
 window/size/width=1920

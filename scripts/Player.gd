@@ -3,6 +3,7 @@ extends KinematicBody2D
 
 onready var debug_label: Label = $DebugLabel
 onready var sprite: Sprite = $Orientation/Sprite
+onready var sprite_echo_generator: Node2D = $SpriteEchoGenerator
 onready var animator: AnimationPlayer = $Orientation/Sprite/AnimationPlayer
 onready var state_manager = $State_Manager
 
@@ -30,6 +31,7 @@ var move_max_speed = 6000.0
 var slow_down_speed = 5000.0
 
 var jump_force = 1200.00
+var air_control_speed = 6000.0
 
 var move_left_input = 0
 var move_right_input = 0
@@ -40,7 +42,7 @@ var is_wall_on_left setget , get_is_wall_on_left
 var is_wall_on_right setget , get_is_wall_on_right
 
 var attack_speed = 2200.0
-var bonk_speed = Vector2(400.0, -450.0)
+var bonk_speed = Vector2(600.0, -675.0)
 
 var rigidbody_push = 300
 
@@ -49,19 +51,26 @@ var is_jump_button_held = false
 var attack_pressed = false
 var stun_triggered = false
 
-
 export var enabled = true
 export var jump_height : float
 export var jump_time_to_peak : float
 export var jump_time_to_descent : float
 export var jump_held_modifier = 0.5
 export var wall_slide_gravity_modifier = 0.1
+export(PackedScene) var powerskull_scene
 
 var wall_jump_x_force = 1200.0
+var wall_jump_x_move_reduction_direction = 0
+var wall_jump_x_move_reduction_length= 0.2
+onready var wall_jump_x_move_reduction_timer = wall_jump_x_move_reduction_length
 
 onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
 onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
+
+var id: int
+var powerskulls = []
+signal powerskulls_updated(player, new_value)
 
 func _ready():
 	state_manager.init(self)
@@ -71,7 +80,10 @@ func _process(delta):
 	state_manager.process(delta)
 	
 func _physics_process(delta):
-	push_rigidbodies()
+	if wall_jump_x_move_reduction_timer > 0:
+		wall_jump_x_move_reduction_timer -= delta
+	else:
+		wall_jump_x_move_reduction_direction = 0
 	
 	state_manager.physics_process(delta)
 
@@ -103,8 +115,13 @@ func get_gravity():
 	var modifier = jump_held_modifier if is_jump_button_held else 1.0
 	return jump_gravity * modifier if velocity.y < 0.0 else fall_gravity
 
-func apply_jump(x_force: float = 0.0):
-	velocity.x += x_force
+func apply_jump(wall_jump_x_dir = 0):
+	orientation.stretch()
+	if wall_jump_x_dir != 0:
+		wall_jump_x_move_reduction_direction = wall_jump_x_dir * -1
+		wall_jump_x_move_reduction_timer = wall_jump_x_move_reduction_length
+		velocity.x += wall_jump_x_force * wall_jump_x_dir
+	
 	velocity.y = jump_velocity
 
 func apply_x_movement(delta):
@@ -114,8 +131,8 @@ func apply_x_movement(delta):
 		else:
 			velocity.x = move_toward(velocity.x, move_speed * move_direction, slow_down_speed * delta)
 	else:
-		if move_direction != 0:
-			velocity.x = move_toward(velocity.x, move_speed * move_direction, move_accel * delta)
+		if move_direction != 0 and move_direction != wall_jump_x_move_reduction_direction:
+			velocity.x = move_toward(velocity.x, move_speed * move_direction, air_control_speed * delta)
 	
 func orient_character():
 	match move_direction:
@@ -154,6 +171,17 @@ func attacked(attack_direction: Vector2, attack_force: Vector2):
 	velocity.x =  attack_force.x * knockback_x_direction
 	velocity.y = attack_force.y
 	stun_triggered = true
+	
+	if powerskulls.size() > 0:
+		var remove_from_front = true if rng.randi_range(0, 1) == 0 else false
+		if remove_from_front:
+			var removed_skull = powerskulls.pop_front()
+		else:
+			var removed_skull = powerskulls.pop_back()
+		
+		emit_signal("powerskulls_updated", self, powerskulls)
+		
+	
 
 
 func bonk(bonked_from_position: Vector2):
@@ -162,30 +190,19 @@ func bonk(bonked_from_position: Vector2):
 	velocity.x =  bonk_speed.x * bonk_x_dir
 	velocity.y = bonk_speed.y
 
-func push_rigidbodies():
-	var overlapping_bodies = collision_detector.get_overlapping_bodies()
-	for body in overlapping_bodies:
-		if body.get_collision_layer() == 4:
-			var push_vector = body.position - position
-			body.mode = RigidBody2D.MODE_STATIC
-			body.position = position + push_vector.normalized() * 100
-			body.mode = RigidBody2D.MODE_RIGID
-			push_vector = push_vector.normalized() * 1000
-			body.apply_central_impulse(push_vector)
-
 
 func _on_CollisionDetector_body_entered(body):
 	if body.get_collision_layer() == 1 and body != self:
 		bonk(body.position)
-	
-#	if body.get_collision_layer() == 4:
-#		var push_vector = body.position - position
-#		body.position = position + push_vector.normalized() * 47
-#		push_vector = push_vector.normalized() * 1000
-#		body.apply_central_impulse(push_vector)
 
 func get_is_wall_on_left():
 	return left_wall_check.is_colliding()
 
 func get_is_wall_on_right():
 	return right_wall_check.is_colliding()
+
+func add_powerskull(powerskull_type: int):
+	if powerskulls.size() < 3:
+		powerskulls.append(powerskull_type)
+		emit_signal("powerskulls_updated", self, powerskulls)
+	

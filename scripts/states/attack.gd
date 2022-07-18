@@ -12,6 +12,8 @@ func enter():
 	player.punch.monitorable = true
 	player.punch.visible = true
 	player.animator.play("punch")
+	
+	player.sprite_echo_generator.enabled = true
 
 func process(delta: float):
 	if player.attack_timer.time_left <= 0:
@@ -38,6 +40,7 @@ func exit():
 	player.punch.monitoring = false
 	player.punch.monitorable = false
 	player.punch.visible = false
+	player.sprite_echo_generator.enabled = false
 
 
 func _on_Punch_body_entered(body):
