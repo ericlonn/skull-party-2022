@@ -1,22 +1,16 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://scripts/Camera2D.gd" type="Script" id=3]
 [ext_resource path="res://level_tiles.tres" type="TileSet" id=4]
 [ext_resource path="res://sprites/light.png" type="Texture" id=5]
-[ext_resource path="res://sprites/soccer-ball.png" type="Texture" id=6]
-
-[sub_resource type="PhysicsMaterial" id=2]
-bounce = 0.75
-
-[sub_resource type="CircleShape2D" id=1]
-radius = 32.0
+[ext_resource path="res://SoccerBall.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Light" type="Sprite" parent="."]
 modulate = Color( 1, 0.0313726, 0.0313726, 0.145098 )
 position = Vector2( 527, 1059 )
 scale = Vector2( 0.663086, 0.663086 )
@@ -25,9 +19,37 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Light2D" type="Light2D" parent="Sprite"]
+[node name="Light2D" type="Light2D" parent="Light"]
 texture = ExtResource( 5 )
 color = Color( 1, 0, 0, 1 )
+energy = 2.0
+
+[node name="Light2" type="Sprite" parent="."]
+modulate = Color( 0.03, 1, 0.03, 0.145098 )
+position = Vector2( 71, 1059 )
+scale = Vector2( 0.663086, 0.663086 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Light2D" type="Light2D" parent="Light2"]
+texture = ExtResource( 5 )
+color = Color( 0, 1, 0, 1 )
+energy = 2.0
+
+[node name="Light3" type="Sprite" parent="."]
+modulate = Color( 0.03, 0.03, 1, 0.145098 )
+position = Vector2( -393, 1059 )
+scale = Vector2( 0.663086, 0.663086 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Light2D" type="Light2D" parent="Light3"]
+texture = ExtResource( 5 )
+color = Color( 0, 0, 1, 1 )
 energy = 2.0
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -40,25 +62,13 @@ tile_data = PoolIntArray( -1441697, -1610612735, 0, -1376161, -1610612733, 0, -1
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 script = ExtResource( 3 )
+min_zoom = 1.25
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 2129, -385 )
+position = Vector2( 410, 781 )
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-position = Vector2( 711, 526 )
-collision_layer = 4
-collision_mask = 7
-physics_material_override = SubResource( 2 )
-gravity_scale = 8.0
-linear_damp = -0.5
-angular_damp = 0.1
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Sprite" type="Sprite" parent="RigidBody2D"]
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 6 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-shape = SubResource( 1 )
+[node name="SoccerBall" parent="." instance=ExtResource( 6 )]
+position = Vector2( 889, 813 )
+collision_mask = 6
+gravity_scale = 20.0
+linear_damp = 0.0

@@ -780,6 +780,7 @@ wall_slide_gravity_modifier = 0.3
 shape = SubResource( 20 )
 
 [node name="CollisionDetector" type="Area2D" parent="."]
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionDetector"]
 shape = SubResource( 2 )

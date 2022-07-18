@@ -163,17 +163,26 @@ func bonk(bonked_from_position: Vector2):
 	velocity.y = bonk_speed.y
 
 func push_rigidbodies():
-	for index in get_slide_count():
-		var collision = get_slide_collision(index)
-		if collision.collider.get_collision_layer() == 4:
-			var push_vector = Vector2.ZERO
-			push_vector = -collision.normal * 300
-			collision.collider.apply_central_impulse(push_vector)
+	var overlapping_bodies = collision_detector.get_overlapping_bodies()
+	for body in overlapping_bodies:
+		if body.get_collision_layer() == 4:
+			var push_vector = body.position - position
+			body.mode = RigidBody2D.MODE_STATIC
+			body.position = position + push_vector.normalized() * 100
+			body.mode = RigidBody2D.MODE_RIGID
+			push_vector = push_vector.normalized() * 1000
+			body.apply_central_impulse(push_vector)
 
 
 func _on_CollisionDetector_body_entered(body):
 	if body.get_collision_layer() == 1 and body != self:
 		bonk(body.position)
+	
+#	if body.get_collision_layer() == 4:
+#		var push_vector = body.position - position
+#		body.position = position + push_vector.normalized() * 47
+#		push_vector = push_vector.normalized() * 1000
+#		body.apply_central_impulse(push_vector)
 
 func get_is_wall_on_left():
 	return left_wall_check.is_colliding()
