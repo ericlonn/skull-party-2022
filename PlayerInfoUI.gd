@@ -19,17 +19,10 @@ func set_assigned_player_id(value):
 		visible = false
 
 func _on_Player_powerskull_count_updated(player, skulls):
-	print(skulls as String)
 	var i = 0
 	for ui_skull in ui_skulls:
 		if i < skulls.size():
-			match skulls[i]:
-				0:
-					ui_skull.modulate = Color.red
-				1:
-					ui_skull.modulate = Color.green
-				2:
-					ui_skull.modulate = Color.blue
+			ui_skull.modulate = Rules.get_skull_color(skulls[i])
 		else:
 			ui_skull.modulate = Color.gray
 		i += 1

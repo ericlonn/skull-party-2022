@@ -14,14 +14,62 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/states/BaseState.gd"
 }, {
+"base": "PanelContainer",
+"class": "LogContainer",
+"language": "GDScript",
+"path": "res://addons/hyperlog/log_container.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://scripts/Player.gd"
+}, {
+"base": "Control",
+"class": "Tracker",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerAngle",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_angle.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerBar",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_bar.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerColor",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_color.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerGraph",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_graph.gd"
+}, {
+"base": "Tracker",
+"class": "TrackerText",
+"language": "GDScript",
+"path": "res://addons/hyperlog/trackers/tracker_text.gd"
+}, {
+"base": "Resource",
+"class": "ValueTracker",
+"language": "GDScript",
+"path": "res://addons/hyperlog/value_tracker.gd"
 } ]
 _global_script_class_icons={
 "BaseState": "",
-"Player": ""
+"LogContainer": "",
+"Player": "",
+"Tracker": "",
+"TrackerAngle": "",
+"TrackerBar": "",
+"TrackerColor": "",
+"TrackerGraph": "",
+"TrackerText": "",
+"ValueTracker": ""
 }
 
 [application]
@@ -31,6 +79,7 @@ run/main_scene="res://Level1.tscn"
 
 [autoload]
 
+HyperLog="*res://addons/hyperlog/hyperlog.tscn"
 Rules="*res://scripts/autoload/Rules.gd"
 
 [display]
@@ -40,7 +89,7 @@ window/size/height=1080
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "res://addons/Trail/plugin.cfg", "res://addons/hyperlog/plugin.cfg" )
 
 [input]
 
@@ -77,8 +126,14 @@ attack={
 
 [layer_names]
 
-2d_physics/layer_1="Player"
+2d_physics/layer_1="Players"
 2d_physics/layer_2="Level"
+2d_physics/layer_3="Powerskulls"
+2d_physics/layer_4="Chest"
+2d_physics/layer_9="AttackArea"
+2d_physics/layer_10="PowerskullArea"
+2d_physics/layer_11="ChestArea"
+2d_physics/layer_13="Shards"
 
 [physics]
 

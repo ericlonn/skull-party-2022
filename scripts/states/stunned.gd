@@ -33,7 +33,6 @@ func physics_process(delta):
 			stun_movement_x *= -1
 			player.flip_orientation()
 			wall_bonk_triggered = true
-			print("wall bonk")
 
 		if wall_bonk_triggered == false:
 			if collision.collider.get_collision_layer() == 2:

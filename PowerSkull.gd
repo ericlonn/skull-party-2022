@@ -14,6 +14,10 @@ var move_toward_time = .5
 onready var tween: Tween = $Tween
 onready var sprite: Sprite = $PowerSkull
 onready var glow_sprite: Sprite = $Glow
+onready var trail: Line2D = $Trail2D
+
+var launch_speed = Vector2(0, -2000)
+var launch_random_angle = 45
 
 func _ready():
 	set_sprite_color(powerskull_type)
@@ -21,7 +25,12 @@ func _ready():
 func move_toward_player(t):
 	manual_position = collected_position.linear_interpolate(collected_by.global_position, t)
 	position = manual_position
-	
+
+func manually_set_position(new_pos: Vector2): 
+	mode = RigidBody2D.MODE_STATIC
+	global_position = new_pos
+	mode = RigidBody2D.MODE_CHARACTER
+
 
 func _on_OverlapDetector_body_entered(body):
 	if body.is_in_group("players") and collected == false:
@@ -45,13 +54,7 @@ func set_powerskull_type(value):
 	
 
 func set_sprite_color(type):
-	match type:
-		0:
-			$PowerSkull.modulate = Color.red
-			$Glow.modulate = Color.red
-		1:
-			$PowerSkull.modulate = Color.green
-			$Glow.modulate = Color.green
-		2:
-			$PowerSkull.modulate = Color.blue
-			$Glow.modulate = Color.blue
+	$PowerSkull.modulate = Rules.get_skull_color(type)
+	$Glow.modulate = Rules.get_skull_color(type)
+	$Trail2D.default_color = Rules.get_skull_color(type)
+	$Light2D.color = Rules.get_skull_color(type)

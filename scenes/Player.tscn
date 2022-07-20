@@ -56,9 +56,8 @@ orbit_velocity_random = 0.0
 scale = 6.0
 scale_curve = SubResource( 25 )
 
-[sub_resource type="CapsuleShape2D" id=13]
-radius = 24.9999
-height = 20.0001
+[sub_resource type="RectangleShape2D" id=28]
+extents = Vector2( 31.75, 68.25 )
 
 [sub_resource type="ShaderMaterial" id=22]
 shader = ExtResource( 10 )
@@ -832,14 +831,16 @@ lifetime = 0.25
 local_coords = false
 process_material = SubResource( 26 )
 
-[node name="Punch" type="Area2D" parent="Orientation"]
+[node name="Punch" type="Area2D" parent="Orientation" groups=["attack_box"]]
+visible = false
+collision_layer = 256
 monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Orientation/Punch"]
-position = Vector2( 65, -74 )
+position = Vector2( 31.25, -70.2501 )
 rotation = 1.5708
-shape = SubResource( 13 )
+shape = SubResource( 28 )
 
 [node name="Sprite" type="Sprite" parent="Orientation"]
 material = SubResource( 22 )
@@ -909,5 +910,6 @@ width = 2.0
 default_color = Color( 1, 0, 1, 1 )
 
 [connection signal="body_entered" from="CollisionDetector" to="." method="_on_CollisionDetector_body_entered"]
+[connection signal="area_entered" from="Orientation/Punch" to="State_Manager/attack" method="_on_Punch_area_entered"]
 [connection signal="body_entered" from="Orientation/Punch" to="State_Manager/attack" method="_on_Punch_body_entered"]
 [connection signal="timeout" from="StunTimer" to="State_Manager/stunned" method="_on_StunTimer_timeout"]

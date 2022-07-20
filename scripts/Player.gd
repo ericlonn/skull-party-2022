@@ -20,6 +20,8 @@ onready var slide_particles: Particles2D = $Orientation/SlideParticles
 onready var right_wall_check: RayCast2D = $RightWallCheck
 onready var left_wall_check: RayCast2D = $LeftWallCheck
 
+onready var rng = RandomNumberGenerator.new()
+
 var velocity = Vector2.ZERO
 
 var gravity = 3000.0
@@ -71,8 +73,13 @@ onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent
 var id: int
 var powerskulls = []
 signal powerskulls_updated(player, new_value)
+signal powerskull_lost(player, skull_type)
+
+
 
 func _ready():
+#	HyperLog.log(self).angle("velocity", self)
+	rng.randomize()
 	state_manager.init(self)
 
 func _process(delta):	
@@ -164,23 +171,14 @@ func attack():
 func attacked(attack_direction: Vector2, attack_force: Vector2):
 	var knockback_x_direction = sign(position.x - attack_direction.x)
 	
-	var rng = RandomNumberGenerator.new()
-	rng.randomize()
+	
 	knockback_x_direction = knockback_x_direction if knockback_x_direction != 0 else round(rng.randf_range(-1, 1))
 	
 	velocity.x =  attack_force.x * knockback_x_direction
 	velocity.y = attack_force.y
 	stun_triggered = true
 	
-	if powerskulls.size() > 0:
-		var remove_from_front = true if rng.randi_range(0, 1) == 0 else false
-		if remove_from_front:
-			var removed_skull = powerskulls.pop_front()
-		else:
-			var removed_skull = powerskulls.pop_back()
-		
-		emit_signal("powerskulls_updated", self, powerskulls)
-		
+	eject_powerskull()
 	
 
 
@@ -206,3 +204,16 @@ func add_powerskull(powerskull_type: int):
 		powerskulls.append(powerskull_type)
 		emit_signal("powerskulls_updated", self, powerskulls)
 	
+
+
+func eject_powerskull():
+		if powerskulls.size() > 0:
+			var remove_from_front = true if rng.randi_range(0, 1) == 0 else false
+			var removed_skull
+			if remove_from_front:
+				removed_skull = powerskulls.pop_front()
+			else:
+				removed_skull = powerskulls.pop_back()
+			
+			emit_signal("powerskull_lost", self, removed_skull)
+			emit_signal("powerskulls_updated", self, powerskulls)

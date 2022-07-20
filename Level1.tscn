@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=2]
@@ -7,9 +7,25 @@
 [ext_resource path="res://PowerSkull.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PlayerInfoUI.gd" type="Script" id=6]
 [ext_resource path="res://sprites/items/powerskull_color.png" type="Texture" id=7]
+[ext_resource path="res://SkullSpawner.gd" type="Script" id=8]
+[ext_resource path="res://sprites/items/chest.png" type="Texture" id=9]
+[ext_resource path="res://scripts/Chest.gd" type="Script" id=10]
+[ext_resource path="res://scripts/shards/Shard.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scripts/shards/ShardEmitter.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scripts/shards/ChestParticles.tscn" type="PackedScene" id=13]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 48, 42 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 46.5, 41.5 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="SkullSpawner" type="Node" parent="."]
+script = ExtResource( 8 )
+powerskull_scene = ExtResource( 5 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 4 )
@@ -24,22 +40,22 @@ script = ExtResource( 3 )
 min_zoom = 1.25
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( -707, 788 )
+position = Vector2( -480, 800 )
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 506, 793 )
+position = Vector2( 482, 764 )
 enabled = false
 
 [node name="PowerSkull" parent="." instance=ExtResource( 5 )]
-position = Vector2( 503, 401 )
-
-[node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 501, 561 )
-powerskull_type = 2
+position = Vector2( 115, 274 )
 
 [node name="PowerSkull2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 508, 289 )
+position = Vector2( 288, 192 )
 powerskull_type = 1
+
+[node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 192 )
+powerskull_type = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -156,3 +172,37 @@ margin_left = 264.0
 margin_right = 392.0
 margin_bottom = 128.0
 texture = ExtResource( 7 )
+
+[node name="Chest" type="KinematicBody2D" parent="." groups=["chests"]]
+position = Vector2( -224, 864 )
+collision_layer = 8
+collision_mask = 2
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+shatter_particles_scene = ExtResource( 13 )
+
+[node name="OverlapDetector" type="Area2D" parent="Chest"]
+position = Vector2( 0, -34 )
+collision_layer = 1024
+collision_mask = 259
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chest/OverlapDetector"]
+position = Vector2( 0.5, -9.5 )
+shape = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="Chest"]
+position = Vector2( 0, -44.5 )
+scale = Vector2( 0.835938, 0.835938 )
+texture = ExtResource( 9 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chest"]
+position = Vector2( 0.5, -42.5 )
+shape = SubResource( 2 )
+
+[node name="Shard" parent="." instance=ExtResource( 11 )]
+
+[node name="ShardEmitter" parent="." instance=ExtResource( 12 )]
+
+[connection signal="area_entered" from="Chest/OverlapDetector" to="Chest" method="_on_OverlapDetector_area_entered"]

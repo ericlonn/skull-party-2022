@@ -46,7 +46,6 @@ func exit():
 func _on_Punch_body_entered(body):
 	if body != player and body is Player:
 		body.attacked(player.position, attack_force)
-		print(body.name + " attacked!")
 		
 		player.bonk(body.position)
 		
@@ -54,3 +53,10 @@ func _on_Punch_body_entered(body):
 	elif body.get_collision_layer() == 2:
 		player.bonk(player.position + Vector2.RIGHT * attack_direction )
 		attack_connected = true
+
+
+func _on_Punch_area_entered(area):
+	if area.get_parent().is_in_group("chests"):
+		player.bonk(player.position + Vector2.RIGHT * attack_direction )
+		attack_connected = true
+	
