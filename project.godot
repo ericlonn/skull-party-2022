@@ -81,6 +81,7 @@ run/main_scene="res://Level1.tscn"
 
 HyperLog="*res://addons/hyperlog/hyperlog.tscn"
 Rules="*res://scripts/autoload/Rules.gd"
+Events="*res://scripts/autoload/Events.gd"
 
 [display]
 

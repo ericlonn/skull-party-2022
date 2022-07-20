@@ -17,8 +17,8 @@ onready var punch: Area2D = $Orientation/Punch
 onready var debug_line: Line2D = $DebugLine
 onready var collision_detector: Area2D = $CollisionDetector
 onready var slide_particles: Particles2D = $Orientation/SlideParticles
-onready var right_wall_check: RayCast2D = $RightWallCheck
-onready var left_wall_check: RayCast2D = $LeftWallCheck
+onready var right_wall_check = $RightWallCheck
+onready var left_wall_check = $LeftWallCheck
 
 onready var rng = RandomNumberGenerator.new()
 
@@ -72,21 +72,19 @@ onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent
 
 var id: int
 var powerskulls = []
-signal powerskulls_updated(player, new_value)
-signal powerskull_lost(player, skull_type)
 
 
 
 func _ready():
-#	HyperLog.log(self).angle("velocity", self)
 	rng.randomize()
 	state_manager.init(self)
 
-func _process(delta):	
+func _process(delta):
 	gather_input()
 	state_manager.process(delta)
 	
 func _physics_process(delta):
+	# timer started at wall jump to prevent player from moving back toward a wall they just jumped off of
 	if wall_jump_x_move_reduction_timer > 0:
 		wall_jump_x_move_reduction_timer -= delta
 	else:
@@ -105,7 +103,7 @@ func gather_input():
 		if jump_pressed:
 			jump_buffer.start()
 		
-		if jump_pressed and Input.is_action_pressed("jump") and is_on_floor():
+		if jump_pressed and is_on_floor():
 			is_jump_button_held = true
 		
 		if is_jump_button_held and not Input.is_action_pressed("jump"):
@@ -144,9 +142,9 @@ func apply_x_movement(delta):
 func orient_character():
 	match move_direction:
 		1:
-			orientation.scale.x = 1.0
+			orientation.face_right()
 		-1:
-			orientation.scale.x = -1.0
+			orientation.face_left()
 
 
 func flip_orientation():
@@ -154,9 +152,7 @@ func flip_orientation():
 
 
 func apply_velocity():
-	debug_label.text = velocity.x as String
 	velocity = move_and_slide(velocity, Vector2.UP, false, 4, PI/4, false)
-#	debug_line.set_point_position(1, velocity)
 
 
 func attack():
@@ -178,7 +174,7 @@ func attacked(attack_direction: Vector2, attack_force: Vector2):
 	velocity.y = attack_force.y
 	stun_triggered = true
 	
-	eject_powerskull()
+	lose_powerskull()
 	
 
 
@@ -202,11 +198,10 @@ func get_is_wall_on_right():
 func add_powerskull(powerskull_type: int):
 	if powerskulls.size() < 3:
 		powerskulls.append(powerskull_type)
-		emit_signal("powerskulls_updated", self, powerskulls)
+		Events.emit_signal("skull_count_updated", self, powerskulls)
 	
 
-
-func eject_powerskull():
+func lose_powerskull():
 		if powerskulls.size() > 0:
 			var remove_from_front = true if rng.randi_range(0, 1) == 0 else false
 			var removed_skull
@@ -215,5 +210,5 @@ func eject_powerskull():
 			else:
 				removed_skull = powerskulls.pop_back()
 			
-			emit_signal("powerskull_lost", self, removed_skull)
-			emit_signal("powerskulls_updated", self, powerskulls)
+			Events.emit_signal("skull_lost", self, removed_skull)
+			Events.emit_signal("skull_count_updated", self, powerskulls)

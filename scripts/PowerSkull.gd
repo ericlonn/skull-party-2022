@@ -15,6 +15,7 @@ onready var tween: Tween = $Tween
 onready var sprite: Sprite = $PowerSkull
 onready var glow_sprite: Sprite = $Glow
 onready var trail: Line2D = $Trail2D
+onready var particles: Particles2D = $Particles2D
 
 var launch_speed = Vector2(0, -2000)
 var launch_random_angle = 45
@@ -43,6 +44,8 @@ func _on_OverlapDetector_body_entered(body):
 		
 		tween.interpolate_method(self, "move_toward_player", 0.0, 1.0, move_toward_time, Tween.TRANS_QUAD, Tween.EASE_OUT)
 		tween.interpolate_property(self, "scale", scale, Vector2.ZERO, move_toward_time, Tween.TRANS_QUAD, Tween.EASE_OUT)
+		tween.interpolate_property(trail, "width", trail.width, 0, move_toward_time, Tween.TRANS_QUAD, Tween.EASE_OUT)
+		particles.emitting = false
 		tween.start()
 		
 		yield(tween, "tween_completed")
@@ -58,3 +61,4 @@ func set_sprite_color(type):
 	$Glow.modulate = Rules.get_skull_color(type)
 	$Trail2D.default_color = Rules.get_skull_color(type)
 	$Light2D.color = Rules.get_skull_color(type)
+	$Particles2D.process_material.color = Rules.get_skull_color(type)

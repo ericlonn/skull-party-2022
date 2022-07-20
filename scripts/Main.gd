@@ -17,7 +17,5 @@ func _ready():
 	for player in players:
 		player.id = i
 		player_info_ui[i - 1].assigned_player_id = i
-		player.connect("powerskulls_updated", player_info_ui[i - 1], "_on_Player_powerskull_count_updated")
-		player.connect("powerskull_lost", skull_spawner, "_on_Player_skull_lost")
 		camera.add_target(player)
 		i += 1

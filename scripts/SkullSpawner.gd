@@ -4,6 +4,7 @@ export(PackedScene) var powerskull_scene
 onready var rng = RandomNumberGenerator.new()
 
 func _ready():
+	Events.connect("skull_lost", self, "_on_Player_skull_lost")
 	rng.randomize()
 
 func _on_Player_skull_lost(player, skull_type):

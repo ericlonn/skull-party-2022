@@ -11,6 +11,10 @@ onready var ui_skulls = [skull1, skull2, skull3]
 func _init():
 	visible = false
 
+
+func _ready():
+	Events.connect("skull_count_updated", self, "_on_Player_skull_count_updated")
+
 func set_assigned_player_id(value):
 	if value is int and value >= 1 and value <= 4:
 		assigned_player_id = value
@@ -18,7 +22,10 @@ func set_assigned_player_id(value):
 	else:
 		visible = false
 
-func _on_Player_powerskull_count_updated(player, skulls):
+func _on_Player_skull_count_updated(player, skulls):
+	if player.id != assigned_player_id:
+		return
+	
 	var i = 0
 	for ui_skull in ui_skulls:
 		if i < skulls.size():

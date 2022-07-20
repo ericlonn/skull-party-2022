@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://sprites/items/chest.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Chest.gd" type="Script" id=2]
-[ext_resource path="res://ChestDestroyedParticles.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 48, 42 )
@@ -10,15 +9,32 @@ extents = Vector2( 48, 42 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 46.5, 41.5 )
 
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.75114, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+emission_shape = 1
+emission_sphere_radius = 18.57
+flag_disable_z = true
+spread = 23.0
+gravity = Vector3( 0, 1000, 0 )
+initial_velocity = 750.0
+initial_velocity_random = 0.16
+angular_velocity = 1000.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 3.92
+scale = 14.8
+scale_random = 0.73
+scale_curve = SubResource( 6 )
+
 [node name="Chest" type="KinematicBody2D" groups=["chests"]]
-position = Vector2( 444, 839 )
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
-shatter_particles_scene = ExtResource( 3 )
 
 [node name="OverlapDetector" type="Area2D" parent="."]
 position = Vector2( 0, -34 )
@@ -26,8 +42,7 @@ collision_layer = 1024
 collision_mask = 259
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OverlapDetector"]
-visible = false
-position = Vector2( 0.5, -9.5 )
+position = Vector2( 0.5, -8.5 )
 shape = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -39,5 +54,14 @@ texture = ExtResource( 1 )
 visible = false
 position = Vector2( 0.5, -42.5 )
 shape = SubResource( 2 )
+
+[node name="ChestDestroyedParticles" type="Particles2D" parent="."]
+position = Vector2( 0, -44 )
+emitting = false
+amount = 50
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 5 )
 
 [connection signal="area_entered" from="OverlapDetector" to="." method="_on_OverlapDetector_area_entered"]
