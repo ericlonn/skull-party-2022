@@ -29,6 +29,9 @@ func process(delta):
 	
 	if player.move_direction == -wall_slide_x_dir:
 		return State.Idle
+		
+	if player.move_direction == 0:
+		return State.Idle
 	
 	if player.is_on_floor():
 		return State.Idle
@@ -43,9 +46,16 @@ func process(delta):
 	
 	return State.Null
 
+
+func exit():
+	if player.is_on_floor() == false:
+		player.wall_jump_coyote_timer.start()
+		player.wall_jump_coyote_timer.buffered_wall_slide_x_dir = wall_slide_x_dir
+
+
 func physics_process(delta):
-	player.apply_gravity(delta, true)
-	player.apply_x_movement(delta)
+	player.apply_gravity(true)
+	player.apply_x_movement()
 	player.orient_character()
 	player.apply_velocity()
 	

@@ -15,7 +15,10 @@ func process(delta: float):
 	if player.stun_triggered:
 		return State.Stunned
 	
-	var has_coyote_time = true if player.coyote_timer.time_left > 0 else false
+	var has_coyote_time = true if \
+	player.coyote_timer.time_left > 0 or \
+	player.wall_jump_coyote_timer.time_left > 0 \
+	else false
 		
 	if player.jump_pressed and has_coyote_time:
 		return State.Jump
@@ -39,8 +42,8 @@ func process(delta: float):
 	return State.Null
 
 func physics_process(delta: float):
-	player.apply_gravity(delta)
-	player.apply_x_movement(delta)
+	player.apply_gravity()
+	player.apply_x_movement()
 	player.orient_character()
 	player.apply_velocity()
 	

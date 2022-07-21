@@ -13,6 +13,6 @@ func get_skull_color(skull_type: int = -1) -> Color:
 		1:
 			return Color.lightgreen
 		2:
-			return Color.lightblue
+			return Color.cyan
 		
 	return Color(0,0,0,1)

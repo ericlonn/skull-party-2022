@@ -46,3 +46,9 @@ func face_right():
 		squash_stretch.remove_all()
 	scale.x = 1
 	scale.y = 1
+
+func flip_around():
+	if squash_stretch.is_active():
+		squash_stretch.remove_all()
+	scale.x = 1 * sign(scale.x)
+	scale.y = 1

@@ -1,16 +1,18 @@
 extends KinematicBody2D
+class_name Chest
 
 signal chested_destroyed(position)
 
 onready var shatter_particles: Particles2D = $ChestDestroyedParticles
 onready var collision_shape: CollisionShape2D = $CollisionShape2D
+onready var sprite_echo_generator = $SpriteEchoGenerator
 
 var velocity = Vector2.ZERO
 var gravity = 1300
-var sliding_speed = Vector2(2500, 0)
+var sliding_speed = Vector2(4000, 0)
 var is_sliding = false
 
-var attack_force = Vector2(1000,-1000)
+var attack_force = Vector2(1000,-1500)
 
 func _physics_process(delta):
 	if is_sliding == false:
@@ -25,7 +27,7 @@ func _physics_process(delta):
 			shatter(collider)
 	
 func shatter(collider):
-	if collider is Player:
+	if collider.is_in_group("players"):
 		collider.attacked(global_position, attack_force)
 	
 	shatter_particles.process_material.direction.x *= sign(velocity.x)
@@ -44,12 +46,14 @@ func shatter(collider):
 func apply_gravity(delta):
 	velocity.y += gravity * delta
 
-func _on_OverlapDetector_area_entered(area):
-	if is_sliding == false:
-		if area.is_in_group("attack_box"):
-			var slide_direction = sign(global_position.x - area.global_position.x)
-			sliding_speed.x *= slide_direction
-			velocity += Vector2(sliding_speed)
-			is_sliding = true
-			velocity.y = 0
-			set_collision_layer_bit(0, true)
+func attacked(attacked_from_pos):
+	if is_sliding:
+		return
+	
+	var slide_direction = sign(global_position.x - attacked_from_pos.x)
+	sliding_speed.x *= slide_direction
+	velocity += Vector2(sliding_speed)
+	is_sliding = true
+	sprite_echo_generator.enabled = true
+	velocity.y = 0
+	set_collision_layer_bit(0, true)

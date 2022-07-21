@@ -23,9 +23,9 @@ func process(delta: float):
 	return State.Null
 
 func physics_process(delta: float):
-	player.apply_gravity(delta)
+	player.apply_gravity()
 	
-	player.apply_x_movement(delta)
+	player.apply_x_movement()
 	player.orient_character()
 	player.apply_velocity()
 	

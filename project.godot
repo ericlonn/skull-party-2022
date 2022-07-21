@@ -12,7 +12,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "BaseState",
 "language": "GDScript",
-"path": "res://scripts/states/BaseState.gd"
+"path": "res://scripts/player/state machine/BaseState.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Chest",
+"language": "GDScript",
+"path": "res://scripts/Chest.gd"
 }, {
 "base": "PanelContainer",
 "class": "LogContainer",
@@ -22,7 +27,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://scripts/Player.gd"
+"path": "res://scripts/player/Player.gd"
 }, {
 "base": "Control",
 "class": "Tracker",
@@ -61,6 +66,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "BaseState": "",
+"Chest": "",
 "LogContainer": "",
 "Player": "",
 "Tracker": "",
@@ -142,4 +148,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_clear_color=Color( 0.0761719, 0.0761719, 0.0761719, 1 )
+environment/default_clear_color=Color( 0.117647, 0.117647, 0.117647, 1 )

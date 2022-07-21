@@ -11,6 +11,9 @@ func enter():
 	player.stun_timer.start()
 	player.sprite.modulate = Color(1,1,1,0.5)
 	stun_movement_x = sign(player.velocity.x)
+	
+	#collide with chests
+	player.set_collision_mask_bit(3, true)
 
 func process(delta):
 	if stun_over:
@@ -31,7 +34,6 @@ func physics_process(delta):
 #			player.position.x -= stun_movement_x * 10.0
 			player.bonk( Vector2(player.position.x + stun_movement_x, player.position.y) )
 			stun_movement_x *= -1
-			player.flip_orientation()
 			wall_bonk_triggered = true
 
 		if wall_bonk_triggered == false:
@@ -41,13 +43,12 @@ func physics_process(delta):
 				player.bonk(collision.collider.position)
 				if sign(collision.collider.position.x - player.position.x) == stun_movement_x:
 					stun_movement_x *= -1
-					player.flip_orientation()
 			
 	player.debug_label.text = stun_movement_x as String
 	
-	player.apply_gravity(delta)
-#	player.apply_x_movement(delta)
-#	player.orient_character()
+	player.apply_gravity()
+#	player.apply_x_movement()
+	player.orient_character(stun_movement_x)
 	player.apply_velocity()
 	
 	return State.Null
@@ -55,6 +56,10 @@ func physics_process(delta):
 func exit():
 	stun_over = false
 	player.sprite.modulate = Color.white
+	
+	#no longer collide with chests
+	player.set_collision_mask_bit(3, true)
+
 
 func _on_StunTimer_timeout():
 	stun_over = true

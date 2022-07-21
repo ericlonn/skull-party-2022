@@ -13,12 +13,14 @@ onready var screen_size = get_viewport_rect().size
 func _process(delta):
 	if !targets:
 		return
+		
 	# Keep the camera centered between the targets
 	var p = Vector2.ZERO
 	for target in targets:
 		p += target.position
 	p /= targets.size()
 	position = lerp(position, p, move_speed)
+	
 	# Find the zoom that will contain all targets
 	var r = Rect2(position, Vector2.ONE)
 	for target in targets:

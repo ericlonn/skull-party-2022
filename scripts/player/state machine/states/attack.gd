@@ -1,7 +1,7 @@
 extends BaseState
 
 var attack_connected = false
-var attack_force = Vector2(1000,-1000)
+var attack_force = Vector2(750,-1500)
 var attack_direction = 0
 
 func enter():
@@ -28,8 +28,8 @@ func process(delta: float):
 
 
 func physics_process(delta):
-#	player.apply_gravity(delta)
-#	player.apply_x_movement(delta)
+#	player.apply_gravity()
+#	player.apply_x_movement()
 #	player.orient_character()
 	player.apply_velocity()
 	
@@ -46,17 +46,12 @@ func exit():
 func _on_Punch_body_entered(body):
 	if body != player and body is Player:
 		body.attacked(player.position, attack_force)
-		
 		player.bonk(body.position)
-		
 		attack_connected = true
-	elif body.get_collision_layer() == 2:
+	elif body.is_in_group("level"):
 		player.bonk(player.position + Vector2.RIGHT * attack_direction )
 		attack_connected = true
-
-
-func _on_Punch_area_entered(area):
-	if area.get_parent().is_in_group("chests"):
+	elif body is Chest:
 		player.bonk(player.position + Vector2.RIGHT * attack_direction )
 		attack_connected = true
-	
+		body.attacked(player.global_position)
