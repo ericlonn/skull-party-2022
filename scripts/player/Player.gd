@@ -34,7 +34,7 @@ var slow_down_speed = 5000.0
 
 var jump_force = 1200.00
 var air_control_speed = 6000.0
-var head_bump_correction_margin = 23
+var head_bump_correction_margin = 12
 
 var move_left_input = 0
 var move_right_input = 0

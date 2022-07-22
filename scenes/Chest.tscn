@@ -6,7 +6,7 @@
 [ext_resource path="res://scenes/SpriteEcho.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 46.5, 41.5 )
+extents = Vector2( 16, 14.5 )
 
 [sub_resource type="Curve" id=3]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.75114, 0.0, 0, 0 ]
@@ -39,13 +39,12 @@ collision_mask = 2
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -44.5 )
-scale = Vector2( 0.835938, 0.835938 )
+scale = Vector2( 0.285616, 0.285616 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -50 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( 0.5, -42.5 )
+position = Vector2( 0, -14.5 )
 shape = SubResource( 2 )
 
 [node name="ChestDestroyedParticles" type="Particles2D" parent="."]

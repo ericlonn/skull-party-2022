@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://scripts/player/state machine/states/attack.gd" type="Script" id=1]
 [ext_resource path="res://scripts/player/Player.gd" type="Script" id=2]
@@ -28,13 +28,12 @@
 [ext_resource path="res://scripts/player/state machine/states/wall_slide.gd" type="Script" id=26]
 [ext_resource path="res://scenes/SpriteEchoGenerator.tscn" type="PackedScene" id=27]
 [ext_resource path="res://scripts/player/Orientation.gd" type="Script" id=29]
-[ext_resource path="res://scenes/CeilingCheck.gd" type="Script" id=30]
 [ext_resource path="res://scripts/player/WallChecker.gd" type="Script" id=31]
 [ext_resource path="res://scenes/WallJumpCoyoteTimer.gd" type="Script" id=32]
 
-[sub_resource type="CapsuleShape2D" id=20]
-radius = 46.0
-height = 35.066
+[sub_resource type="RectangleShape2D" id=30]
+resource_local_to_scene = true
+extents = Vector2( 23.3846, 32 )
 
 [sub_resource type="Gradient" id=29]
 colors = PoolColorArray( 0, 1, 0.168627, 0.74902, 0.627451, 0, 1, 0.517647 )
@@ -57,7 +56,7 @@ scale = 6.0
 scale_curve = SubResource( 25 )
 
 [sub_resource type="RectangleShape2D" id=28]
-extents = Vector2( 31.75, 68.25 )
+extents = Vector2( 19.3333, 16.5 )
 
 [sub_resource type="ShaderMaterial" id=22]
 shader = ExtResource( 10 )
@@ -141,7 +140,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 12, -74 ) ]
+"values": [ Vector2( 4.48984, -1 ) ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -219,7 +218,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 6, -61 ) ]
+"values": [ Vector2( 0, 6.72187 ) ]
 }
 
 [sub_resource type="Animation" id=16]
@@ -297,7 +296,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 12, -73 ) ]
+"values": [ Vector2( 4.14263, 0 ) ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -374,7 +373,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.266666 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -10, -54 ), Vector2( -6, -76 ) ]
+"values": [ Vector2( -6.07138, 11.1028 ), Vector2( -4.12923, 1.44988 ) ]
 }
 
 [sub_resource type="Animation" id=18]
@@ -452,7 +451,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 27, -72 ) ]
+"values": [ Vector2( 12.7224, -1 ) ]
 }
 
 [sub_resource type="Animation" id=19]
@@ -530,7 +529,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -4, -73 ) ]
+"values": [ Vector2( -2.91666, -0.75 ) ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -608,7 +607,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, -73 ) ]
+"values": [ Vector2( -1.91666, -0.749992 ) ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -685,7 +684,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -13, -72 ) ]
+"values": [ Vector2( -7.25, -1 ) ]
 }
 
 [sub_resource type="Animation" id=27]
@@ -763,7 +762,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -27, -56 ) ]
+"values": [ Vector2( -15.25, 10.6667 ) ]
 }
 
 [node name="Player" type="KinematicBody2D" groups=["players"]]
@@ -774,40 +773,21 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_vertical_guides_": [ 100.0 ]
 }
-jump_height = 125.0
+jump_height = 150.0
 jump_time_to_peak = 0.175
 jump_time_to_descent = 0.125
 wall_slide_gravity_modifier = 0.3
 
 [node name="PhysicsColliderShape" type="CollisionShape2D" parent="."]
-shape = SubResource( 20 )
-
-[node name="CeilingCheck" type="Node2D" parent="."]
-script = ExtResource( 30 )
-
-[node name="CeilingCheckRay1" type="RayCast2D" parent="CeilingCheck"]
-position = Vector2( 25, -40 )
-enabled = true
-cast_to = Vector2( 0, -25 )
-collision_mask = 2
-
-[node name="CeilingCheckRay2" type="RayCast2D" parent="CeilingCheck"]
-position = Vector2( 0, -40 )
-enabled = true
-cast_to = Vector2( 0, -25 )
-collision_mask = 2
-
-[node name="CeilingCheckRay3" type="RayCast2D" parent="CeilingCheck"]
-position = Vector2( -25, -40 )
-enabled = true
-cast_to = Vector2( 0, -25 )
-collision_mask = 2
+position = Vector2( -1.31812, 30 )
+shape = SubResource( 30 )
 
 [node name="RightWallCheck" type="Node2D" parent="."]
+position = Vector2( 0, 30 )
 script = ExtResource( 31 )
 
 [node name="WallCheckRay" type="RayCast2D" parent="RightWallCheck"]
-position = Vector2( 0, -30 )
+position = Vector2( 0, -25 )
 enabled = true
 cast_to = Vector2( 50, 0 )
 collision_mask = 2
@@ -818,16 +798,17 @@ cast_to = Vector2( 50, 0 )
 collision_mask = 2
 
 [node name="WallCheckRay3" type="RayCast2D" parent="RightWallCheck"]
-position = Vector2( 0, 30 )
+position = Vector2( 0, 25 )
 enabled = true
 cast_to = Vector2( 50, 0 )
 collision_mask = 2
 
 [node name="LeftWallCheck" type="Node2D" parent="."]
+position = Vector2( 0, 30 )
 script = ExtResource( 31 )
 
 [node name="WallCheckRay" type="RayCast2D" parent="LeftWallCheck"]
-position = Vector2( 0, -30 )
+position = Vector2( 0, -25 )
 enabled = true
 cast_to = Vector2( -50, 0 )
 collision_mask = 2
@@ -838,7 +819,7 @@ cast_to = Vector2( -50, 0 )
 collision_mask = 2
 
 [node name="WallCheckRay3" type="RayCast2D" parent="LeftWallCheck"]
-position = Vector2( 0, 30 )
+position = Vector2( 0, 25 )
 enabled = true
 cast_to = Vector2( -50, 0 )
 collision_mask = 2
@@ -858,7 +839,7 @@ stretch_amount = 0.2
 stretch_speed = 0.1
 
 [node name="SlideParticles" type="Particles2D" parent="Orientation"]
-position = Vector2( -52, 0 )
+position = Vector2( -28.4549, -1.05112 )
 emitting = false
 amount = 40
 lifetime = 0.25
@@ -866,23 +847,23 @@ local_coords = false
 process_material = SubResource( 26 )
 
 [node name="Punch" type="Area2D" parent="Orientation" groups=["attack_box"]]
-visible = false
 collision_layer = 256
 collision_mask = 9
 monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Orientation/Punch"]
-position = Vector2( 31.25, -70.2501 )
+position = Vector2( 33.5, -39.6667 )
 rotation = 1.5708
 shape = SubResource( 28 )
 
 [node name="Sprite" type="Sprite" parent="Orientation"]
 material = SubResource( 22 )
-position = Vector2( 12, -74 )
-scale = Vector2( 0.572266, 0.572266 )
+position = Vector2( 4.48984, -1 )
+scale = Vector2( 0.291873, 0.306169 )
 texture = ExtResource( 19 )
 normal_map = ExtResource( 22 )
+offset = Vector2( 0, -128 )
 hframes = 6
 vframes = 5
 

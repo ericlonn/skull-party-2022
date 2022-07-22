@@ -34,6 +34,7 @@ func spawn_new_echo():
 	var new_echo = SpriteEchoScene.instance()
 	
 	new_echo.spawn_position = sprite_source.global_position
+	new_echo.offset = sprite_source.offset
 	new_echo.texture = sprite_source.texture
 	new_echo.normal_map = sprite_source.normal_map
 	new_echo.color_gradient = echo_gradient
