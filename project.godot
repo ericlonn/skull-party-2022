@@ -19,63 +19,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/Chest.gd"
 }, {
-"base": "PanelContainer",
-"class": "LogContainer",
-"language": "GDScript",
-"path": "res://addons/hyperlog/log_container.gd"
-}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://scripts/player/Player.gd"
-}, {
-"base": "Control",
-"class": "Tracker",
-"language": "GDScript",
-"path": "res://addons/hyperlog/trackers/tracker.gd"
-}, {
-"base": "Tracker",
-"class": "TrackerAngle",
-"language": "GDScript",
-"path": "res://addons/hyperlog/trackers/tracker_angle.gd"
-}, {
-"base": "Tracker",
-"class": "TrackerBar",
-"language": "GDScript",
-"path": "res://addons/hyperlog/trackers/tracker_bar.gd"
-}, {
-"base": "Tracker",
-"class": "TrackerColor",
-"language": "GDScript",
-"path": "res://addons/hyperlog/trackers/tracker_color.gd"
-}, {
-"base": "Tracker",
-"class": "TrackerGraph",
-"language": "GDScript",
-"path": "res://addons/hyperlog/trackers/tracker_graph.gd"
-}, {
-"base": "Tracker",
-"class": "TrackerText",
-"language": "GDScript",
-"path": "res://addons/hyperlog/trackers/tracker_text.gd"
-}, {
-"base": "Resource",
-"class": "ValueTracker",
-"language": "GDScript",
-"path": "res://addons/hyperlog/value_tracker.gd"
 } ]
 _global_script_class_icons={
 "BaseState": "",
 "Chest": "",
-"LogContainer": "",
-"Player": "",
-"Tracker": "",
-"TrackerAngle": "",
-"TrackerBar": "",
-"TrackerColor": "",
-"TrackerGraph": "",
-"TrackerText": "",
-"ValueTracker": ""
+"Player": ""
 }
 
 [application]
@@ -85,7 +37,6 @@ run/main_scene="res://Level1.tscn"
 
 [autoload]
 
-HyperLog="*res://addons/hyperlog/hyperlog.tscn"
 Rules="*res://scripts/autoload/Rules.gd"
 Events="*res://scripts/autoload/Events.gd"
 
@@ -96,7 +47,7 @@ window/size/height=1080
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Trail/plugin.cfg", "res://addons/hyperlog/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Trail/plugin.cfg" )
 
 [input]
 

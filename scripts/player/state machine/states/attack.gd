@@ -1,7 +1,7 @@
 extends BaseState
 
 var attack_connected = false
-var attack_force = Vector2(750,-1500)
+var attack_force = Vector2(750,-750)
 var attack_direction = 0
 
 func enter():

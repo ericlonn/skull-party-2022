@@ -9,7 +9,7 @@ onready var sprite_echo_generator = $SpriteEchoGenerator
 
 var velocity = Vector2.ZERO
 var gravity = 1300
-var sliding_speed = Vector2(4000, 0)
+var sliding_speed = Vector2(1000, 0)
 var is_sliding = false
 
 var attack_force = Vector2(1000,-1500)
@@ -39,7 +39,6 @@ func shatter(collider):
 	get_parent().add_child(shatter_particles)
 	shatter_particles.position += global_position
 	shatter_particles.emitting = true
-	print(shatter_particles.global_position as String)
 	
 	queue_free()
 
@@ -54,6 +53,5 @@ func attacked(attacked_from_pos):
 	sliding_speed.x *= slide_direction
 	velocity += Vector2(sliding_speed)
 	is_sliding = true
-	sprite_echo_generator.enabled = true
 	velocity.y = 0
 	set_collision_layer_bit(0, true)

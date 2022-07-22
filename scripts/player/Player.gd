@@ -27,14 +27,16 @@ var velocity = Vector2.ZERO
 var gravity = 3000.0
 var gravity_max_speed = 1800.0
 
-var move_speed = 1000.0
-var move_accel = 3500.0
-var move_max_speed = 6000.0
-var slow_down_speed = 5000.0
+var move_speed = 550.0
+var move_accel = 1900.0
+var move_max_speed = 3000.0
+var slow_down_speed = 2500.0
+var change_x_dir_modifier = 1.4
 
-var jump_force = 1200.00
-var air_control_speed = 6000.0
-var head_bump_correction_margin = 12
+var air_control_speed = 1900.0
+
+var head_bump_correction_margin = 14
+var almost_ledge_correction_margin = 64
 
 var move_left_input = 0
 var move_right_input = 0
@@ -44,8 +46,8 @@ var was_on_floor = false
 var is_wall_on_left setget , get_is_wall_on_left
 var is_wall_on_right setget , get_is_wall_on_right
 
-var attack_speed = 2200.0
-var bonk_speed = Vector2(1100.0, -1200.0)
+var attack_speed = 1200.0
+var bonk_speed = Vector2(700.0, -800.0)
 
 var rigidbody_push = 300
 
@@ -61,7 +63,7 @@ export var jump_time_to_descent : float
 export var jump_held_modifier = 0.5
 export var wall_slide_gravity_modifier = 0.1
 
-var wall_jump_x_force = 1200.0
+var wall_jump_x_force = 400.0
 var wall_jump_x_move_reduction_direction = 0
 var wall_jump_x_move_reduction_length= 0.2
 onready var wall_jump_x_move_reduction_timer = wall_jump_x_move_reduction_length
@@ -145,13 +147,18 @@ func apply_x_movement():
 	var delta = get_physics_process_delta_time()
 	
 	if is_on_floor():
-		if move_direction != 0:
+		if move_direction != 0 and sign(move_direction) == sign(velocity.x):
 			velocity.x = move_toward(velocity.x, move_speed * move_direction, move_accel * delta)
+		elif move_direction != 0 and sign(move_direction) == -sign(velocity.x):
+			print("change dir")
+			velocity.x = move_toward(velocity.x, move_speed * move_direction, move_accel * change_x_dir_modifier * delta)
 		else:
 			velocity.x = move_toward(velocity.x, move_speed * move_direction, slow_down_speed * delta)
 	else:
 		if move_direction != 0 and move_direction != wall_jump_x_move_reduction_direction:
 			velocity.x = move_toward(velocity.x, move_speed * move_direction, air_control_speed * delta)
+	
+	debug_label.text = velocity.x as String
 
 
 func apply_velocity():
@@ -217,6 +224,9 @@ func attack():
 
 
 func attacked(attack_direction: Vector2, attack_force: Vector2):
+	if state_manager.current_state.name == "stunned":
+		return
+	
 	var knockback_x_direction = sign(position.x - attack_direction.x)
 
 	knockback_x_direction = knockback_x_direction if knockback_x_direction != 0 else [-1,1][rng.randi_range(0,1)]

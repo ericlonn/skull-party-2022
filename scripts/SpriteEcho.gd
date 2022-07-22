@@ -25,6 +25,5 @@ func _process(delta):
 
 
 func set_color(time):
-	print(time as String)
 	var color = color_gradient.interpolate(time)
 	material.set_shader_param("Fill_Color", color)

@@ -9,7 +9,7 @@ func _ready():
 
 func _on_Player_skull_lost(player, skull_type):
 	var spawn_position = player.global_position
-	spawn_position.y += -100
+	spawn_position.y += -32
 	spawn_skull(skull_type, spawn_position, true)
 
 func spawn_skull(type: int = -1, spawn_position: Vector2 = Vector2.ZERO, launch_skull: bool = false):
@@ -28,7 +28,6 @@ func spawn_skull(type: int = -1, spawn_position: Vector2 = Vector2.ZERO, launch_
 		var launch_force_rotation = rng.randf_range(-random_angle_rads, random_angle_rads)
 		
 		launch_force = launch_force.rotated(launch_force_rotation)
-		print(launch_force)
 		
 		new_skull.apply_impulse(Vector2.ZERO, launch_force)
 	
