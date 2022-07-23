@@ -39,7 +39,7 @@ linear_accel = -61.72
 linear_accel_random = 1.0
 scale = 5.0
 scale_curve = SubResource( 7 )
-color = Color( 0.56, 0.93, 0.56, 1 )
+color = Color( 0.94, 0.5, 0.5, 1 )
 
 [node name="PowerSkull" type="RigidBody2D"]
 collision_layer = 4
@@ -47,6 +47,7 @@ collision_mask = 2
 mode = 2
 physics_material_override = SubResource( 4 )
 gravity_scale = 20.0
+continuous_cd = 1
 script = ExtResource( 4 )
 
 [node name="Trail2D" type="Line2D" parent="."]

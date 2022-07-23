@@ -5,6 +5,7 @@ onready var rng = RandomNumberGenerator.new()
 
 func _ready():
 	Events.connect("skull_lost", self, "_on_Player_skull_lost")
+	Events.connect("chest_shattered", self, "_on_chest_shattered")
 	rng.randomize()
 
 func _on_Player_skull_lost(player, skull_type):
@@ -32,3 +33,7 @@ func spawn_skull(type: int = -1, spawn_position: Vector2 = Vector2.ZERO, launch_
 		new_skull.apply_impulse(Vector2.ZERO, launch_force)
 	
 	get_parent().add_child(new_skull)
+
+
+func _on_chest_shattered(chest_pos):
+	spawn_skull(-1, chest_pos, true)

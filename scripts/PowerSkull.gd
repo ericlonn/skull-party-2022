@@ -17,7 +17,7 @@ onready var glow_sprite: Sprite = $Glow
 onready var trail: Line2D = $Trail2D
 onready var particles: Particles2D = $Particles2D
 
-var launch_speed = Vector2(0, -2000)
+var launch_speed = Vector2(0, -1250)
 var launch_random_angle = 45
 
 func _ready():

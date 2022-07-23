@@ -20,6 +20,8 @@ onready var slide_particles: Particles2D = $Orientation/SlideParticles
 onready var right_wall_check = $RightWallCheck
 onready var left_wall_check = $LeftWallCheck
 
+onready var powerup_flames: Particles2D = $PowerUpFlames
+
 onready var rng = RandomNumberGenerator.new()
 
 var velocity = Vector2.ZERO
@@ -36,7 +38,6 @@ var change_x_dir_modifier = 1.4
 var air_control_speed = 1900.0
 
 var head_bump_correction_margin = 14
-var almost_ledge_correction_margin = 64
 
 var move_left_input = 0
 var move_right_input = 0
@@ -74,7 +75,7 @@ onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent
 
 var id: int setget set_id
 var powerskulls = []
-
+var chance_to_lose_skull = 0.5
 
 
 func _ready():
@@ -91,10 +92,8 @@ func _physics_process(delta):
 	# timer started at wall jump to prevent player from moving back toward a wall they just jumped off of
 	if wall_jump_x_move_reduction_timer > 0:
 		wall_jump_x_move_reduction_timer -= delta
-		sprite.modulate = Color.red
 	else:
 		wall_jump_x_move_reduction_direction = 0
-		sprite.modulate = Color.white
 
 	state_manager.physics_process(delta)
 
@@ -119,7 +118,7 @@ func gather_input():
 
 func apply_gravity(wall_slide: bool = false):
 	var delta = get_physics_process_delta_time()
-	
+
 	if velocity.y <= gravity_max_speed:
 		if wall_slide:
 			velocity.y += get_gravity() * delta * wall_slide_gravity_modifier
@@ -138,7 +137,7 @@ func apply_jump(wall_jump_x_dir = 0):
 		wall_jump_x_move_reduction_direction = wall_jump_x_dir * -1
 		wall_jump_x_move_reduction_timer = wall_jump_x_move_reduction_length
 		velocity.x += wall_jump_x_force * wall_jump_x_dir
-		
+
 		if move_direction == 0:
 			orient_character(wall_jump_x_dir)
 
@@ -147,7 +146,7 @@ func apply_jump(wall_jump_x_dir = 0):
 
 func apply_x_movement():
 	var delta = get_physics_process_delta_time()
-	
+
 	if is_on_floor():
 		if move_direction != 0 and sign(move_direction) == sign(velocity.x):
 			velocity.x = move_toward(velocity.x, move_speed * move_direction, move_accel * delta)
@@ -163,9 +162,9 @@ func apply_x_movement():
 func apply_velocity():
 	if velocity.y < 0:
 		head_bump_correction(head_bump_correction_margin)
-	
+
 	velocity = move_and_slide(velocity, Vector2.UP, false, 4, PI/4, false)
-	
+
 	for i in get_slide_count():
 		handle_collision(get_slide_collision(i))
 
@@ -173,7 +172,7 @@ func apply_velocity():
 func head_bump_correction(margin_pixels: int):
 	var delta = get_physics_process_delta_time()
 	var next_y_step = Vector2(0, velocity.y * delta)
-	
+
 	if test_move(global_transform, next_y_step):
 		for i in margin_pixels:
 			for j in [-1, 1]:
@@ -225,7 +224,7 @@ func attack():
 func attacked(attack_direction: Vector2, attack_force: Vector2):
 	if state_manager.current_state.name == "stunned":
 		return
-	
+
 	var knockback_x_direction = sign(position.x - attack_direction.x)
 
 	knockback_x_direction = knockback_x_direction if knockback_x_direction != 0 else [-1,1][rng.randi_range(0,1)]
@@ -233,8 +232,9 @@ func attacked(attack_direction: Vector2, attack_force: Vector2):
 	velocity.x =  attack_force.x * knockback_x_direction
 	velocity.y = attack_force.y
 	stun_triggered = true
-
-	lose_powerskull()
+	
+	if rng.randf_range(0.0, 1.0) >= chance_to_lose_skull:
+		lose_powerskull()
 
 
 func bonk(bonked_from_position: Vector2):
@@ -274,4 +274,6 @@ func lose_powerskull():
 func set_id(value):
 	id = value
 	sprite.material.set_shader_param("outline_color", Rules.get_player_color(id))
+	powerup_flames.process_material.color = Rules.get_player_color(id)
+	slide_particles.process_material.color = Rules.get_player_color(id)
 	Events.emit_signal("player_id_assigned", self, id)

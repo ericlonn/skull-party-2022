@@ -4,6 +4,8 @@ var attack_connected = false
 var attack_force = Vector2(750,-750)
 var attack_direction = 0
 
+var x_move_margin_pixel = 32
+
 func enter():
 	player.attack()
 	attack_direction = sign(player.orientation.scale.x)
@@ -28,6 +30,7 @@ func process(delta: float):
 
 
 func physics_process(delta):
+	ledge_punch_correction()
 #	player.apply_gravity()
 #	player.apply_x_movement()
 #	player.orient_character()
@@ -41,6 +44,20 @@ func exit():
 	player.punch.monitorable = false
 	player.punch.visible = false
 	player.sprite_echo_generator.enabled = false
+
+
+func ledge_punch_correction():
+	var delta = get_physics_process_delta_time()
+	var next_x_step = Vector2(player.velocity.x * delta, 0)
+	
+	if player.test_move(player.global_transform, next_x_step):
+		for i in x_move_margin_pixel:
+			for j in [-1, 1]:
+				var test_transform = player.global_transform.translated(Vector2(0, (i*j)))
+				if !player.test_move(test_transform, next_x_step):
+					var new_translate = Vector2(0, (i*j))
+					player.translate(new_translate)
+					return
 
 
 func _on_Punch_body_entered(body):

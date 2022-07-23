@@ -16,7 +16,7 @@ var sliding_speed = Vector2(1300, 0)
 var attacked_by
 var is_sliding = false
 
-var attack_force = Vector2(1000,-1500)
+var attack_force = Vector2(1000,-700)
 
 func _physics_process(delta):
 	if is_sliding == false:
@@ -48,6 +48,7 @@ func shatter(collider):
 	
 	print(collider.name)
 	
+	Events.emit_signal("chest_shattered", global_position)
 	queue_free()
 
 func apply_gravity(delta):
@@ -68,8 +69,12 @@ func attacked(attack_direction, attacker= null):
 	
 	if sliding_speed.x > 0:
 		particles_left.emitting = true
+		particles_left.process_material.color = Rules.get_player_color(attacked_by.id)
 	else:
 		particles_right.emitting = true
+		particles_right.process_material.color = Rules.get_player_color(attacked_by.id)
+	shatter_particles.process_material.color = Rules.get_player_color(attacked_by.id)
+	
 	
 	# make sure the attacking player doesn't get hit
 	if not area2d.get_overlapping_bodies().has(attacked_by):
