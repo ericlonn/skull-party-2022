@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://scripts/player/state machine/states/attack.gd" type="Script" id=1]
 [ext_resource path="res://scripts/player/Player.gd" type="Script" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://scripts/player/state machine/states/run.gd" type="Script" id=7]
 [ext_resource path="res://scripts/player/state machine/states/jump.gd" type="Script" id=8]
 [ext_resource path="res://sprites/player/skull_stun_color.png" type="Texture" id=9]
-[ext_resource path="res://shaders/toon shader.tres" type="Shader" id=10]
+[ext_resource path="res://shaders/outline.shader" type="Shader" id=10]
 [ext_resource path="res://sprites/player/skull_slide_color.png" type="Texture" id=11]
 [ext_resource path="res://scripts/player/state machine/states/fall.gd" type="Script" id=12]
 [ext_resource path="res://scripts/player/state machine/states/stunned.gd" type="Script" id=13]
@@ -19,17 +19,20 @@
 [ext_resource path="res://sprites/player/skull_punch_color.png" type="Texture" id=17]
 [ext_resource path="res://sprites/player/skull_punch_normal.png" type="Texture" id=18]
 [ext_resource path="res://sprites/player/skull_idle_color.png" type="Texture" id=19]
-[ext_resource path="res://sprites/player/skull_run_color.png" type="Texture" id=20]
-[ext_resource path="res://sprites/player/skull_run_normal.png" type="Texture" id=21]
+[ext_resource path="res://sprites/player/skull_run_n.png" type="Texture" id=20]
+[ext_resource path="res://sprites/player/skull_run.png" type="Texture" id=21]
 [ext_resource path="res://sprites/player/skull_idle_normal.png" type="Texture" id=22]
 [ext_resource path="res://sprites/player/skull_jump_color.png" type="Texture" id=23]
 [ext_resource path="res://sprites/player/skull_slide_normal.png" type="Texture" id=24]
 [ext_resource path="res://sprites/player/skull_wallslide_color.png" type="Texture" id=25]
 [ext_resource path="res://scripts/player/state machine/states/wall_slide.gd" type="Script" id=26]
 [ext_resource path="res://scenes/SpriteEchoGenerator.tscn" type="PackedScene" id=27]
+[ext_resource path="res://sprites/player/skull_idle_n.png" type="Texture" id=28]
 [ext_resource path="res://scripts/player/Orientation.gd" type="Script" id=29]
+[ext_resource path="res://sprites/player/skull_idle.png" type="Texture" id=30]
 [ext_resource path="res://scripts/player/WallChecker.gd" type="Script" id=31]
 [ext_resource path="res://scenes/WallJumpCoyoteTimer.gd" type="Script" id=32]
+[ext_resource path="res://sprites/particles/smoke_06 (Custom).png" type="Texture" id=33]
 
 [sub_resource type="RectangleShape2D" id=30]
 resource_local_to_scene = true
@@ -38,35 +41,52 @@ extents = Vector2( 23.3846, 32 )
 [sub_resource type="Gradient" id=29]
 colors = PoolColorArray( 0, 1, 0.168627, 0.74902, 0.627451, 0, 1, 0.517647 )
 
-[sub_resource type="Curve" id=24]
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+[sub_resource type="Gradient" id=31]
+resource_local_to_scene = true
+offsets = PoolRealArray( 0, 0.63474, 1 )
+colors = PoolColorArray( 1, 1, 1, 0.788235, 1, 1, 1, 0.662745, 1, 1, 1, 0 )
 
-[sub_resource type="CurveTexture" id=25]
+[sub_resource type="GradientTexture" id=32]
+gradient = SubResource( 31 )
+
+[sub_resource type="Curve" id=24]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.260736 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=33]
 curve = SubResource( 24 )
 
 [sub_resource type="ParticlesMaterial" id=26]
+lifetime_randomness = 0.59
 flag_disable_z = true
-direction = Vector3( -1, -0.25, 0 )
-spread = 20.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 500.0
+direction = Vector3( -1, -0.173, 0 )
+spread = 15.0
+gravity = Vector3( 0, 300, 0 )
+initial_velocity = 350.0
+initial_velocity_random = 0.32
+angular_velocity = 720.0
+angular_velocity_random = 0.52
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-scale = 6.0
-scale_curve = SubResource( 25 )
+tangential_accel = 24.33
+tangential_accel_random = 0.65
+angle = 42.7
+angle_random = 1.0
+scale = 0.35
+scale_random = 0.08
+scale_curve = SubResource( 33 )
+color = Color( 0.796078, 0.796078, 0.796078, 1 )
+color_ramp = SubResource( 32 )
 
 [sub_resource type="RectangleShape2D" id=28]
-extents = Vector2( 19.3333, 16.5 )
+extents = Vector2( 19.3333, 36.4009 )
 
 [sub_resource type="ShaderMaterial" id=22]
+resource_local_to_scene = true
 shader = ExtResource( 10 )
-shader_param/level_1 = 0.5
-shader_param/level_1_smoothing = 0.03
-shader_param/level_2 = 0.0
-shader_param/level_2_smoothing = 0.03
-shader_param/min_light = 0.0
-shader_param/mid_light = 0.0
-shader_param/max_light = 1.0
+shader_param/Smooth = true
+shader_param/width = 15.0
+shader_param/outline_color = Color( 0.894118, 0.192157, 0.984314, 1 )
+shader_param/pixel_size = 1
 
 [sub_resource type="Animation" id=14]
 length = 0.001
@@ -140,7 +160,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 4.48984, -1 ) ]
+"values": [ Vector2( 4.48984, 7.41482 ) ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -248,7 +268,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 19 ) ]
+"values": [ ExtResource( 30 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:normal_map")
@@ -260,7 +280,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 22 ) ]
+"values": [ ExtResource( 28 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:hframes")
@@ -296,7 +316,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 6, 0 ) ]
+"values": [ Vector2( 5.52381, 7.9965 ) ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -373,7 +393,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.266666 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -6.07138, 11.1028 ), Vector2( -3, 1.44988 ) ]
+"values": [ Vector2( -5.04246, 11.4174 ), Vector2( -3, 1.44988 ) ]
 }
 
 [sub_resource type="Animation" id=18]
@@ -481,7 +501,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 20 ) ]
+"values": [ ExtResource( 21 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:normal_map")
@@ -493,7 +513,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 21 ) ]
+"values": [ ExtResource( 20 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:hframes")
@@ -529,7 +549,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -2, -0.75 ) ]
+"values": [ Vector2( -2, 3.92194 ) ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -842,9 +862,10 @@ stretch_speed = 0.1
 position = Vector2( -28.4549, -1.05112 )
 emitting = false
 amount = 40
-lifetime = 0.25
+lifetime = 0.75
 local_coords = false
 process_material = SubResource( 26 )
+texture = ExtResource( 33 )
 
 [node name="Punch" type="Area2D" parent="Orientation" groups=["attack_box"]]
 collision_layer = 256
@@ -853,19 +874,20 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Orientation/Punch"]
-position = Vector2( 33.5, -39.6667 )
+position = Vector2( 13.5991, -39.6668 )
 rotation = 1.5708
 shape = SubResource( 28 )
 
 [node name="Sprite" type="Sprite" parent="Orientation"]
 material = SubResource( 22 )
-position = Vector2( 4.48984, -1 )
+position = Vector2( 4.48984, 7.41482 )
 scale = Vector2( 0.291873, 0.306169 )
 texture = ExtResource( 19 )
 normal_map = ExtResource( 22 )
 offset = Vector2( 2, -128 )
 hframes = 6
 vframes = 5
+region_rect = Rect2( 0, 0, 100, 100 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Orientation/Sprite"]
 anims/RESET = SubResource( 14 )

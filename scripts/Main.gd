@@ -16,6 +16,6 @@ func _ready():
 	var i: int = 1
 	for player in players:
 		player.id = i
-		player_info_ui[i - 1].assigned_player_id = i
+#		player_info_ui[i - 1].assigned_player_id = i
 		camera.add_target(player)
 		i += 1

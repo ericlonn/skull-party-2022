@@ -65,14 +65,14 @@ export var wall_slide_gravity_modifier = 0.1
 
 var wall_jump_x_force = 400.0
 var wall_jump_x_move_reduction_direction = 0
-var wall_jump_x_move_reduction_length= 0.2
-onready var wall_jump_x_move_reduction_timer = wall_jump_x_move_reduction_length
+var wall_jump_x_move_reduction_length= 0.25
+var wall_jump_x_move_reduction_timer = 0.0
 
 onready var jump_velocity : float = ((2.0 * jump_height) / jump_time_to_peak) * -1.0
 onready var jump_gravity : float = ((-2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)) * -1.0
 onready var fall_gravity : float = ((-2.0 * jump_height) / (jump_time_to_descent * jump_time_to_descent)) * -1.0
 
-var id: int
+var id: int setget set_id
 var powerskulls = []
 
 
@@ -91,8 +91,10 @@ func _physics_process(delta):
 	# timer started at wall jump to prevent player from moving back toward a wall they just jumped off of
 	if wall_jump_x_move_reduction_timer > 0:
 		wall_jump_x_move_reduction_timer -= delta
+		sprite.modulate = Color.red
 	else:
 		wall_jump_x_move_reduction_direction = 0
+		sprite.modulate = Color.white
 
 	state_manager.physics_process(delta)
 
@@ -150,15 +152,12 @@ func apply_x_movement():
 		if move_direction != 0 and sign(move_direction) == sign(velocity.x):
 			velocity.x = move_toward(velocity.x, move_speed * move_direction, move_accel * delta)
 		elif move_direction != 0 and sign(move_direction) == -sign(velocity.x):
-			print("change dir")
 			velocity.x = move_toward(velocity.x, move_speed * move_direction, move_accel * change_x_dir_modifier * delta)
 		else:
 			velocity.x = move_toward(velocity.x, move_speed * move_direction, slow_down_speed * delta)
 	else:
 		if move_direction != 0 and move_direction != wall_jump_x_move_reduction_direction:
 			velocity.x = move_toward(velocity.x, move_speed * move_direction, air_control_speed * delta)
-	
-	debug_label.text = velocity.x as String
 
 
 func apply_velocity():
@@ -270,3 +269,9 @@ func lose_powerskull():
 
 			Events.emit_signal("skull_lost", self, removed_skull)
 			Events.emit_signal("skull_count_updated", self, powerskulls)
+
+
+func set_id(value):
+	id = value
+	sprite.material.set_shader_param("outline_color", Rules.get_player_color(id))
+	Events.emit_signal("player_id_assigned", self, id)

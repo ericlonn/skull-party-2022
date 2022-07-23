@@ -28,6 +28,7 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 curve = SubResource( 6 )
 
 [sub_resource type="ParticlesMaterial" id=8]
+resource_local_to_scene = true
 flag_disable_z = true
 spread = 180.0
 gravity = Vector3( 0, 0, 0 )
@@ -38,8 +39,7 @@ linear_accel = -61.72
 linear_accel_random = 1.0
 scale = 5.0
 scale_curve = SubResource( 7 )
-color = Color( 0, 1, 1, 1 )
-hue_variation = 0.1
+color = Color( 0.56, 0.93, 0.56, 1 )
 
 [node name="PowerSkull" type="RigidBody2D"]
 collision_layer = 4
@@ -53,9 +53,11 @@ script = ExtResource( 4 )
 show_behind_parent = true
 position = Vector2( 0, 14 )
 points = PoolVector2Array( 0, -1 )
+width = 5.0
 width_curve = SubResource( 5 )
 default_color = Color( 0.94, 0.5, 0.5, 1 )
 script = ExtResource( 5 )
+distance = 10.0
 
 [node name="Glow" type="Sprite" parent="."]
 modulate = Color( 0.94, 0.5, 0.5, 1 )

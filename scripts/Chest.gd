@@ -6,10 +6,14 @@ signal chested_destroyed(position)
 onready var shatter_particles: Particles2D = $ChestDestroyedParticles
 onready var collision_shape: CollisionShape2D = $CollisionShape2D
 onready var sprite_echo_generator = $SpriteEchoGenerator
+onready var particles_left: Particles2D = $Particles2DLeft
+onready var particles_right: Particles2D = $Particles2DRight
+onready var area2d: Area2D = $Area2D
 
 var velocity = Vector2.ZERO
 var gravity = 1300
-var sliding_speed = Vector2(1000, 0)
+var sliding_speed = Vector2(1300, 0)
+var attacked_by
 var is_sliding = false
 
 var attack_force = Vector2(1000,-1500)
@@ -23,7 +27,9 @@ func _physics_process(delta):
 		var collider = collision.collider
 		var is_shatter_collision = collider.is_in_group("players") or collider.is_in_group("level")
 		var is_collision_the_floor = collision.normal == Vector2(0,-1)
-		if is_shatter_collision and not is_collision_the_floor:
+		var is_collision_ahead = sign(velocity.x) != sign(collision.normal.x)
+		if is_shatter_collision and is_collision_ahead and not is_collision_the_floor:
+			print(collision.normal as String)
 			shatter(collider)
 	
 func shatter(collider):
@@ -40,18 +46,40 @@ func shatter(collider):
 	shatter_particles.position += global_position
 	shatter_particles.emitting = true
 	
+	print(collider.name)
+	
 	queue_free()
 
 func apply_gravity(delta):
 	velocity.y += gravity * delta
 
-func attacked(attacked_from_pos):
+func attacked(attack_direction, attacker= null):
 	if is_sliding:
 		return
 	
-	var slide_direction = sign(global_position.x - attacked_from_pos.x)
+	attacked_by = attacker
+	
+	var slide_direction = sign(attack_direction)
+	print(slide_direction as String)
 	sliding_speed.x *= slide_direction
 	velocity += Vector2(sliding_speed)
-	is_sliding = true
 	velocity.y = 0
-	set_collision_layer_bit(0, true)
+	is_sliding = true
+	
+	if sliding_speed.x > 0:
+		particles_left.emitting = true
+	else:
+		particles_right.emitting = true
+	
+	# make sure the attacking player doesn't get hit
+	if not area2d.get_overlapping_bodies().has(attacked_by):
+		set_collision_mask_bit(0, true)
+
+
+func _on_Area2D_body_exited(body):
+	# once the attacking player isn't overlapping, they can be hit.
+	# not sure when this will come up but who knows
+	if is_sliding:
+		if body == attacked_by:
+			set_collision_mask_bit(0, true)
+			attacked_by = null

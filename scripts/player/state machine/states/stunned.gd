@@ -48,8 +48,6 @@ func physics_process(delta):
 				bounce()
 				if sign(collision.collider.position.x - player.position.x) == stun_movement_x:
 					stun_movement_x *= -1
-			
-	player.debug_label.text = stun_movement_x as String
 	
 	player.apply_gravity()
 #	player.apply_x_movement()

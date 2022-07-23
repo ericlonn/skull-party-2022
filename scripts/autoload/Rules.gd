@@ -16,3 +16,16 @@ func get_skull_color(skull_type: int = -1) -> Color:
 			return Color.cyan
 		
 	return Color(0,0,0,1)
+
+func get_player_color(player_id: int) -> Color:
+	match player_id:
+		1:
+			return Color.deeppink
+		2:
+			return Color.coral
+		3:
+			return Color.deepskyblue
+		4:
+			return Color.mediumspringgreen
+	
+	return Color.brown

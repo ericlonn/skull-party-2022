@@ -44,6 +44,7 @@ Events="*res://scripts/autoload/Events.gd"
 
 window/size/width=1920
 window/size/height=1080
+window/stretch/aspect="keep"
 
 [editor_plugins]
 
@@ -99,4 +100,4 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/default_clear_color=Color( 0.117647, 0.117647, 0.117647, 1 )
+environment/default_clear_color=Color( 0.192157, 0.192157, 0.192157, 1 )

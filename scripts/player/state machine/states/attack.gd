@@ -52,6 +52,6 @@ func _on_Punch_body_entered(body):
 		player.bonk(player.position + Vector2.RIGHT * attack_direction )
 		attack_connected = true
 	elif body is Chest:
+		body.attacked(player.velocity.x, player)
 		player.bonk(player.position + Vector2.RIGHT * attack_direction )
 		attack_connected = true
-		body.attacked(player.global_position)

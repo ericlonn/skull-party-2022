@@ -33,11 +33,20 @@ func spawn_new_echo():
 	
 	var new_echo = SpriteEchoScene.instance()
 	
+	if get_parent() is Player:
+		var player_color = Rules.get_player_color(get_parent().id)
+		for i in echo_gradient.get_point_count():
+			new_echo.begin_color = player_color
+			new_echo.end_color = player_color - Color(0,0,0,1)
+			new_echo.end_color = player_color - Color(0,0,0,1)
+	else:
+		new_echo.color_gradient = echo_gradient
+	
 	new_echo.spawn_position = sprite_source.global_position
 	new_echo.offset = sprite_source.offset
 	new_echo.texture = sprite_source.texture
 	new_echo.normal_map = sprite_source.normal_map
-	new_echo.color_gradient = echo_gradient
+	
 	new_echo.hframes = sprite_source.hframes
 	new_echo.vframes = sprite_source.vframes
 	new_echo.frame = sprite_source.frame
