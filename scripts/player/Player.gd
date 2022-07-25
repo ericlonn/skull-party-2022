@@ -48,7 +48,7 @@ var is_wall_on_left setget , get_is_wall_on_left
 var is_wall_on_right setget , get_is_wall_on_right
 
 var attack_speed = 1200.0
-var bonk_speed = Vector2(700.0, -800.0)
+var bonk_speed = Vector2(700.0, -450.0)
 
 var rigidbody_push = 300
 
@@ -242,6 +242,7 @@ func bonk(bonked_from_position: Vector2):
 	var bonk_x_dir = sign(bonk_vector.x)
 	velocity.x =  bonk_speed.x * bonk_x_dir
 	velocity.y = bonk_speed.y
+
 
 
 func get_is_wall_on_left():

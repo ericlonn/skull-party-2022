@@ -1047,7 +1047,6 @@ width = 2.0
 default_color = Color( 1, 0, 1, 1 )
 
 [node name="PowerUpFlames" type="Particles2D" parent="."]
-visible = false
 show_behind_parent = true
 material = SubResource( 44 )
 position = Vector2( 0, 22.154 )
