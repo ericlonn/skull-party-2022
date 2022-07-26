@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://scripts/player/Player.gd"
+}, {
+"base": "Node2D",
+"class": "SkullSpawnPoint",
+"language": "GDScript",
+"path": "res://SkullSpawnPoint.gd"
 } ]
 _global_script_class_icons={
 "BaseState": "",
 "Chest": "",
-"Player": ""
+"Player": "",
+"SkullSpawnPoint": ""
 }
 
 [application]
@@ -44,7 +50,7 @@ Events="*res://scripts/autoload/Events.gd"
 
 window/size/width=1280
 window/size/height=720
-window/stretch/mode="viewport"
+window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
 [editor_plugins]

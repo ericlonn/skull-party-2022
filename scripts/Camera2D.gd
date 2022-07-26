@@ -10,6 +10,10 @@ var targets = []  # Array of targets to be tracked.
 
 onready var screen_size = get_viewport_rect().size
 
+func _ready():
+	Events.connect("skull_spawned", self, "on_skull_spawned")
+	Events.connect("skull_collected", self, "on_skull_collected")
+
 func _process(delta):
 	if !targets:
 		return
@@ -41,3 +45,12 @@ func add_target(t):
 func remove_target(t):
 	if t in targets:
 		targets.erase(t)
+
+
+func on_skull_spawned(skull):
+	targets.append(skull)
+
+func on_skull_collected(skull):
+	var skull_index = targets.find(skull)
+	if skull_index !=  -1:
+		targets.remove(skull_index)

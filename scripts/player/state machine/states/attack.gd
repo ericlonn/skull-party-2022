@@ -25,7 +25,6 @@ func process(delta: float):
 		attack_connected = false
 		return State.Run
 	
-
 	return State.Null
 
 
@@ -44,6 +43,7 @@ func exit():
 	player.punch.monitorable = false
 	player.punch.visible = false
 	player.sprite_echo_generator.enabled = false
+	player.attack_limit_timer.start()
 
 
 func ledge_punch_correction():

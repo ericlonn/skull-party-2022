@@ -12,6 +12,7 @@ onready var attack_timer: Timer = $AttackTimer
 onready var stun_timer: Timer = $StunTimer
 onready var coyote_timer: Timer = $CoyoteTimer
 onready var wall_jump_coyote_timer: Timer = $WallJumpCoyoteTimer
+onready var attack_limit_timer: Timer = $AttackLimitTimer
 
 onready var orientation: Node2D = $Orientation
 onready var punch: Area2D = $Orientation/Punch

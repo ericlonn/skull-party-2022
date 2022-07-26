@@ -19,3 +19,6 @@ func _ready():
 #		player_info_ui[i - 1].assigned_player_id = i
 		camera.add_target(player)
 		i += 1
+		
+func get_players() -> Array:
+	return get_tree().get_nodes_in_group("players")

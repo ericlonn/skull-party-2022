@@ -10,7 +10,7 @@ func process(delta: float):
 	if player.jump_pressed:
 		return State.Jump
 	
-	if player.attack_pressed:
+	if player.attack_pressed and player.attack_limit_timer.time_left == 0:
 		return State.Attack
 	
 	if player.move_direction == 0:

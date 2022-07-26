@@ -23,15 +23,26 @@ func _physics_process(delta):
 		apply_gravity(delta)
 	
 	var collision = move_and_collide(velocity * delta)
-	if is_sliding and collision != null:
-		var collider = collision.collider
+	if collision != null:
+		handle_collision(collision)
+
+
+
+func handle_collision(collision):
+	var collider = collision.collider
+	
+	if is_sliding:
 		var is_shatter_collision = collider.is_in_group("players") or collider.is_in_group("level")
 		var is_collision_the_floor = collision.normal == Vector2(0,-1)
 		var is_collision_ahead = sign(velocity.x) != sign(collision.normal.x)
 		if is_shatter_collision and is_collision_ahead and not is_collision_the_floor:
-			print(collision.normal as String)
 			shatter(collider)
-	
+			
+	elif not is_sliding and collision != null:
+		if collider.is_in_group("chests"):
+			shatter(collider)
+
+
 func shatter(collider):
 	if collider.is_in_group("players"):
 		collider.attacked(global_position, attack_force)
@@ -45,8 +56,6 @@ func shatter(collider):
 	get_parent().add_child(shatter_particles)
 	shatter_particles.position += global_position
 	shatter_particles.emitting = true
-	
-	print(collider.name)
 	
 	Events.emit_signal("chest_shattered", global_position)
 	queue_free()
