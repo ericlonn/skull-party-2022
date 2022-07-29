@@ -9,7 +9,9 @@ onready var states = {
 	BaseState.State.Jump: $jump,
 	BaseState.State.Attack: $attack,
 	BaseState.State.Stunned: $stunned,
-	BaseState.State.Wall_Slide: $wall_slide
+	BaseState.State.Wall_Slide: $wall_slide,
+	BaseState.State.Punch: $punch,
+	BaseState.State.Fire_Weapon: $fire_weapon
 }
 
 var current_state: BaseState

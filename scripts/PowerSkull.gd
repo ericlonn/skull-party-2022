@@ -40,6 +40,9 @@ func manually_set_position(new_pos: Vector2):
 
 func _on_OverlapDetector_body_entered(body):
 	if body.is_in_group("players") and collected == false:
+		if body.powerskulls.size() >= 3:
+			return
+		
 		collected = true
 		collected_by = body
 		collected_position = global_position
@@ -65,6 +68,7 @@ func _on_OverlapDetector_body_entered(body):
 		norm_vector = norm_vector.rotated(random_angle_rads)
 		
 		apply_central_impulse(-norm_vector * skull_to_skull_force)
+
 
 func set_powerskull_type(value):
 	powerskull_type = value

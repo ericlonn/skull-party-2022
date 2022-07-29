@@ -1,39 +1,40 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://scripts/player/state machine/states/attack.gd" type="Script" id=1]
 [ext_resource path="res://scripts/player/Player.gd" type="Script" id=2]
 [ext_resource path="res://fonts/m5x7.tres" type="DynamicFont" id=3]
-[ext_resource path="res://sprites/player/skull_stun_normal.png" type="Texture" id=4]
+[ext_resource path="res://sprites/player/skull_fall.png" type="Texture" id=4]
 [ext_resource path="res://scripts/player/state machine/State_Manager.gd" type="Script" id=5]
 [ext_resource path="res://scripts/player/state machine/states/idle.gd" type="Script" id=6]
 [ext_resource path="res://scripts/player/state machine/states/run.gd" type="Script" id=7]
 [ext_resource path="res://scripts/player/state machine/states/jump.gd" type="Script" id=8]
-[ext_resource path="res://sprites/player/skull_stun_color.png" type="Texture" id=9]
-[ext_resource path="res://shaders/outline.shader" type="Shader" id=10]
-[ext_resource path="res://sprites/player/skull_slide_color.png" type="Texture" id=11]
+[ext_resource path="res://sprites/player/skull_slide_n.png" type="Texture" id=9]
+[ext_resource path="res://scripts/player/PowerUpVisuals.gd" type="Script" id=10]
+[ext_resource path="res://sprites/player/skull_jump_n.png" type="Texture" id=11]
 [ext_resource path="res://scripts/player/state machine/states/fall.gd" type="Script" id=12]
 [ext_resource path="res://scripts/player/state machine/states/stunned.gd" type="Script" id=13]
-[ext_resource path="res://sprites/player/skull_jump_normal.png" type="Texture" id=14]
-[ext_resource path="res://sprites/player/skull_fall_color.png" type="Texture" id=15]
-[ext_resource path="res://sprites/player/skull_fall_normal.png" type="Texture" id=16]
-[ext_resource path="res://sprites/player/skull_punch_color.png" type="Texture" id=17]
-[ext_resource path="res://sprites/player/skull_punch_normal.png" type="Texture" id=18]
-[ext_resource path="res://sprites/player/skull_idle_color.png" type="Texture" id=19]
+[ext_resource path="res://sprites/player/skull_jump.png" type="Texture" id=14]
+[ext_resource path="res://sprites/player/skull_punch.png" type="Texture" id=15]
+[ext_resource path="res://sprites/player/skull_punch_n.png" type="Texture" id=16]
+[ext_resource path="res://sprites/player/skull_stun.png" type="Texture" id=17]
+[ext_resource path="res://sprites/player/skull_wallslide.png" type="Texture" id=18]
+[ext_resource path="res://sprites/player/skull_stun_n.png" type="Texture" id=19]
 [ext_resource path="res://sprites/player/skull_run_n.png" type="Texture" id=20]
 [ext_resource path="res://sprites/player/skull_run.png" type="Texture" id=21]
-[ext_resource path="res://sprites/player/skull_idle_normal.png" type="Texture" id=22]
-[ext_resource path="res://sprites/player/skull_jump_color.png" type="Texture" id=23]
-[ext_resource path="res://sprites/player/skull_slide_normal.png" type="Texture" id=24]
-[ext_resource path="res://sprites/player/skull_wallslide_color.png" type="Texture" id=25]
+[ext_resource path="res://sprites/player/skull_fall_n.png" type="Texture" id=22]
+[ext_resource path="res://sprites/player/skull_slide.png" type="Texture" id=23]
+[ext_resource path="res://scripts/player/WallJumpCoyoteTimer.gd" type="Script" id=24]
+[ext_resource path="res://scripts/player/state machine/states/punch.gd" type="Script" id=25]
 [ext_resource path="res://scripts/player/state machine/states/wall_slide.gd" type="Script" id=26]
 [ext_resource path="res://scenes/SpriteEchoGenerator.tscn" type="PackedScene" id=27]
 [ext_resource path="res://sprites/player/skull_idle_n.png" type="Texture" id=28]
 [ext_resource path="res://scripts/player/Orientation.gd" type="Script" id=29]
 [ext_resource path="res://sprites/player/skull_idle.png" type="Texture" id=30]
 [ext_resource path="res://scripts/player/WallChecker.gd" type="Script" id=31]
-[ext_resource path="res://scenes/WallJumpCoyoteTimer.gd" type="Script" id=32]
 [ext_resource path="res://sprites/particles/smoke_06 (Custom).png" type="Texture" id=33]
 [ext_resource path="res://sprites/particles/fire_02 (Custom).png" type="Texture" id=34]
+[ext_resource path="res://scenes/WeaponSlot.gd" type="Script" id=35]
+[ext_resource path="res://scripts/player/state machine/states/fire_weapon.gd" type="Script" id=36]
 
 [sub_resource type="RectangleShape2D" id=30]
 resource_local_to_scene = true
@@ -132,13 +133,73 @@ color = Color( 0.796078, 0.796078, 0.796078, 1 )
 [sub_resource type="RectangleShape2D" id=28]
 extents = Vector2( 19.3333, 36.4009 )
 
-[sub_resource type="ShaderMaterial" id=22]
+[sub_resource type="Shader" id=50]
+code = "shader_type canvas_item;
+
+uniform float max_line_width = 10.0;
+uniform float min_line_width = 5.0;
+uniform float freq = 1.0;
+uniform float block_size = 20.0;
+uniform vec4 outline_colour = vec4(0,0,0,1);
+
+const float pi = 3.1415;
+const int ang_res = 16;
+
+
+float hash(vec2 p, float s) {
+	return fract(35.1 * sin(dot(vec3(112.3, 459.2, 753.2), vec3(p, s))));
+}
+
+float noise(vec2 p, float s) {
+	vec2 d = vec2(0, 1);
+	vec2 b = floor(p);
+	vec2 f = fract(p);
+	return mix(
+		mix(hash(b + d.xx, s), hash(b + d.yx, s), f.x),
+		mix(hash(b + d.xy, s), hash(b + d.yy, s), f.x), f.y);
+}
+
+float get_line_width(vec2 p, float s) {
+	p /= block_size;
+	float w = 0.0;
+	float intensity = 1.0;
+	for (int i = 0; i < 3; i++) {
+		w = mix(w, noise(p, s), intensity);
+		p /= 2.0;
+		intensity /= 2.0;
+	}
+	
+	return mix(max_line_width, min_line_width, w);
+}
+
+void fragment() {
+
+	float alpha = 0.0;
+	float timeStep = floor(TIME * freq);
+	vec2 scale = TEXTURE_PIXEL_SIZE;
+	scale *= get_line_width(UV / TEXTURE_PIXEL_SIZE, timeStep);
+	for (int i = 0; i < ang_res; i++) {
+		float angle = 2.0 * pi * float(i) / float(ang_res);
+		vec2 disp = scale * vec2(cos(angle), sin(angle));
+		alpha += texture(TEXTURE, UV + disp).a;
+	}
+	
+	if ((alpha > 0.0) && (texture(TEXTURE, UV).a < 0.1)) {
+		COLOR = outline_colour;
+	}
+	else {
+		COLOR = texture(TEXTURE, UV);
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=51]
 resource_local_to_scene = true
-shader = ExtResource( 10 )
-shader_param/Smooth = true
-shader_param/width = 8.347
-shader_param/outline_color = Color( 0.894118, 0.192157, 0.984314, 1 )
-shader_param/pixel_size = 1
+shader = SubResource( 50 )
+shader_param/max_line_width = 20.0
+shader_param/min_line_width = 15.0
+shader_param/freq = 5.0
+shader_param/block_size = 5.0
+shader_param/outline_colour = Plane( 0, 0, 0, 1 )
 
 [sub_resource type="Animation" id=14]
 length = 0.001
@@ -164,7 +225,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ ExtResource( 19 ) ]
+"values": [ ExtResource( 30 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:normal_map")
@@ -176,7 +237,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ ExtResource( 22 ) ]
+"values": [ ExtResource( 28 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:hframes")
@@ -212,7 +273,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 4.48984, -1 ) ]
+"values": [ Vector2( 4.48984, -31.3333 ) ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -242,7 +303,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 15 ) ]
+"values": [ ExtResource( 4 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:normal_map")
@@ -254,7 +315,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 16 ) ]
+"values": [ ExtResource( 22 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:hframes")
@@ -290,7 +351,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, 6.72187 ) ]
+"values": [ Vector2( 1, -33 ) ]
 }
 
 [sub_resource type="Animation" id=16]
@@ -368,7 +429,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 5.52381, 7.9965 ) ]
+"values": [ Vector2( 5.52381, -30.6554 ) ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -397,7 +458,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 23 ) ]
+"values": [ ExtResource( 14 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:normal_map")
@@ -409,7 +470,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 14 ) ]
+"values": [ ExtResource( 11 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:hframes")
@@ -421,7 +482,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 8 ]
+"values": [ 6 ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath(".:vframes")
@@ -433,7 +494,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
+"values": [ 2 ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath(".:position")
@@ -445,7 +506,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.266666 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -5.04246, 11.4174 ), Vector2( -3, 1.44988 ) ]
+"values": [ Vector2( -5.04246, -33 ), Vector2( -3, -29.1851 ) ]
 }
 
 [sub_resource type="Animation" id=18]
@@ -475,7 +536,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ) ]
+"values": [ ExtResource( 15 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:normal_map")
@@ -487,7 +548,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 18 ) ]
+"values": [ ExtResource( 16 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:hframes")
@@ -523,7 +584,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 12.7224, -1 ) ]
+"values": [ Vector2( 13.0561, -38.1973 ) ]
 }
 
 [sub_resource type="Animation" id=19]
@@ -577,7 +638,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 8 ]
+"values": [ 6 ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath(".:vframes")
@@ -589,7 +650,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 2 ]
+"values": [ 3 ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath(".:position")
@@ -601,7 +662,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -2, 3.92194 ) ]
+"values": [ Vector2( -2, -34.7081 ) ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -631,7 +692,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ) ]
+"values": [ ExtResource( 23 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:normal_map")
@@ -643,7 +704,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 24 ) ]
+"values": [ ExtResource( 9 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:hframes")
@@ -679,7 +740,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -1.91666, -1 ) ]
+"values": [ Vector2( -1.35979, -32.563 ) ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -708,7 +769,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 9 ) ]
+"values": [ ExtResource( 17 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:normal_map")
@@ -720,7 +781,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ) ]
+"values": [ ExtResource( 19 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:hframes")
@@ -756,8 +817,10 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -7.25, -1 ) ]
+"values": [ Vector2( -5.25513, -35.9396 ) ]
 }
+
+[sub_resource type="StreamTexture" id=48]
 
 [sub_resource type="Animation" id=27]
 resource_name = "wall_slide"
@@ -786,7 +849,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 25 ) ]
+"values": [ ExtResource( 18 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:normal_map")
@@ -798,7 +861,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 24 ) ]
+"values": [ SubResource( 48 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath(".:hframes")
@@ -834,7 +897,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -14.25, 10.667 ) ]
+"values": [ Vector2( -6.47833, -31.7546 ) ]
 }
 
 [sub_resource type="ShaderMaterial" id=44]
@@ -863,7 +926,7 @@ radial_accel = 0.53
 angle = 180.7
 angle_random = 1.0
 scale_curve = SubResource( 37 )
-color = Color( 0.894118, 0.192157, 0.984314, 1 )
+color = Color( 0, 0, 0, 1 )
 
 [node name="Player" type="KinematicBody2D" groups=["players"]]
 position = Vector2( 0, -62 )
@@ -879,7 +942,6 @@ jump_time_to_descent = 0.25
 wall_slide_gravity_modifier = 0.3
 
 [node name="PhysicsColliderShape" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, 30 )
 shape = SubResource( 30 )
 
@@ -939,6 +1001,12 @@ script = ExtResource( 29 )
 squash_amount = 0.1
 stretch_amount = 0.1
 
+[node name="WeaponSlot" type="Node2D" parent="Orientation"]
+script = ExtResource( 35 )
+
+[node name="BulletSpawnPoint" type="Node2D" parent="Orientation/WeaponSlot"]
+position = Vector2( 24.5833, -31.2575 )
+
 [node name="SlideParticles" type="Particles2D" parent="Orientation"]
 material = SubResource( 43 )
 position = Vector2( -28.4549, -1.05112 )
@@ -962,12 +1030,11 @@ rotation = 1.5708
 shape = SubResource( 28 )
 
 [node name="Sprite" type="Sprite" parent="Orientation"]
-material = SubResource( 22 )
-position = Vector2( 4.48984, -1 )
-scale = Vector2( 0.291873, 0.306169 )
-texture = ExtResource( 19 )
-normal_map = ExtResource( 22 )
-offset = Vector2( 2, -128 )
+material = SubResource( 51 )
+position = Vector2( 4.48984, -31.3333 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 30 )
+normal_map = ExtResource( 28 )
 hframes = 6
 vframes = 5
 region_rect = Rect2( 0, 0, 100, 100 )
@@ -989,10 +1056,6 @@ anims/wall_slide = SubResource( 27 )
 wait_time = 0.1
 one_shot = true
 
-[node name="AttackTimer" type="Timer" parent="."]
-wait_time = 0.3
-one_shot = true
-
 [node name="StunTimer" type="Timer" parent="."]
 one_shot = true
 
@@ -1004,7 +1067,7 @@ one_shot = true
 [node name="WallJumpCoyoteTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
-script = ExtResource( 32 )
+script = ExtResource( 24 )
 
 [node name="AttackLimitTimer" type="Timer" parent="."]
 wait_time = 0.2
@@ -1034,6 +1097,16 @@ script = ExtResource( 13 )
 [node name="wall_slide" type="Node" parent="State_Manager"]
 script = ExtResource( 26 )
 
+[node name="punch" type="Node" parent="State_Manager"]
+script = ExtResource( 25 )
+
+[node name="PunchTimer" type="Timer" parent="State_Manager/punch"]
+wait_time = 0.3
+one_shot = true
+
+[node name="fire_weapon" type="Node" parent="State_Manager"]
+script = ExtResource( 36 )
+
 [node name="DebugLabel" type="Label" parent="."]
 margin_left = -100.0
 margin_top = -30.0
@@ -1048,10 +1121,15 @@ points = PoolVector2Array( 0, 0, 0, 0 )
 width = 2.0
 default_color = Color( 1, 0, 1, 1 )
 
-[node name="PowerUpFlames" type="Particles2D" parent="."]
+[node name="PowerUpVisuals" type="Node2D" parent="."]
+script = ExtResource( 10 )
+
+[node name="PowerUpFlames" type="Particles2D" parent="PowerUpVisuals"]
 show_behind_parent = true
 material = SubResource( 44 )
 position = Vector2( 0, 9.47462 )
+z_index = -1
+emitting = false
 amount = 30
 lifetime = 0.25
 explosiveness = 0.1

@@ -8,7 +8,6 @@ onready var animator: AnimationPlayer = $Orientation/Sprite/AnimationPlayer
 onready var state_manager = $State_Manager
 
 onready var jump_buffer: Timer = $JumpBuffer
-onready var attack_timer: Timer = $AttackTimer
 onready var stun_timer: Timer = $StunTimer
 onready var coyote_timer: Timer = $CoyoteTimer
 onready var wall_jump_coyote_timer: Timer = $WallJumpCoyoteTimer
@@ -20,6 +19,8 @@ onready var debug_line: Line2D = $DebugLine
 onready var slide_particles: Particles2D = $Orientation/SlideParticles
 onready var right_wall_check = $RightWallCheck
 onready var left_wall_check = $LeftWallCheck
+onready var powerup_visuals = $PowerUpVisuals
+onready var weapon_slot = $Orientation/WeaponSlot
 
 onready var powerup_flames: Particles2D = $PowerUpFlames
 
@@ -48,7 +49,7 @@ var was_on_floor = false
 var is_wall_on_left setget , get_is_wall_on_left
 var is_wall_on_right setget , get_is_wall_on_right
 
-var attack_speed = 1200.0
+
 var bonk_speed = Vector2(700.0, -450.0)
 
 var rigidbody_push = 300
@@ -78,6 +79,8 @@ var id: int setget set_id
 var powerskulls = []
 var chance_to_lose_skull = 0.5
 
+var is_powered_up = false
+
 
 func _ready():
 	rng.randomize()
@@ -85,6 +88,9 @@ func _ready():
 
 
 func _process(delta):
+	if powerskulls.size() >= 3:
+		power_up()
+	
 	gather_input()
 	state_manager.process(delta)
 
@@ -213,15 +219,6 @@ func flip_orientation():
 	orientation.scale.x = -orientation.scale.x
 
 
-func attack():
-	var attack_direction = sign(orientation.scale.x)
-
-	velocity = Vector2.ZERO
-	velocity.x = attack_speed * attack_direction
-
-	attack_timer.start()
-
-
 func attacked(attack_direction: Vector2, attack_force: Vector2):
 	if state_manager.current_state.name == "stunned":
 		return
@@ -275,7 +272,16 @@ func lose_powerskull():
 
 func set_id(value):
 	id = value
-	sprite.material.set_shader_param("outline_color", Rules.get_player_color(id))
-	powerup_flames.process_material.color = Rules.get_player_color(id)
-	slide_particles.process_material.color = Rules.get_player_color(id)
+	var color = Rules.get_player_color(id)
+	var player_color_as_plane: Plane = Plane(color.r, color.g, color.b, color.a)
+	sprite.material.set_shader_param("outline_colour", player_color_as_plane)
+	powerup_visuals.set_color(color)
+	slide_particles.process_material.color = color
 	Events.emit_signal("player_id_assigned", self, id)
+
+
+func power_up():
+	var weapon_scene = load("res://scenes/FireBallWeapon.tscn")
+	powerup_visuals.enabled = true
+	weapon_slot.add_weapon(weapon_scene.instance())
+	is_powered_up = true

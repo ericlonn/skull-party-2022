@@ -12,9 +12,6 @@ export(float) var powerskull_spawn_chance = 3.0
 export(PackedScene) var chest_scene
 export(float) var chest_spawn_chance = 1.0
 
-onready var debug_poly1 = $Polygon2D
-onready var debug_poly2 = $Polygon2D2
-
 onready var rng = RandomNumberGenerator.new()
 
 onready var red_count_label = $RedCountLabel
@@ -119,8 +116,6 @@ func _on_SkullSpawnTimer_timeout():
 	
 	var total_weight = powerskull_spawn_chance + chest_spawn_chance
 	var weight_to_spawn = rng.randf_range(0, total_weight)
-	
-	debug_poly1.global_position = avg_player_pos
 	
 	if weight_to_spawn <= powerskull_spawn_chance:
 		spawn_skull(new_spawn_point.global_position)

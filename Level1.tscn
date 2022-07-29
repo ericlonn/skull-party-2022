@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=2]
@@ -6,11 +6,15 @@
 [ext_resource path="res://scenes/SkullSpawnPoint.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/PowerSkull.tscn" type="PackedScene" id=5]
 [ext_resource path="res://PlayerInfo.tscn" type="PackedScene" id=6]
-[ext_resource path="res://UI.gd" type="Script" id=7]
+[ext_resource path="res://scripts/UI.gd" type="Script" id=7]
 [ext_resource path="res://scripts/SkullSpawner.gd" type="Script" id=8]
-[ext_resource path="res://FPSLabel.gd" type="Script" id=9]
+[ext_resource path="res://scripts/FPSLabel.gd" type="Script" id=9]
 [ext_resource path="res://brick+grass tile.tres" type="TileSet" id=10]
 [ext_resource path="res://scenes/Chest.tscn" type="PackedScene" id=11]
+[ext_resource path="res://sprites/lights/light.png" type="Texture" id=12]
+[ext_resource path="res://sprites/bg/space/Stars Small_1.png" type="Texture" id=13]
+[ext_resource path="res://sprites/bg/space/Nebula Gray.png" type="Texture" id=14]
+[ext_resource path="res://sprites/bg/space/Stars Small_2.png" type="Texture" id=16]
 
 [sub_resource type="StyleBoxFlat" id=1]
 resource_local_to_scene = true
@@ -50,10 +54,47 @@ border_color = Color( 1, 0, 0, 1 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.2, 0.2 )
+motion_mirroring = Vector2( 1, 1 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 1233, 157 )
+texture = ExtResource( 14 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.5, 0.5 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+modulate = Color( 1, 1, 1, 0.427451 )
+position = Vector2( 1233, 157 )
+texture = ExtResource( 13 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.7, 0.8 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer3"]
+modulate = Color( 1, 1, 1, 0.427451 )
+position = Vector2( 1233, 157 )
+texture = ExtResource( 16 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 1250, 550 )
+offset = Vector2( 0, -50 )
+current = true
+zoom = Vector2( 2.5, 2.5 )
+script = ExtResource( 3 )
 __meta__ = {
-"_edit_horizontal_guides_": [ 896.0 ],
-"_edit_vertical_guides_": [ 352.0 ]
+"_edit_lock_": true
 }
+move_speed = 0.2
+zoom_speed = 0.2
+min_zoom = 0.75
+max_zoom = 1000
+margin = Vector2( 250, 250 )
 
 [node name="TileMap2" type="TileMap" parent="." groups=["level"]]
 tile_set = ExtResource( 10 )
@@ -66,9 +107,13 @@ tile_data = PoolIntArray( 0, 0, 1, 1, 0, 196610, 2, 0, 196610, 3, 0, 196610, 4, 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 306, 829 )
 
+[node name="Player2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1488, 831 )
+enabled = false
+
 [node name="SkullSpawner" type="Node" parent="."]
 script = ExtResource( 8 )
-skull_spawn_interval = 0.1
+skull_spawn_interval = 2.0
 skull_spawn_variation = 1.0
 furthest_point_variation = 15
 powerskull_scene = ExtResource( 5 )
@@ -140,12 +185,6 @@ position = Vector2( 2089, 782 )
 [node name="SkullSpawnPoint4" parent="SkullSpawner" instance=ExtResource( 4 )]
 position = Vector2( 365, 117 )
 
-[node name="Polygon2D" type="Polygon2D" parent="SkullSpawner"]
-polygon = PoolVector2Array( -43, -42, -1, -1, 47, -44 )
-
-[node name="Polygon2D2" type="Polygon2D" parent="SkullSpawner"]
-polygon = PoolVector2Array( -43, -42, -1, -1, 47, -44 )
-
 [node name="RedCountLabel" type="Label" parent="SkullSpawner"]
 margin_left = 491.0
 margin_top = 299.0
@@ -167,19 +206,6 @@ margin_right = 530.0
 margin_bottom = 392.0
 rect_scale = Vector2( 2, 2 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2( 0, -50 )
-current = true
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_lock_": true
-}
-move_speed = 0.05
-zoom_speed = 0.05
-min_zoom = 0.75
-max_zoom = 1000
-margin = Vector2( 250, 250 )
-
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 7 )
 
@@ -195,9 +221,10 @@ __meta__ = {
 [node name="UI" type="Control" parent="UI"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -960.0
-margin_right = 960.0
-margin_bottom = 1055.0
+margin_left = -986.0
+margin_top = 7.0
+margin_right = 934.0
+margin_bottom = 1062.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/UI"]
 anchor_left = 0.5
@@ -238,5 +265,24 @@ margin_right = 852.0
 margin_bottom = 140.0
 rect_clip_content = true
 custom_styles/panel = SubResource( 4 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 424, 876 )
+scale = Vector2( 0.402832, 0.402832 )
+texture = ExtResource( 12 )
+color = Color( 0.815686, 0, 1, 1 )
+energy = 1.6
+
+[node name="Polygon2D" type="Polygon2D" parent="Light2D"]
+polygon = PoolVector2Array( -5, -6, 5, -6, 5, 5, -5, 5 )
+
+[node name="PowerSkull" parent="." instance=ExtResource( 5 )]
+position = Vector2( 307, 773 )
+
+[node name="PowerSkull2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 316, 695 )
+
+[node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 316, 597 )
 
 [connection signal="timeout" from="SkullSpawner/SkullSpawnTimer" to="SkullSpawner" method="_on_SkullSpawnTimer_timeout"]

@@ -1,34 +1,57 @@
 shader_type canvas_item;
-render_mode unshaded;
 
-uniform bool Smooth = true;
-uniform float width : hint_range(0.0, 16) = 1.0;
-uniform vec4 outline_color : hint_color = vec4(0.0, 0.0, 0.0, 1.0);
-uniform int pixel_size : hint_range(1, 10) = 4;
- 
-void fragment()
-{
-	vec2 unit = (1.0/float(pixel_size) ) / vec2(textureSize(TEXTURE, 0));
-	vec4 pixel_color = texture(TEXTURE, UV);
-	if (pixel_color.a <= 0.9) {
-		pixel_color = outline_color;
-		pixel_color.a = 0.0;
-		for (float x = -ceil(width); x <= ceil(width); x++) {
-			for (float y = -ceil(width); y <= ceil(width); y++) {
-				if (texture(TEXTURE, UV + vec2(x*unit.x, y*unit.y)).a == 0.0 || (x==0.0 && y==0.0)) {
-					continue;
-				}
-				if (Smooth) {
-					pixel_color.a += outline_color.a / (pow(x,2)+pow(y,2)) * (1.0-pow(2.0, -width));
-					if (pixel_color.a > 1.0) {
-						pixel_color.a = 1.0;
-					}
-				} else {
-					pixel_color.a = outline_color.a;
-					return
-				}
-			}
-		}
+uniform float max_line_width = 10.0;
+uniform float min_line_width = 5.0;
+uniform float freq = 1.0;
+uniform float block_size = 20.0;
+uniform vec4 outline_colour = vec4(0,0,0,1);
+
+const float pi = 3.1415;
+const int ang_res = 16;
+
+
+float hash(vec2 p, float s) {
+	return fract(35.1 * sin(dot(vec3(112.3, 459.2, 753.2), vec3(p, s))));
+}
+
+float noise(vec2 p, float s) {
+	vec2 d = vec2(0, 1);
+	vec2 b = floor(p);
+	vec2 f = fract(p);
+	return mix(
+		mix(hash(b + d.xx, s), hash(b + d.yx, s), f.x),
+		mix(hash(b + d.xy, s), hash(b + d.yy, s), f.x), f.y);
+}
+
+float get_line_width(vec2 p, float s) {
+	p /= block_size;
+	float w = 0.0;
+	float intensity = 1.0;
+	for (int i = 0; i < 3; i++) {
+		w = mix(w, noise(p, s), intensity);
+		p /= 2.0;
+		intensity /= 2.0;
 	}
-	COLOR = pixel_color;
+	
+	return mix(max_line_width, min_line_width, w);
+}
+
+void fragment() {
+
+	float alpha = 0.0;
+	float timeStep = floor(TIME * freq);
+	vec2 scale = TEXTURE_PIXEL_SIZE;
+	scale *= get_line_width(UV / TEXTURE_PIXEL_SIZE, timeStep);
+	for (int i = 0; i < ang_res; i++) {
+		float angle = 2.0 * pi * float(i) / float(ang_res);
+		vec2 disp = scale * vec2(cos(angle), sin(angle));
+		alpha += texture(TEXTURE, UV + disp).a;
+	}
+	
+	if ((alpha > 0.0) && (texture(TEXTURE, UV).a < 0.1)) {
+		COLOR = outline_colour;
+	}
+	else {
+		COLOR = texture(TEXTURE, UV);
+	}
 }
