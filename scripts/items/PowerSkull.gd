@@ -49,6 +49,11 @@ func _on_OverlapDetector_body_entered(body):
 		
 		Events.emit_signal("skull_collected", self)
 		
+		set_collision_layer_bit(2, false)
+		set_collision_mask_bit(1, false)
+		set_collision_mask_bit(2, false)
+		set_collision_mask_bit(3, false)
+		
 		body.add_powerskull(powerskull_type)
 		mode = RigidBody2D.MODE_STATIC
 		

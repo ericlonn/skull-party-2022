@@ -40,7 +40,7 @@ func process(delta):
 		player.position.x += -5 * wall_slide_x_dir
 		return State.Jump
 	
-	if player.attack_pressed and player.attack_limit_timer.time_left == 0:
+	if player.attack_pressed:
 		player.flip_orientation()
 		return State.Attack
 	

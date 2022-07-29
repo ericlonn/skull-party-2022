@@ -5,7 +5,6 @@ signal chested_destroyed(position)
 
 onready var shatter_particles: Particles2D = $ChestDestroyedParticles
 onready var collision_shape: CollisionShape2D = $CollisionShape2D
-onready var sprite_echo_generator = $SpriteEchoGenerator
 onready var particles_left: Particles2D = $Particles2DLeft
 onready var particles_right: Particles2D = $Particles2DRight
 onready var area2d: Area2D = $Area2D
@@ -17,6 +16,9 @@ var attacked_by
 var is_sliding = false
 
 var attack_force = Vector2(1000,-700)
+
+func _ready():
+	Events.emit_signal("chest_spawned", self)
 
 func _physics_process(delta):
 	if is_sliding == false:
@@ -32,7 +34,9 @@ func handle_collision(collision):
 	var collider = collision.collider
 	
 	if is_sliding:
-		var is_shatter_collision = collider.is_in_group("players") or collider.is_in_group("level")
+		var is_shatter_collision = collider.is_in_group("players") or \
+		collider.is_in_group("level")
+		
 		var is_collision_the_floor = collision.normal == Vector2(0,-1)
 		var is_collision_ahead = sign(velocity.x) != sign(collision.normal.x)
 		if is_shatter_collision and is_collision_ahead and not is_collision_the_floor:
@@ -57,7 +61,7 @@ func shatter(collider):
 	shatter_particles.position += global_position
 	shatter_particles.emitting = true
 	
-	Events.emit_signal("chest_shattered", global_position)
+	Events.emit_signal("chest_shattered", self)
 	queue_free()
 
 func apply_gravity(delta):
@@ -70,19 +74,24 @@ func attacked(attack_direction, attacker= null):
 	attacked_by = attacker
 	
 	var slide_direction = sign(attack_direction)
-	print(slide_direction as String)
 	sliding_speed.x *= slide_direction
 	velocity += Vector2(sliding_speed)
 	velocity.y = 0
 	is_sliding = true
 	
+	var particle_color
+	if attacked_by != null:
+		particle_color = Rules.get_player_color(attacked_by.id)
+	else:
+		particle_color = Color.white
+	
 	if sliding_speed.x > 0:
 		particles_left.emitting = true
-		particles_left.process_material.color = Rules.get_player_color(attacked_by.id)
+		particles_left.process_material.color = particle_color
 	else:
 		particles_right.emitting = true
-		particles_right.process_material.color = Rules.get_player_color(attacked_by.id)
-	shatter_particles.process_material.color = Rules.get_player_color(attacked_by.id)
+		particles_right.process_material.color = particle_color
+	shatter_particles.process_material.color = particle_color
 	
 	
 	# make sure the attacking player doesn't get hit

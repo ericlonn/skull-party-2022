@@ -33,7 +33,7 @@
 [ext_resource path="res://scripts/player/WallChecker.gd" type="Script" id=31]
 [ext_resource path="res://sprites/particles/smoke_06 (Custom).png" type="Texture" id=33]
 [ext_resource path="res://sprites/particles/fire_02 (Custom).png" type="Texture" id=34]
-[ext_resource path="res://scenes/WeaponSlot.gd" type="Script" id=35]
+[ext_resource path="res://scripts/player/WeaponSlot.gd" type="Script" id=35]
 [ext_resource path="res://scripts/player/state machine/states/fire_weapon.gd" type="Script" id=36]
 
 [sub_resource type="RectangleShape2D" id=30]
@@ -1070,7 +1070,7 @@ one_shot = true
 script = ExtResource( 24 )
 
 [node name="AttackLimitTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.3
 one_shot = true
 
 [node name="State_Manager" type="Node" parent="."]
@@ -1137,5 +1137,5 @@ local_coords = false
 process_material = SubResource( 38 )
 texture = ExtResource( 34 )
 
-[connection signal="body_entered" from="Orientation/Punch" to="State_Manager/attack" method="_on_Punch_body_entered"]
+[connection signal="body_entered" from="Orientation/Punch" to="State_Manager/punch" method="_on_Punch_body_entered"]
 [connection signal="timeout" from="StunTimer" to="State_Manager/stunned" method="_on_StunTimer_timeout"]

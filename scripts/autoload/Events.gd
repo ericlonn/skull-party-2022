@@ -8,4 +8,5 @@ signal skull_collected(skull)
 
 signal player_id_assigned(player, id)
 
-signal chest_shattered(position)
+signal chest_spawned(chest)
+signal chest_shattered(chest)

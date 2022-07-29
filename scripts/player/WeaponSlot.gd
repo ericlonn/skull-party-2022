@@ -7,7 +7,6 @@ var parent_player: Player
 
 func _ready():
 	find_parent_player()
-	print(parent_player.name)
 
 func add_weapon(weapon: SuperWeapon):
 	var has_superweapon = false

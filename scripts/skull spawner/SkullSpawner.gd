@@ -14,9 +14,6 @@ export(float) var chest_spawn_chance = 1.0
 
 onready var rng = RandomNumberGenerator.new()
 
-onready var red_count_label = $RedCountLabel
-onready var blue_count_label = $BlueCountLabel
-onready var green_count_label = $GreenCountLabel
 var red_count = 0
 var blue_count = 0
 var green_count = 0
@@ -60,18 +57,6 @@ func spawn_skull(spawn_position: Vector2, type: int = -1, launch_skull: bool = f
 		
 		new_skull.apply_impulse(Vector2.ZERO, launch_force)
 	
-	match new_skull.powerskull_type:
-		0:
-			red_count += 1
-			red_count_label.text = str(red_count)
-		1:
-			blue_count += 1
-			blue_count_label.text = str(blue_count)
-		2:
-			green_count += 1
-			green_count_label.text = str(green_count)
-		
-	
 	get_parent().add_child(new_skull)
 
 
@@ -83,8 +68,8 @@ func spawn_chest(spawn_position: Vector2):
 	
 
 
-func _on_chest_shattered(chest_pos):
-	spawn_skull(chest_pos, true)
+func _on_chest_shattered(chest):
+	spawn_skull(chest.global_position, true)
 
 
 func _on_SkullSpawnTimer_timeout():

@@ -2,11 +2,10 @@ extends BaseState
 
 func enter():
 	player.weapon_slot.fire_weapon()
-	print("FIRE")
+	player.attack_limit_timer.start()
 
 func process(delta):
 	return State.Idle
-
 
 func physics_process(delta):
 	player.apply_gravity()

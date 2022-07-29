@@ -13,6 +13,8 @@ onready var screen_size = get_viewport_rect().size
 func _ready():
 	Events.connect("skull_spawned", self, "on_skull_spawned")
 	Events.connect("skull_collected", self, "on_skull_collected")
+	Events.connect("chest_spawned", self, "on_chest_spawned")
+	Events.connect("chest_shattered", self, "on_chest_shattered")
 
 func _process(delta):
 	if !targets:
@@ -48,9 +50,13 @@ func remove_target(t):
 
 
 func on_skull_spawned(skull):
-	targets.append(skull)
+	add_target(skull)
 
 func on_skull_collected(skull):
-	var skull_index = targets.find(skull)
-	if skull_index !=  -1:
-		targets.remove(skull_index)
+	remove_target(skull)
+
+func on_chest_spawned(chest):
+	add_target(chest)
+
+func on_chest_shattered(chest):
+	remove_target(chest)

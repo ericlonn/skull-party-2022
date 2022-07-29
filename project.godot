@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Ammo",
 "language": "GDScript",
-"path": "res://scripts/super weapons/Ammo.gd"
+"path": "res://weapons/Ammo.gd"
 }, {
 "base": "Node",
 "class": "BaseState",
@@ -22,7 +22,7 @@ _global_script_classes=[ {
 "base": "KinematicBody2D",
 "class": "Chest",
 "language": "GDScript",
-"path": "res://scripts/Chest.gd"
+"path": "res://scripts/items/Chest.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
@@ -32,12 +32,12 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "SkullSpawnPoint",
 "language": "GDScript",
-"path": "res://scripts/SkullSpawnPoint.gd"
+"path": "res://scripts/skull spawner/SkullSpawnPoint.gd"
 }, {
 "base": "Node2D",
 "class": "SuperWeapon",
 "language": "GDScript",
-"path": "res://scripts/super weapons/SuperWeapon.gd"
+"path": "res://weapons/SuperWeapon.gd"
 } ]
 _global_script_class_icons={
 "Ammo": "",
@@ -111,6 +111,7 @@ attack={
 2d_physics/layer_9="AttackArea"
 2d_physics/layer_10="PowerskullArea"
 2d_physics/layer_11="ChestArea"
+2d_physics/layer_12="WeaponArea"
 2d_physics/layer_13="Shards"
 
 [physics]

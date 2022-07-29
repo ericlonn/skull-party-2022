@@ -36,7 +36,7 @@ func process(delta: float):
 			player.orientation.squash()
 			return State.Idle
 	
-	if player.attack_pressed and player.attack_limit_timer.time_left == 0:
+	if player.attack_pressed:
 		return State.Attack
 	
 	return State.Null

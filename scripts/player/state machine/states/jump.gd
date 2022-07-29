@@ -27,7 +27,7 @@ func process(delta: float):
 	if player.is_wall_on_left and player.move_direction == -1:
 		return State.Wall_Slide
 	
-	if player.attack_pressed and player.attack_limit_timer.time_left == 0:
+	if player.attack_pressed:
 		return State.Attack
 	
 	if player.velocity.y > 0:
