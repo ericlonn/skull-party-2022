@@ -22,13 +22,14 @@ func set_color():
 
 func _on_Area2D_body_entered(body):
 	if body is Player:
+		body.health -= 1
 		body.attacked(global_position, attack_force)
 		spawn_destroy_particles()
 		queue_free()
 	elif body.is_in_group("level"):
 		spawn_destroy_particles()
 		queue_free()
-	elif body.is_in_group("chests"):
+	elif body is Chest:
 		body.attacked(firing_direction, player)
 		spawn_destroy_particles()
 		queue_free()

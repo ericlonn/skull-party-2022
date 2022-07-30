@@ -79,6 +79,8 @@ var id: int setget set_id
 var powerskulls = []
 var chance_to_lose_skull = 0.5
 
+var health: int = 3 setget set_health
+
 var is_powered_up = false
 
 
@@ -268,6 +270,12 @@ func lose_powerskull():
 
 			Events.emit_signal("skull_lost", self, removed_skull)
 			Events.emit_signal("skull_count_updated", self, powerskulls)
+
+
+func set_health(value):
+	health = value
+	Events.emit_signal("player_health_updated", self, health)
+	print(health as String)
 
 
 func set_id(value):

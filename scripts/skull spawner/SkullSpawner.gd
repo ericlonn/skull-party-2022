@@ -69,7 +69,7 @@ func spawn_chest(spawn_position: Vector2):
 
 
 func _on_chest_shattered(chest):
-	spawn_skull(chest.global_position, true)
+	spawn_skull(chest.global_position, -1, true)
 
 
 func _on_SkullSpawnTimer_timeout():
@@ -99,10 +99,10 @@ func _on_SkullSpawnTimer_timeout():
 	
 	var new_spawn_point = furthest_spawn_points[rng.randi_range(0, furthest_spawn_points.size() - 1)]
 	
-	var total_weight = powerskull_spawn_chance + chest_spawn_chance
-	var weight_to_spawn = rng.randf_range(0, total_weight)
+	var weighted_bag = RNGTools.WeightedBag.new()
+	weighted_bag.weights = {
+		spawn_skull = powerskull_spawn_chance,
+		spawn_chest = chest_spawn_chance}
 	
-	if weight_to_spawn <= powerskull_spawn_chance:
-		spawn_skull(new_spawn_point.global_position)
-	else:
-		spawn_chest(new_spawn_point.global_position)
+	var weighted_result = RNGTools.pick_weighted(weighted_bag)
+	funcref(self, weighted_result).call_func(new_spawn_point.global_position)

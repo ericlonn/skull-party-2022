@@ -35,7 +35,8 @@ func handle_collision(collision):
 	
 	if is_sliding:
 		var is_shatter_collision = collider.is_in_group("players") or \
-		collider.is_in_group("level")
+		collider.is_in_group("level") or \
+		collider.is_in_group("chests")
 		
 		var is_collision_the_floor = collision.normal == Vector2(0,-1)
 		var is_collision_ahead = sign(velocity.x) != sign(collision.normal.x)
@@ -50,6 +51,9 @@ func handle_collision(collision):
 func shatter(collider):
 	if collider.is_in_group("players"):
 		collider.attacked(global_position, attack_force)
+	elif collider.is_in_group("chests"):
+		collider.attacked(sliding_speed.x)
+	
 	
 	shatter_particles.process_material.direction.x *= sign(velocity.x)
 	

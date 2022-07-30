@@ -3,6 +3,8 @@ extends Node
 signal skull_lost(player, skull_type)
 signal skull_count_updated(player, skulls)
 
+signal player_health_updated(player, new_value)
+
 signal skull_spawned(skull)
 signal skull_collected(skull)
 
