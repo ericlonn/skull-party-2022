@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://scripts/FPSLabel.gd" type="Script" id=9]
 [ext_resource path="res://brick+grass tile.tres" type="TileSet" id=10]
 [ext_resource path="res://scenes/Chest.tscn" type="PackedScene" id=11]
+[ext_resource path="res://weapons/grenade/GrenadeAmmo.tscn" type="PackedScene" id=12]
 [ext_resource path="res://sprites/bg/space/Stars Small_1.png" type="Texture" id=13]
 [ext_resource path="res://sprites/bg/space/Nebula Gray.png" type="Texture" id=14]
 [ext_resource path="res://sprites/lights/light.png" type="Texture" id=15]
@@ -263,5 +264,8 @@ position = Vector2( 360, 860 )
 texture = ExtResource( 15 )
 color = Color( 1, 0, 0, 1 )
 energy = 2.18
+
+[node name="GrenadeAmmo" parent="." instance=ExtResource( 12 )]
+position = Vector2( 771, 200 )
 
 [connection signal="timeout" from="SkullSpawner/SkullSpawnTimer" to="SkullSpawner" method="_on_SkullSpawnTimer_timeout"]

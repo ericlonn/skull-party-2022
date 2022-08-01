@@ -55,7 +55,7 @@ func _on_OverlapDetector_body_entered(body):
 		set_collision_mask_bit(3, false)
 		
 		body.add_powerskull(powerskull_type)
-		mode = RigidBody2D.MODE_STATIC
+		set_deferred("mode", RigidBody2D.MODE_STATIC)
 		
 		tween.interpolate_method(self, "move_toward_player", 0.0, 1.0, move_toward_time, Tween.TRANS_QUAD, Tween.EASE_OUT)
 		tween.interpolate_property(self, "scale", scale, Vector2.ZERO, move_toward_time, Tween.TRANS_QUAD, Tween.EASE_OUT)

@@ -233,6 +233,8 @@ func attacked(attack_direction: Vector2, attack_force: Vector2):
 	velocity.y = attack_force.y
 	stun_triggered = true
 	
+	print(str(velocity))
+	
 	if rng.randf_range(0.0, 1.0) >= chance_to_lose_skull:
 		lose_powerskull()
 
@@ -273,7 +275,7 @@ func lose_powerskull():
 
 
 func set_health(value):
-	health = value
+	health = clamp(value, 0, 3)
 	Events.emit_signal("player_health_updated", self, health)
 	print(health as String)
 

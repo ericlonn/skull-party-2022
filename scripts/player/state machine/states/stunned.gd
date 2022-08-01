@@ -54,6 +54,8 @@ func physics_process(delta):
 	player.orient_character(stun_movement_x)
 	player.apply_velocity()
 	
+	print(str(player.velocity))
+	
 	return State.Null
 
 
