@@ -80,6 +80,7 @@ var powerskulls = []
 var chance_to_lose_skull = 0.5
 
 var health: int = 3 setget set_health
+var is_dead = false
 
 var is_powered_up = false
 
@@ -233,7 +234,6 @@ func attacked(attack_direction: Vector2, attack_force: Vector2):
 	velocity.y = attack_force.y
 	stun_triggered = true
 	
-	print(str(velocity))
 	
 	if rng.randf_range(0.0, 1.0) >= chance_to_lose_skull:
 		lose_powerskull()
@@ -275,9 +275,15 @@ func lose_powerskull():
 
 
 func set_health(value):
+	print(state_manager.current_state.name)
+	if state_manager.current_state.name == "stunned":
+		return
+	
 	health = clamp(value, 0, 3)
 	Events.emit_signal("player_health_updated", self, health)
-	print(health as String)
+	
+	if health == 0:
+		is_dead = true
 
 
 func set_id(value):
@@ -291,7 +297,7 @@ func set_id(value):
 
 
 func power_up():
-	var weapon_scene = load("res://weapons/grenade/GrenadeWeapon.tscn")
+	var weapon_scene = load("res://weapons/shotgun/ShotgunWeapon.tscn")
 	powerup_visuals.enabled = true
 	weapon_slot.add_weapon(weapon_scene.instance())
 	is_powered_up = true

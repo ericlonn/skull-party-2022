@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://scripts/player/state machine/states/attack.gd" type="Script" id=1]
 [ext_resource path="res://scripts/player/Player.gd" type="Script" id=2]
@@ -31,10 +31,13 @@
 [ext_resource path="res://scripts/player/Orientation.gd" type="Script" id=29]
 [ext_resource path="res://sprites/player/skull_idle.png" type="Texture" id=30]
 [ext_resource path="res://scripts/player/WallChecker.gd" type="Script" id=31]
+[ext_resource path="res://sprites/player/skull_death.png" type="Texture" id=32]
 [ext_resource path="res://sprites/particles/smoke_06 (Custom).png" type="Texture" id=33]
 [ext_resource path="res://sprites/particles/fire_02 (Custom).png" type="Texture" id=34]
 [ext_resource path="res://scripts/player/WeaponSlot.gd" type="Script" id=35]
 [ext_resource path="res://scripts/player/state machine/states/fire_weapon.gd" type="Script" id=36]
+[ext_resource path="res://sprites/player/skull_death_n.png" type="Texture" id=37]
+[ext_resource path="res://scripts/player/state machine/states/dead.gd" type="Script" id=38]
 
 [sub_resource type="RectangleShape2D" id=30]
 resource_local_to_scene = true
@@ -54,6 +57,8 @@ function = 15
 
 [sub_resource type="VisualShader" id=42]
 code = "shader_type canvas_item;
+render_mode unshaded;
+
 
 
 
@@ -87,9 +92,10 @@ void light() {
 
 }
 "
-graph_offset = Vector2( -379.333, -63.6594 )
+graph_offset = Vector2( -285.333, -198 )
 mode = 1
 flags/light_only = false
+flags/unshaded = true
 nodes/fragment/0/position = Vector2( 560, 120 )
 nodes/fragment/2/node = SubResource( 39 )
 nodes/fragment/2/position = Vector2( -380, 0 )
@@ -195,8 +201,8 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=51]
 resource_local_to_scene = true
 shader = SubResource( 50 )
-shader_param/max_line_width = 5.0
-shader_param/min_line_width = 4.0
+shader_param/max_line_width = 10.0
+shader_param/min_line_width = 10.0
 shader_param/freq = 5.0
 shader_param/block_size = 5.0
 shader_param/outline_colour = Plane( 0, 0, 0, 1 )
@@ -274,6 +280,84 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 4.48984, -31.3333 ) ]
+}
+
+[sub_resource type="Animation" id=52]
+resource_name = "death"
+length = 0.666666
+loop = true
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.666666 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 20 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 32 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:normal_map")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 37 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:hframes")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 7 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath(".:vframes")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -0.634651, -33.8817 ) ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -900,6 +984,38 @@ tracks/5/keys = {
 "values": [ Vector2( -6.47833, -31.7546 ) ]
 }
 
+[sub_resource type="Animation" id=53]
+resource_name = "death"
+length = 2.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1.9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "emit_death_signal"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
 [sub_resource type="ShaderMaterial" id=44]
 shader = SubResource( 42 )
 
@@ -1041,6 +1157,7 @@ region_rect = Rect2( 0, 0, 100, 100 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Orientation/Sprite"]
 anims/RESET = SubResource( 14 )
+anims/death = SubResource( 52 )
 anims/fall = SubResource( 15 )
 anims/idle = SubResource( 16 )
 anims/jump = SubResource( 17 )
@@ -1106,6 +1223,12 @@ one_shot = true
 
 [node name="fire_weapon" type="Node" parent="State_Manager"]
 script = ExtResource( 36 )
+
+[node name="dead" type="Node" parent="State_Manager"]
+script = ExtResource( 38 )
+
+[node name="DeathAnimator" type="AnimationPlayer" parent="State_Manager/dead"]
+anims/death = SubResource( 53 )
 
 [node name="DebugLabel" type="Label" parent="."]
 margin_left = -100.0

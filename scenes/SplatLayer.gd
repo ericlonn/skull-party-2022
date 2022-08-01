@@ -1,6 +1,8 @@
 class_name SplatLayer extends Node2D
 
 export(int) var padding = 32
+export(Array, Texture) var splat_textures
+
 
 onready var mask_tilemap: TileMap = $MaskTileMap
 
@@ -11,6 +13,8 @@ onready var _mask = $Mask
 var _tile_map: TileMap
 
 func _ready():
+	Events.connect("player_died", self, "on_Player_died")
+	
 	_tile_map = get_parent()
 	
 	var used_cells = _tile_map.get_used_cells()
@@ -20,7 +24,6 @@ func _ready():
 	
 	var tile_map_rect = mask_tilemap.get_used_rect()
 	var tile_map_size = tile_map_rect.size * mask_tilemap.cell_size
-	print(mask_tilemap.cell_size)
 	
 	
 	var itex := ImageTexture.new()
@@ -65,6 +68,7 @@ func _copy_tile_map_to_texture(tile_map: TileMap) -> ImageTexture:
 
 
 func draw_spot(spot: Texture, pos: Vector2) -> void:
+	print("DRAW")
 	var targets = [_canvas.texture, _bg_canvas.texture]
 	var size = spot.get_size()
 	var dst = pos - size/2
@@ -79,3 +83,9 @@ func draw_spot(spot: Texture, pos: Vector2) -> void:
 #		size.x, size.y, 
 #		dst.x, dst.y,
 #		0, 0)
+
+
+func on_Player_died(player, color, death_location):
+	var splat_texture_index = RNGTools.randi_range(0, splat_textures.size() - 1)
+	
+	draw_spot(splat_textures[splat_texture_index], death_location)

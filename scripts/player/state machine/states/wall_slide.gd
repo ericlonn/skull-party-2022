@@ -21,6 +21,9 @@ func enter():
 	
 
 func process(delta):
+	if player.is_dead:
+		return State.Dead
+	
 	if player.is_wall_on_left == false and wall_slide_x_dir == -1:
 		return State.Idle
 		

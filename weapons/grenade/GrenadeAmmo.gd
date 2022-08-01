@@ -10,7 +10,9 @@ onready var explosion_animplayer := $Explosion/ExplosionAnimPlayer
 onready var explosion_sprite := $Explosion/ExplosionsSprite
 onready var level_collision_check := $Explosion/LevelCollisionCheck
 
-var attack_force = Vector2(50000, -50000)
+onready var light := $Light2D
+
+var attack_force = Vector2(2000, -2000)
 var x_velocity = 1000
 var y_velocity = -400
 
@@ -35,6 +37,7 @@ func set_color():
 	var player_color_as_plane: Plane = Plane(color.r, color.g, color.b, color.a)
 	sprite.material.set_shader_param("outline_colour", player_color_as_plane)
 	
+	light.color = color
 	explosion_sprite.modulate = color
 
 func explode():
@@ -44,13 +47,22 @@ func explode():
 	explosion_animplayer.play("explosion")
 	
 	for body in explosion_hitbox.get_overlapping_bodies():
+		level_collision_check.cast_to = to_local(body.position)
+		level_collision_check.force_raycast_update()
+		if level_collision_check.is_colliding():
+			continue
+		
 		if body is Player:
-			level_collision_check.cast_to = to_local(body.position)
-			level_collision_check.force_raycast_update()
-			
-			if not level_collision_check.is_colliding():
-				body.health -= 1
-				body.attacked(global_position, attack_force)
+			body.health -= 1
+			body.attacked(global_position, attack_force)
+		elif body is Chest:
+			body.attacked(body.global_position.x - global_position.x, player)
+		elif body is Powerskull:
+			var applied_force = Vector2.ZERO
+			applied_force.x = sign(body.position.x - global_position.x)
+			applied_force.y = -sign(body.position.y - global_position.y)
+			applied_force = applied_force * attack_force
+			body.apply_force(applied_force)
 			
 	
 

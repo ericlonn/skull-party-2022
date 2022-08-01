@@ -1,5 +1,6 @@
 tool
 extends RigidBody2D
+class_name Powerskull
 
 export(Rules.powerskull_types) var powerskull_type setget set_powerskull_type
 
@@ -86,3 +87,10 @@ func set_sprite_color(type):
 	$Trail2D.default_color = Rules.get_skull_color(type)
 	$Light2D.color = Rules.get_skull_color(type)
 	$Particles2D.process_material.color = Rules.get_skull_color(type)
+
+
+func apply_force(force):
+	print(str(force))
+	apply_central_impulse(force)
+	
+	

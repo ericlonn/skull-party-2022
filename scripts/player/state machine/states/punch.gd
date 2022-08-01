@@ -26,6 +26,9 @@ func enter():
 	player.sprite_echo_generator.enabled = true
 
 func process(delta: float):
+	if player.is_dead:
+		return State.Dead
+	
 	if punch_timer.time_left <= 0:
 		return State.Idle
 	

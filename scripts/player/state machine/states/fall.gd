@@ -12,6 +12,9 @@ func enter():
 
 
 func process(delta: float):
+	if player.is_dead:
+		return State.Dead
+	
 	if player.stun_triggered:
 		return State.Stunned
 	

@@ -125,3 +125,5 @@ autostart = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 20, 0 )
 shape = SubResource( 46 )
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

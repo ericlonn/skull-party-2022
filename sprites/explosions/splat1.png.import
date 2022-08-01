@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/skull_jump_normal.png-74df140f3102d167a599924f990e8450.stex"
+path="res://.import/splat1.png-1bf3d2a31293e79e36b95b7044b9d5dc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/player/skull_jump_normal.png"
-dest_files=[ "res://.import/skull_jump_normal.png-74df140f3102d167a599924f990e8450.stex" ]
+source_file="res://sprites/explosions/splat1.png"
+dest_files=[ "res://.import/splat1.png-1bf3d2a31293e79e36b95b7044b9d5dc.stex" ]
 
 [params]
 
@@ -18,9 +18,9 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=1
+compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

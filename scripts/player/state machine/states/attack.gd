@@ -14,6 +14,9 @@ func enter():
 		use_superweapon = false
 
 func process(delta: float):
+	if player.is_dead:
+		return State.Dead
+	
 	if attack_disabled:
 		return State.Idle
 	

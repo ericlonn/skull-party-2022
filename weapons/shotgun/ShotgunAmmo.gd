@@ -34,6 +34,7 @@ func set_color():
 
 func _on_Area2D_body_entered(body):
 	if body is Player:
+		body.health -= 1
 		body.attacked(global_position, attack_force)
 		spawn_destroy_particles()
 		queue_free()

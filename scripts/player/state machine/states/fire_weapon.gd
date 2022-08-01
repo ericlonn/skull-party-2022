@@ -5,6 +5,9 @@ func enter():
 	player.attack_limit_timer.start()
 
 func process(delta):
+	if player.is_dead:
+		return State.Dead
+	
 	return State.Idle
 
 func physics_process(delta):

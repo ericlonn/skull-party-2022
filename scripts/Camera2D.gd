@@ -15,6 +15,7 @@ func _ready():
 	Events.connect("skull_collected", self, "on_skull_collected")
 	Events.connect("chest_spawned", self, "on_chest_spawned")
 	Events.connect("chest_shattered", self, "on_chest_shattered")
+	Events.connect("player_died", self, "on_Player_died")
 
 func _process(delta):
 	if !targets:
@@ -49,14 +50,17 @@ func remove_target(t):
 		targets.erase(t)
 
 
-func on_skull_spawned(skull):
-	add_target(skull)
+func on_Player_died(player, color, death_position):
+	remove_target(player)
 
-func on_skull_collected(skull):
-	remove_target(skull)
-
-func on_chest_spawned(chest):
-	add_target(chest)
-
-func on_chest_shattered(chest):
-	remove_target(chest)
+#func on_skull_spawned(skull):
+#	add_target(skull)
+#
+#func on_skull_collected(skull):
+#	remove_target(skull)
+#
+#func on_chest_spawned(chest):
+#	add_target(chest)
+#
+#func on_chest_shattered(chest):
+#	remove_target(chest)

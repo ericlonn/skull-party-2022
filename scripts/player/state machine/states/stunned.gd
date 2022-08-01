@@ -9,6 +9,8 @@ var initial_bounce_vector = Vector2(400.0, -600.0)
 var current_bounce_vector = Vector2.ZERO
 var bounce_degradation = 125
 
+var has_left_ground = false
+
 func enter():
 	player.stun_triggered = false
 	player.animator.play("stunned")
@@ -18,10 +20,15 @@ func enter():
 	
 	current_bounce_vector = initial_bounce_vector
 	
+	has_left_ground = false
+	
 	#collide with chests
 	player.set_collision_mask_bit(3, true)
 
 func process(delta):
+	if player.is_dead:
+		return State.Dead
+	
 	if stun_over:
 		return State.Idle
 
@@ -29,6 +36,10 @@ func process(delta):
 
 
 func physics_process(delta):
+	if not player.is_on_floor():
+		#prevent bounce being called on first frame
+		has_left_ground = true
+	
 	var wall_bonk_triggered = false
 	
 	if stun_movement_x == 0:
@@ -42,7 +53,7 @@ func physics_process(delta):
 			wall_bonk_triggered = true
 
 		if wall_bonk_triggered == false:
-			if collision.collider.get_collision_layer() == 2 and collision.normal.y < 0:
+			if collision.collider.get_collision_layer() == 2 and collision.normal.y < 0 and has_left_ground:
 				bounce()
 			elif collision.collider.get_collision_layer() != 2:
 				bounce()
@@ -53,8 +64,6 @@ func physics_process(delta):
 #	player.apply_x_movement()
 	player.orient_character(stun_movement_x)
 	player.apply_velocity()
-	
-	print(str(player.velocity))
 	
 	return State.Null
 
