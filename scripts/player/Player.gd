@@ -289,7 +289,7 @@ func set_id(value):
 
 
 func power_up():
-	var weapon_scene = load("res://weapons/fireball/FireBallWeapon.tscn")
+	var weapon_scene = load("res://weapons/grenade/GrenadeWeapon.tscn")
 	powerup_visuals.enabled = true
 	weapon_slot.add_weapon(weapon_scene.instance())
 	is_powered_up = true

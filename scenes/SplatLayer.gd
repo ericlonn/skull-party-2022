@@ -7,7 +7,6 @@ onready var mask_tilemap: TileMap = $MaskTileMap
 onready var _canvas: Sprite = $Canvas
 onready var _bg_canvas: Sprite = $BGCanvas
 onready var _mask = $Mask
-onready var test_sprite: Sprite = $HeartFull
 
 var _tile_map: TileMap
 
@@ -80,8 +79,3 @@ func draw_spot(spot: Texture, pos: Vector2) -> void:
 #		size.x, size.y, 
 #		dst.x, dst.y,
 #		0, 0)
-
-
-func _input(event):
-	if event is InputEventMouseButton:
-		draw_spot(test_sprite.texture, get_global_mouse_position())

@@ -195,8 +195,8 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id=51]
 resource_local_to_scene = true
 shader = SubResource( 50 )
-shader_param/max_line_width = 20.0
-shader_param/min_line_width = 15.0
+shader_param/max_line_width = 5.0
+shader_param/min_line_width = 4.0
 shader_param/freq = 5.0
 shader_param/block_size = 5.0
 shader_param/outline_colour = Plane( 0, 0, 0, 1 )
@@ -1005,7 +1005,7 @@ stretch_amount = 0.1
 script = ExtResource( 35 )
 
 [node name="BulletSpawnPoint" type="Node2D" parent="Orientation/WeaponSlot"]
-position = Vector2( 24.5833, -31.2575 )
+position = Vector2( 24, -32 )
 
 [node name="SlideParticles" type="Particles2D" parent="Orientation"]
 material = SubResource( 43 )
