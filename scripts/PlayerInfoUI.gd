@@ -1,6 +1,6 @@
 extends Panel
 
-var assigned_player setget set_assigned_player
+var assigned_player: Player setget set_assigned_player
 
 onready var heart_tex1 = $VBoxContainer/PlayerHealthUI/Heart1
 onready var heart_tex2 = $VBoxContainer/PlayerHealthUI/Heart2
@@ -98,6 +98,9 @@ func set_assigned_player(value):
 	assigned_player = value
 	var player_color = Rules.get_player_color(assigned_player.id)
 	get_stylebox("panel", "").border_color = player_color
+	
+	_on_Player_health_updated(assigned_player, assigned_player.health)
+	_on_Player_skull_count_updated(assigned_player, assigned_player.powerskulls)
 	
 	visible = true
 

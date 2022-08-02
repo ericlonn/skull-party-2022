@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://scripts/player/state machine/states/attack.gd" type="Script" id=1]
 [ext_resource path="res://scripts/player/Player.gd" type="Script" id=2]
@@ -38,6 +38,7 @@
 [ext_resource path="res://scripts/player/state machine/states/fire_weapon.gd" type="Script" id=36]
 [ext_resource path="res://sprites/player/skull_death_n.png" type="Texture" id=37]
 [ext_resource path="res://scripts/player/state machine/states/dead.gd" type="Script" id=38]
+[ext_resource path="res://sprites/particles/scorch_01 (Custom).png" type="Texture" id=39]
 
 [sub_resource type="RectangleShape2D" id=30]
 resource_local_to_scene = true
@@ -1027,6 +1028,65 @@ tracks/2/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1.9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "spawn_death_particles"
+} ]
+}
+
+[sub_resource type="Animation" id=58]
+resource_name = "reset"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../../Orientation/Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="ShaderMaterial" id=54]
+shader = SubResource( 42 )
+
+[sub_resource type="Curve" id=55]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=56]
+curve = SubResource( 55 )
+
+[sub_resource type="ParticlesMaterial" id=57]
+resource_local_to_scene = true
+lifetime_randomness = 0.51
+emission_shape = 1
+emission_sphere_radius = 40.03
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 1500.0
+initial_velocity_random = 0.3
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 63.12
+damping_random = 1.0
+angle = 360.0
+angle_random = 1.0
+scale = 3.0
+scale_random = 0.36
+scale_curve = SubResource( 56 )
 
 [sub_resource type="ShaderMaterial" id=44]
 shader = SubResource( 42 )
@@ -1168,6 +1228,7 @@ vframes = 5
 region_rect = Rect2( 0, 0, 100, 100 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Orientation/Sprite"]
+autoplay = "RESET"
 anims/RESET = SubResource( 14 )
 anims/death = SubResource( 52 )
 anims/fall = SubResource( 15 )
@@ -1241,6 +1302,17 @@ script = ExtResource( 38 )
 
 [node name="DeathAnimator" type="AnimationPlayer" parent="State_Manager/dead"]
 anims/death = SubResource( 53 )
+anims/reset = SubResource( 58 )
+
+[node name="DeathParticles" type="Particles2D" parent="State_Manager/dead"]
+material = SubResource( 54 )
+emitting = false
+amount = 20
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 57 )
+texture = ExtResource( 39 )
 
 [node name="DebugLabel" type="Label" parent="."]
 margin_left = -100.0

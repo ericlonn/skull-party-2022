@@ -79,7 +79,7 @@ var id: int setget set_id
 var powerskulls = []
 var chance_to_lose_skull = 0.5
 
-var health: int = 3 setget set_health
+var health: int = 1 setget set_health
 var is_dead = false
 
 var is_powered_up = false
