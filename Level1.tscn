@@ -57,9 +57,6 @@ border_color = Color( 1, 0, 0, 1 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_vertical_guides_": [ 2560.0 ]
-}
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 7 )
@@ -91,33 +88,25 @@ alignment = 1
 
 [node name="PlayerInfo1" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
 margin_left = 120.0
-margin_top = 0.0
 margin_right = 300.0
-margin_bottom = 140.0
 rect_clip_content = true
 custom_styles/panel = SubResource( 1 )
 
 [node name="PlayerInfo2" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
 margin_left = 304.0
-margin_top = 0.0
 margin_right = 484.0
-margin_bottom = 140.0
 rect_clip_content = true
 custom_styles/panel = SubResource( 2 )
 
 [node name="PlayerInfo3" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
 margin_left = 488.0
-margin_top = 0.0
 margin_right = 668.0
-margin_bottom = 140.0
 rect_clip_content = true
 custom_styles/panel = SubResource( 3 )
 
 [node name="PlayerInfo4" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
 margin_left = 672.0
-margin_top = 0.0
 margin_right = 852.0
-margin_bottom = 140.0
 rect_clip_content = true
 custom_styles/panel = SubResource( 4 )
 
@@ -242,14 +231,12 @@ __meta__ = {
 }
 move_speed = 0.05
 zoom_speed = 0.05
+min_zoom = 0.75
 max_zoom = 1000
 margin = Vector2( 250, 250 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1679, 980 )
-
-[node name="Player2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 2129, 980 )
 
 [node name="PowerSkull" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1124, 932 )
@@ -259,5 +246,8 @@ position = Vector2( 1126, 878 )
 
 [node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1127, 818 )
+
+[node name="Player2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 2156, 975 )
 
 [connection signal="timeout" from="SkullSpawner/SkullSpawnTimer" to="SkullSpawner" method="_on_SkullSpawnTimer_timeout"]

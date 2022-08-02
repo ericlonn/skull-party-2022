@@ -9,7 +9,7 @@ signal player_died(player, color, death_positon)
 signal skull_spawned(skull)
 signal skull_collected(skull)
 
-signal player_id_assigned(player, id)
+signal player_id_assigned(player)
 
 signal chest_spawned(chest)
 signal chest_shattered(chest)

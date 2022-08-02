@@ -1,6 +1,6 @@
 extends Panel
 
-var assigned_player_id setget set_assigned_player_id
+var assigned_player setget set_assigned_player
 
 onready var heart_tex1 = $VBoxContainer/PlayerHealthUI/Heart1
 onready var heart_tex2 = $VBoxContainer/PlayerHealthUI/Heart2
@@ -22,6 +22,9 @@ var collected_anim_time = 0.5
 
 onready var tween: Tween = $Tween
 
+var dead_player_ui_color = Color(.5,.5,.5,.5)
+var death_fade_time = .5
+
 func _ready():
 	visible = false
 	
@@ -30,6 +33,7 @@ func _ready():
 	
 	Events.connect("skull_count_updated", self, "_on_Player_skull_count_updated")
 	Events.connect("player_health_updated", self, "_on_Player_health_updated")
+	Events.connect("player_died", self, "on_Player_died")
 
 
 func set_skull_count():
@@ -37,7 +41,7 @@ func set_skull_count():
 
 
 func _on_Player_skull_count_updated(player: Player, skulls):
-	if player.id != assigned_player_id:
+	if player != assigned_player:
 		return
 	
 	var previous_skull_count = 0
@@ -64,7 +68,7 @@ func _on_Player_skull_count_updated(player: Player, skulls):
 
 
 func _on_Player_health_updated(player, new_value):
-	if player.id != assigned_player_id:
+	if player != assigned_player:
 		return
 	
 	var previous_heart_count = 0
@@ -90,9 +94,16 @@ func _on_Player_health_updated(player, new_value):
 			tween.start()
 
 
-func set_assigned_player_id(value):
-	assigned_player_id = value
-	var player_color = Rules.get_player_color(assigned_player_id)
+func set_assigned_player(value):
+	assigned_player = value
+	var player_color = Rules.get_player_color(assigned_player.id)
 	get_stylebox("panel", "").border_color = player_color
 	
 	visible = true
+
+
+func on_Player_died(player, color, death_location):
+	if player == assigned_player:
+		tween.reset_all()
+		tween.interpolate_property(self, "modulate", modulate, dead_player_ui_color, death_fade_time, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+		tween.start()

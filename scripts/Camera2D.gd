@@ -8,6 +8,8 @@ export var margin = Vector2(400, 200)  # include some buffer area around targets
 
 var targets = []  # Array of targets to be tracked.
 
+var placeholde_lifetime = 1
+
 onready var screen_size = get_viewport_rect().size
 
 func _ready():
@@ -52,15 +54,23 @@ func remove_target(t):
 
 func on_Player_died(player, color, death_position):
 	remove_target(player)
+	add_delay_placeholder(death_position)
 
-#func on_skull_spawned(skull):
-#	add_target(skull)
-#
-#func on_skull_collected(skull):
-#	remove_target(skull)
-#
-#func on_chest_spawned(chest):
-#	add_target(chest)
-#
-#func on_chest_shattered(chest):
-#	remove_target(chest)
+
+func add_delay_placeholder(pos: Vector2):
+	var placeholder_pos := Node2D.new()
+	placeholder_pos.global_position = pos
+	add_child(placeholder_pos)
+	
+	var life_timer := Timer.new()
+	life_timer.wait_time = placeholde_lifetime
+	life_timer.one_shot = true
+	placeholder_pos.add_child(life_timer)
+	
+	add_target(placeholder_pos)
+	life_timer.start()
+	
+	yield(life_timer,"timeout")
+	
+	remove_target(placeholder_pos)
+	placeholder_pos.queue_free()

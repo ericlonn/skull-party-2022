@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://weapons/bigpunch/BigPunchWeapon.gd" type="Script" id=1]
+[ext_resource path="res://weapons/bigpunch/BigPunchAmmo.tscn" type="PackedScene" id=2]
+[ext_resource path="res://weapons/bigpunch/BigPunch_state.gd" type="Script" id=3]
+[ext_resource path="res://sprites/weapons/bigpunch_n.png" type="Texture" id=4]
+[ext_resource path="res://sprites/weapons/bigpunch.png" type="Texture" id=5]
+[ext_resource path="res://shaders/outline.shader" type="Shader" id=6]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 6 )
+shader_param/max_line_width = 10.0
+shader_param/min_line_width = 5.0
+shader_param/freq = 1.0
+shader_param/block_size = 20.0
+shader_param/outline_colour = Plane( 0, 0, 0, 1 )
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 145.0
+height = 120.0
+
+[node name="BigPunchWeapon" type="Node2D"]
+script = ExtResource( 1 )
+ammo_scene = ExtResource( 2 )
+
+[node name="BigPunch_state" type="Node" parent="."]
+script = ExtResource( 3 )
+
+[node name="PunchTimer" type="Timer" parent="BigPunch_state"]
+one_shot = true
+
+[node name="BigPunch" type="Node2D" parent="."]
+
+[node name="BigPunchSprite" type="Sprite" parent="BigPunch"]
+material = SubResource( 2 )
+position = Vector2( 7.2, -4.8 )
+scale = Vector2( 0.2, 0.2 )
+z_index = 1
+texture = ExtResource( 5 )
+normal_map = ExtResource( 4 )
+offset = Vector2( 200, 0 )
+
+[node name="Area2D" type="Area2D" parent="BigPunch"]
+position = Vector2( 7.2, -4.8 )
+scale = Vector2( 0.2, 0.2 )
+collision_layer = 2048
+collision_mask = 11
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BigPunch/Area2D"]
+position = Vector2( 205, 0 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="BigPunch/Area2D" to="." method="_on_Area2D_body_entered"]

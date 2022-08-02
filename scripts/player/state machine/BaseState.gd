@@ -14,7 +14,8 @@ enum State {
 	Wall_Slide,
 	Punch,
 	Fire_Weapon,
-	Dead
+	Dead,
+	Weapon
 }
 
 export (String) var animation_name

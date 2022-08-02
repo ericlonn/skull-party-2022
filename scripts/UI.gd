@@ -12,6 +12,6 @@ func _ready():
 
 func on_Player_id_assigned(player, id):
 	for panel in player_info_panels:
-		if panel.assigned_player_id == null:
-			panel.assigned_player_id = id
+		if panel.assigned_player == null:
+			panel.assigned_player = player
 			break

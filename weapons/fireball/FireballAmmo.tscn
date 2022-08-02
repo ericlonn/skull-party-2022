@@ -3,7 +3,7 @@
 [ext_resource path="res://weapons/fireball/FireballAmmo.gd" type="Script" id=1]
 [ext_resource path="res://sprites/particles/fire_01 (Custom).png" type="Texture" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=46]
 extents = Vector2( 20, 8.5 )
 
 [sub_resource type="VisualShaderNodeInput" id=39]
@@ -87,7 +87,7 @@ scale = 0.65
 scale_random = 0.73
 scale_curve = SubResource( 6 )
 
-[sub_resource type="RectangleShape2D" id=46]
+[sub_resource type="RectangleShape2D" id=47]
 extents = Vector2( 20, 5 )
 
 [node name="FireballAmmo" type="RigidBody2D"]
@@ -104,7 +104,7 @@ collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2( 20, 0.5 )
-shape = SubResource( 1 )
+shape = SubResource( 46 )
 
 [node name="DestroyedParticles" type="Particles2D" parent="."]
 material = SubResource( 43 )
@@ -118,6 +118,6 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 20, 0 )
-shape = SubResource( 46 )
+shape = SubResource( 47 )
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

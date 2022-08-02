@@ -7,5 +7,5 @@ func fire():
 	for i in pellet_count:
 		.fire()
 	
-	var knockback = knockback_x_force * parent_player.orientation.scale.x * -1
-	parent_player.velocity.x += knockback
+	var knockback = knockback_x_force * player.orientation.scale.x * -1
+	player.velocity.x += knockback

@@ -19,8 +19,8 @@ func add_weapon(weapon: SuperWeapon):
 		return
 		
 	weapon.bullet_spawn_point = bullet_spawn_point
+	weapon.player = parent_player
 	add_child(weapon)
-	weapon.parent_player = parent_player
 	
 	super_weapon = weapon
 

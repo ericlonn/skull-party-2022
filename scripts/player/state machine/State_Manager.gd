@@ -12,7 +12,8 @@ onready var states = {
 	BaseState.State.Wall_Slide: $wall_slide,
 	BaseState.State.Punch: $punch,
 	BaseState.State.Fire_Weapon: $fire_weapon,
-	BaseState.State.Dead: $dead
+	BaseState.State.Dead: $dead,
+	BaseState.State.Weapon: null
 }
 
 var current_state: BaseState
@@ -20,6 +21,7 @@ var current_state: BaseState
 func change_state(new_state: int) -> void:
 	if current_state:
 		current_state.exit()
+	
 
 	current_state = states[new_state]
 	current_state.enter()

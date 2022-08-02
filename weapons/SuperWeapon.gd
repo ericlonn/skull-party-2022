@@ -4,13 +4,21 @@ class_name SuperWeapon
 export(PackedScene) var ammo_scene
 
 var bullet_spawn_point: Node2D
-var parent_player: Player
+var player: Player
+var used_state: BaseState
+
+func _ready():
+	for child in get_children():
+		if child is BaseState:
+			used_state = child
+
 
 func fire():
+	print("fired")
 	var ammo_instance: Ammo = ammo_scene.instance()
 	ammo_instance.global_position = bullet_spawn_point.global_position
-	ammo_instance.firing_direction = sign(parent_player.orientation.scale.x)
-	ammo_instance.player = parent_player
-	ammo_instance.color = Rules.get_player_color(parent_player.id)
+	ammo_instance.firing_direction = sign(player.orientation.scale.x)
+	ammo_instance.player = player
+	ammo_instance.color = Rules.get_player_color(player.id)
 	
 	add_child(ammo_instance)

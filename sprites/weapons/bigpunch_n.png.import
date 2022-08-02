@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/splat1.png-1bf3d2a31293e79e36b95b7044b9d5dc.stex"
+path="res://.import/bigpunch_n.png-98177a360574a00e44664edfae3ddac5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/explosions/splat1.png"
-dest_files=[ "res://.import/splat1.png-1bf3d2a31293e79e36b95b7044b9d5dc.stex" ]
+source_file="res://sprites/weapons/bigpunch_n.png"
+dest_files=[ "res://.import/bigpunch_n.png-98177a360574a00e44664edfae3ddac5.stex" ]
 
 [params]
 

@@ -1,10 +1,21 @@
 extends BaseState
 
+var weapon_state: BaseState
+
 func enter():
-	player.weapon_slot.fire_weapon()
+	if player.weapon_slot.super_weapon.used_state != null:
+		weapon_state = player.weapon_slot.super_weapon.used_state
+	
+	if weapon_state != null:
+		get_parent().states[BaseState.State.Weapon] = weapon_state
+	else:
+		player.weapon_slot.fire_weapon()
 	player.attack_limit_timer.start()
 
 func process(delta):
+	if weapon_state != null:
+		return State.Weapon
+	
 	if player.is_dead:
 		return State.Dead
 	
