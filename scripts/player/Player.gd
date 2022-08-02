@@ -5,7 +5,7 @@ onready var debug_label: Label = $DebugLabel
 onready var sprite: Sprite = $Orientation/Sprite
 onready var sprite_echo_generator: Node2D = $SpriteEchoGenerator
 onready var animator: AnimationPlayer = $Orientation/Sprite/AnimationPlayer
-onready var state_manager = $State_Manager
+onready var state_manager := $State_Manager
 
 onready var jump_buffer: Timer = $JumpBuffer
 onready var stun_timer: Timer = $StunTimer
@@ -275,8 +275,7 @@ func lose_powerskull():
 
 
 func set_health(value):
-	print(state_manager.current_state.name)
-	if state_manager.current_state.name == "stunned":
+	if stun_triggered:
 		return
 	
 	health = clamp(value, 0, 3)
@@ -297,7 +296,7 @@ func set_id(value):
 
 
 func power_up():
-	var weapon_scene = load("res://weapons/shotgun/ShotgunWeapon.tscn")
+	var weapon_scene = load("res://weapons/fireball/FireBallWeapon.tscn")
 	powerup_visuals.enabled = true
 	weapon_slot.add_weapon(weapon_scene.instance())
 	is_powered_up = true

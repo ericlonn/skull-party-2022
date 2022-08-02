@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://mask_tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/SplatLayer.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Splat.tscn" type="PackedScene" id=3]
 
 [sub_resource type="ImageTexture" id=1]
 size = Vector2( 2, 2 )
@@ -11,6 +12,7 @@ size = Vector2( 2, 2 )
 
 [node name="SplatLayer" type="Node2D"]
 script = ExtResource( 2 )
+splat_scene = ExtResource( 3 )
 
 [node name="MaskTileMap" type="TileMap" parent="."]
 visible = false
@@ -29,7 +31,6 @@ texture = SubResource( 2 )
 centered = false
 
 [node name="BGCanvas" type="Sprite" parent="."]
-visible = false
 light_mask = 0
 z_index = -1
 texture = SubResource( 2 )

@@ -45,20 +45,21 @@ func physics_process(delta):
 	if stun_movement_x == 0:
 		stun_movement_x = ( rng.randi_range(0,1) * 2 ) - 1
 	
-	for i in player.get_slide_count():
-		var collision = player.get_slide_collision(i)
-		if collision.collider.get_collision_layer() == 2 and player.is_on_wall() and wall_bonk_triggered == false:
-			stun_movement_x *= -1
-			bounce()
-			wall_bonk_triggered = true
+	if player.get_slide_count() > 0:
+		for i in player.get_slide_count():
+			var collision = player.get_slide_collision(i)
+			if collision.collider.get_collision_layer() == 2 and player.is_on_wall() and wall_bonk_triggered == false:
+				stun_movement_x *= -1
+				bounce()
+				wall_bonk_triggered = true
 
-		if wall_bonk_triggered == false:
-			if collision.collider.get_collision_layer() == 2 and collision.normal.y < 0 and has_left_ground:
-				bounce()
-			elif collision.collider.get_collision_layer() != 2:
-				bounce()
-				if sign(collision.collider.position.x - player.position.x) == stun_movement_x:
-					stun_movement_x *= -1
+			if wall_bonk_triggered == false:
+				if collision.collider.get_collision_layer() == 2 and collision.normal.y < 0 and has_left_ground:
+					bounce()
+				elif collision.collider.get_collision_layer() != 2:
+					bounce()
+					if sign(collision.collider.position.x - player.position.x) == stun_movement_x:
+						stun_movement_x *= -1
 	
 	player.apply_gravity()
 #	player.apply_x_movement()

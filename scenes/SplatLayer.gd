@@ -2,7 +2,7 @@ class_name SplatLayer extends Node2D
 
 export(int) var padding = 32
 export(Array, Texture) var splat_textures
-
+export(PackedScene) var splat_scene
 
 onready var mask_tilemap: TileMap = $MaskTileMap
 
@@ -10,9 +10,14 @@ onready var _canvas: Sprite = $Canvas
 onready var _bg_canvas: Sprite = $BGCanvas
 onready var _mask = $Mask
 
+onready var rng := RandomNumberGenerator.new()
+
 var _tile_map: TileMap
 
+
 func _ready():
+	rng.randomize()
+	
 	Events.connect("player_died", self, "on_Player_died")
 	
 	_tile_map = get_parent()
@@ -87,5 +92,38 @@ func draw_spot(spot: Texture, pos: Vector2) -> void:
 
 func on_Player_died(player, color, death_location):
 	var splat_texture_index = RNGTools.randi_range(0, splat_textures.size() - 1)
+	var splat_texture = splat_textures[splat_texture_index]
 	
-	draw_spot(splat_textures[splat_texture_index], death_location)
+	var new_splat = splat_scene.instance()
+	add_child(new_splat)
+	
+	new_splat.texture = splat_texture
+	new_splat.color = color
+	new_splat.rotation = rng.randf_range(0,360)
+	new_splat.global_position = death_location
+	
+	
+#	var splat_texture_index = RNGTools.randi_range(0, splat_textures.size() - 1)
+#	var splat_texture: Texture = splat_textures[splat_texture_index]
+#	temp_splat_sprite.texture = splat_textures[splat_texture_index]
+#	viewport.size = splat_texture.get_size()
+#
+#	temp_splat_sprite.modulate = color
+#	temp_splat_sprite.rotation_degrees = rng.randf_range(0, 360)
+#
+#	var splat_draw_image: Image = viewport.get_texture().get_data()
+#	var splat_draw_texture: Texture = ImageTexture.new()
+#	splat_draw_texture.create_from_image(splat_draw_image)
+#
+#	draw_spot(splat_draw_texture, death_location)
+#	temp_splat_sprite.texture = null
+#	var splat_image := Image.new()
+#	splat_image.load(splat_textures[splat_texture_index].resource_path)
+#
+#	splat_image.fill(color)
+#
+#	var splat_tex := ImageTexture.new()
+#	splat_tex.create_from_image(splat_image)
+#
+#	draw_spot(splat_tex, death_location)
+	

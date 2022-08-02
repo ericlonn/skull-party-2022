@@ -91,6 +91,7 @@ scale_curve = SubResource( 6 )
 extents = Vector2( 20, 5 )
 
 [node name="FireballAmmo" type="RigidBody2D"]
+collision_layer = 16
 mode = 3
 script = ExtResource( 1 )
 
