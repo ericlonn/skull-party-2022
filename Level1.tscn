@@ -242,10 +242,10 @@ position = Vector2( 1679, 980 )
 position = Vector2( 1124, 932 )
 
 [node name="PowerSkull2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1126, 878 )
+position = Vector2( 1221, 899 )
 
 [node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1127, 818 )
+position = Vector2( 1353, 894 )
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 2156, 975 )

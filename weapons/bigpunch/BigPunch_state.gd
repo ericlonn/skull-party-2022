@@ -53,4 +53,5 @@ func ledge_punch_correction():
 
 
 func exit():
+	player.sprite_echo_generator.enabled = false
 	super_weapon.deactivate()
