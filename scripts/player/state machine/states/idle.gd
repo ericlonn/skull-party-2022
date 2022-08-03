@@ -2,7 +2,7 @@ extends BaseState
 
 
 func enter():
-	player.animator.play("idle")
+	player.play_animation("idle")
 
 func process(delta: float):
 	if player.is_dead:

@@ -9,7 +9,7 @@ func enter():
 		player.apply_jump(1)
 	else:
 		player.apply_jump()
-	player.animator.play("jump")
+	player.play_animation("jump")
 	Fmod.play_one_shot("event:/Player/Jump", self)
 
 func process(delta: float):

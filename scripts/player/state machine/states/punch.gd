@@ -21,7 +21,7 @@ func enter():
 	player.punch.monitoring = true
 	player.punch.monitorable = true
 	player.punch.visible = true
-	player.animator.play("punch")
+	player.play_animation("punch")
 	
 	player.sprite_echo_generator.enabled = true
 
@@ -34,6 +34,7 @@ func process(delta: float):
 	
 	if attack_connected:
 		Fmod.play_one_shot("event:/Player/Punch Landing", self)
+		player.hit_stop()
 		attack_connected = false
 		return State.Run
 	

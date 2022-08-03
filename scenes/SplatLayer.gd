@@ -6,8 +6,7 @@ export(PackedScene) var splat_scene
 
 onready var mask_tilemap: TileMap = $MaskTileMap
 
-onready var _canvas: Sprite = $Canvas
-onready var _bg_canvas: Sprite = $BGCanvas
+onready var _bg_mask: Light2D = $BGMask
 onready var _mask = $Mask
 
 onready var rng := RandomNumberGenerator.new()
@@ -33,15 +32,13 @@ func _ready():
 	
 	var itex := ImageTexture.new()
 	var c_img := _create_image(tile_map_size)
-	itex.create_from_image(c_img)
-	_canvas.texture = itex
-	_canvas.position = tile_map_rect.position
-	_bg_canvas.texture = itex
-	_bg_canvas.position = tile_map_rect.position
+#	itex.create_from_image(c_img)
+	_bg_mask.texture = itex
+	_bg_mask.position = tile_map_rect.position + itex.get_size() / 2
 
 	var img_tex = _copy_tile_map_to_texture(mask_tilemap)
 	_mask.texture = img_tex
-	_mask.position = _canvas.position + img_tex.get_size() / 2 
+	_mask.position = mask_tilemap.position + img_tex.get_size() / 2 
 
 
 func _create_image(size: Vector2) -> Image:
@@ -70,24 +67,6 @@ func _copy_tile_map_to_texture(tile_map: TileMap) -> ImageTexture:
 	itex.create_from_image(img)
 	
 	return itex
-
-
-func draw_spot(spot: Texture, pos: Vector2) -> void:
-	print("DRAW")
-	var targets = [_canvas.texture, _bg_canvas.texture]
-	var size = spot.get_size()
-	var dst = pos - size/2
-	
-	for target in targets:
-		var target_img = target.get_data()
-		target_img.blend_rect(spot.get_data(), Rect2(Vector2.ZERO, size), dst)
-		VisualServer.texture_set_data(target.get_rid(), target_img)
-#	VisualServer.texture_set_data_partial(
-#		target.get_rid(), spot.get_data(), 
-#		0, 0,
-#		size.x, size.y, 
-#		dst.x, dst.y,
-#		0, 0)
 
 
 func on_Player_died(player, color, death_location):

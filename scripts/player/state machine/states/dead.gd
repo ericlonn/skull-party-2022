@@ -4,7 +4,7 @@ onready var death_animator := $DeathAnimator
 onready var death_particles := $DeathParticles
 
 func enter():
-	player.animator.play("death")
+	player.play_animation("death")
 	death_animator.play("death")
 	
 

@@ -19,7 +19,7 @@ func enter():
 
 	punch_timer.start()
 	
-	player.animator.play("punch")
+	player.play_animation("punch")
 	player.sprite_echo_generator.enabled = true
 	
 	super_weapon.activate()

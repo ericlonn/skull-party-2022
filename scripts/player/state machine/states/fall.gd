@@ -3,7 +3,7 @@ extends BaseState
 
 
 func enter():
-	player.animator.play("fall")
+	player.play_animation("fall")
 	var animation_length = player.animator.current_animation_length
 	var rnd = RandomNumberGenerator.new()
 	rnd.randomize()

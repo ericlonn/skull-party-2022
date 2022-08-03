@@ -13,8 +13,9 @@ var has_left_ground = false
 
 func enter():
 	player.stun_triggered = false
-	player.animator.play("stunned")
+	player.play_animation("stunned")
 	player.stun_timer.start()
+	player.hit_stop()
 	player.sprite.modulate = Color(1,1,1,0.5)
 	stun_movement_x = sign(player.velocity.x)
 	

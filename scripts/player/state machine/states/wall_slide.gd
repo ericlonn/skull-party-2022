@@ -5,7 +5,7 @@ var min_y_velocity_on_entry = -300.0
 var max_y_velocity_on_entry = 150.0
 
 func enter():
-	player.animator.play("wall_slide")
+	player.play_animation("wall_slide")
 	
 	if player.is_wall_on_right and player.move_direction == 1:
 		wall_slide_x_dir = 1

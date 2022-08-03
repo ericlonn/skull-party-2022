@@ -3,8 +3,8 @@ extends Node2D
 onready var bg_splat := $BGSplat
 onready var fg_splat := $FGSplat
 
-var bg_alpha = 0.7
-var fg_alpha = 0.6
+var bg_alpha = 0.4
+var fg_alpha = 0.9
 
 var texture setget set_texture
 var color setget set_color

@@ -7,11 +7,13 @@ onready var sprite_echo_generator: Node2D = $SpriteEchoGenerator
 onready var animator: AnimationPlayer = $Orientation/Sprite/AnimationPlayer
 onready var state_manager := $State_Manager
 
-onready var jump_buffer: Timer = $JumpBuffer
-onready var stun_timer: Timer = $StunTimer
-onready var coyote_timer: Timer = $CoyoteTimer
-onready var wall_jump_coyote_timer: Timer = $WallJumpCoyoteTimer
-onready var attack_limit_timer: Timer = $AttackLimitTimer
+onready var jump_buffer: Timer = $Timers/JumpBuffer
+onready var stun_timer: Timer = $Timers/StunTimer
+onready var coyote_timer: Timer = $Timers/CoyoteTimer
+onready var wall_jump_coyote_timer: Timer = $Timers/WallJumpCoyoteTimer
+onready var attack_limit_timer: Timer = $Timers/AttackLimitTimer
+onready var hit_stop_timer: Timer = $Timers/HitStopTimer
+
 
 onready var orientation: Node2D = $Orientation
 onready var punch: Area2D = $Orientation/Punch
@@ -79,10 +81,11 @@ var id: int setget set_id
 var powerskulls = []
 var chance_to_lose_skull = 0.5
 
-var health: int = 1 setget set_health
+var health: int = 3 setget set_health
 var is_dead = false
 
 var is_powered_up = false
+var is_in_hit_stop = false
 
 
 func _ready():
@@ -298,7 +301,31 @@ func set_id(value):
 
 
 func power_up():
-	var weapon_scene = load("res://weapons/bigpunch/BigPunchWeapon.tscn")
+	var weapon_scene = load("res://weapons/fireball/FireBallWeapon.tscn")
 	powerup_visuals.enabled = true
 	weapon_slot.add_weapon(weapon_scene.instance())
 	is_powered_up = true
+
+
+func hit_stop(length := .15):
+	set_process(false)
+	set_physics_process(false)
+	is_in_hit_stop = true
+	
+	sprite.material.set_shader_param("hit_stop", true)
+	
+	hit_stop_timer.wait_time = length
+	hit_stop_timer.start()
+	yield(hit_stop_timer,"timeout")
+	
+	sprite.material.set_shader_param("hit_stop", false)
+	set_process(true)
+	set_physics_process(true)
+	is_in_hit_stop = false
+	
+
+func play_animation(animation_name: String):
+	if is_in_hit_stop:
+		yield(hit_stop_timer, "timeout")
+	
+	animator.play(animation_name)

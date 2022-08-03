@@ -1,7 +1,7 @@
 extends BaseState
 
 func enter():
-	player.animator.play("run")
+	player.play_animation("run")
 
 func process(delta: float):
 	if player.is_dead:
@@ -38,10 +38,10 @@ func physics_process(delta: float):
 	
 func choose_animation():
 	if player.move_direction != sign(player.velocity.x) and abs(player.velocity.x) > 0.0:
-		player.animator.play("slide")
+		player.play_animation("slide")
 		player.slide_particles.emitting = true
 	else:
-		player.animator.play("run")
+		player.play_animation("run")
 		player.slide_particles.emitting = false
 
 func exit():

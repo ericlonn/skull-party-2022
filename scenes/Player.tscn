@@ -148,6 +148,7 @@ uniform float min_line_width = 5.0;
 uniform float freq = 1.0;
 uniform float block_size = 20.0;
 uniform vec4 outline_colour = vec4(0,0,0,1);
+uniform bool hit_stop = false;
 
 const float pi = 3.1415;
 const int ang_res = 16;
@@ -195,7 +196,12 @@ void fragment() {
 		COLOR = outline_colour;
 	}
 	else {
+		if (hit_stop) {
+			COLOR = texture(TEXTURE, UV) + vec4(.3,.3,.3,0);
+		}
+		else {
 		COLOR = texture(TEXTURE, UV);
+		}
 	}
 }"
 
@@ -207,6 +213,7 @@ shader_param/min_line_width = 10.0
 shader_param/freq = 5.0
 shader_param/block_size = 5.0
 shader_param/outline_colour = Plane( 0, 0, 0, 1 )
+shader_param/hit_stop = false
 
 [sub_resource type="Animation" id=14]
 length = 0.001
@@ -1245,25 +1252,30 @@ anims/wall_slide = SubResource( 27 )
 
 [node name="SquashStretch" type="Tween" parent="Orientation"]
 
-[node name="JumpBuffer" type="Timer" parent="."]
+[node name="Timers" type="Node" parent="."]
+
+[node name="JumpBuffer" type="Timer" parent="Timers"]
 wait_time = 0.1
 one_shot = true
 
-[node name="StunTimer" type="Timer" parent="."]
+[node name="StunTimer" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="CoyoteTimer" type="Timer" parent="."]
+[node name="CoyoteTimer" type="Timer" parent="Timers"]
 process_mode = 0
 wait_time = 0.075
 one_shot = true
 
-[node name="WallJumpCoyoteTimer" type="Timer" parent="."]
+[node name="WallJumpCoyoteTimer" type="Timer" parent="Timers"]
 wait_time = 0.2
 one_shot = true
 script = ExtResource( 24 )
 
-[node name="AttackLimitTimer" type="Timer" parent="."]
+[node name="AttackLimitTimer" type="Timer" parent="Timers"]
 wait_time = 0.3
+one_shot = true
+
+[node name="HitStopTimer" type="Timer" parent="Timers"]
 one_shot = true
 
 [node name="State_Manager" type="Node" parent="."]
@@ -1348,4 +1360,4 @@ process_material = SubResource( 38 )
 texture = ExtResource( 34 )
 
 [connection signal="body_entered" from="Orientation/Punch" to="State_Manager/punch" method="_on_Punch_body_entered"]
-[connection signal="timeout" from="StunTimer" to="State_Manager/stunned" method="_on_StunTimer_timeout"]
+[connection signal="timeout" from="Timers/StunTimer" to="State_Manager/stunned" method="_on_StunTimer_timeout"]
