@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{d7bad37b-94bb-4707-bf16-6b5a164b91ad}">
+		<property name="assetPath">
+			<value>Powerskull Collected.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.93600000000000005</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{592112ea-3b1b-4381-87cd-53b0ce001267}</destination>
+		</relationship>
+	</object>
+</objects>

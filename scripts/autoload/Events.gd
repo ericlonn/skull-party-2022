@@ -4,6 +4,7 @@ signal skull_lost(player, skull_type)
 signal skull_count_updated(player, skulls)
 
 signal player_health_updated(player, new_value)
+signal player_death_begun(player)
 signal player_died(player, color, death_positon)
 
 signal skull_spawned(skull)

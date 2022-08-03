@@ -33,6 +33,7 @@ func process(delta: float):
 		return State.Idle
 	
 	if attack_connected:
+		Fmod.play_one_shot("event:/Player/Punch Landing", self)
 		attack_connected = false
 		return State.Run
 	

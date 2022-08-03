@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Powerskull Collected.wav-af0cb7337f5ad3f841c8d48c5137579a.sample"
+
+[deps]
+
+source_file="res://audio/skull_party/Assets/Powerskull Collected.wav"
+dest_files=[ "res://.import/Powerskull Collected.wav-af0cb7337f5ad3f841c8d48c5137579a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

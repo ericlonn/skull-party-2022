@@ -244,6 +244,8 @@ func bonk(bonked_from_position: Vector2):
 	var bonk_x_dir = sign(bonk_vector.x)
 	velocity.x =  bonk_speed.x * bonk_x_dir
 	velocity.y = bonk_speed.y
+	
+	Fmod.play_one_shot("event:/Player/Bonk", self)
 
 
 

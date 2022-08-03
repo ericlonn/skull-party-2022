@@ -14,7 +14,11 @@ func physics_process(delta):
 	return State.Null
 
 
-func emit_death_signal():
+func emit_death_begun_signal():
+	Events.emit_signal("player_death_begun", player)
+
+
+func emit_death_complete_signal():
 	Events.emit_signal("player_died", player, Rules.get_player_color(player.id), player.global_position)
 
 

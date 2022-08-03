@@ -10,6 +10,7 @@ func enter():
 	else:
 		player.apply_jump()
 	player.animator.play("jump")
+	Fmod.play_one_shot("event:/Player/Jump", self)
 
 func process(delta: float):
 	if player.is_dead:

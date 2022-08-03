@@ -995,11 +995,14 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 1.9 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 1.9 ),
+"transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
-"method": "emit_death_signal"
+"method": "emit_death_begun_signal"
+}, {
+"args": [  ],
+"method": "emit_death_complete_signal"
 } ]
 }
 tracks/1/type = "method"

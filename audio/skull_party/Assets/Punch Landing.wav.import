@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Punch Landing.wav-65e9a59d0a450b1e1ee69f1089085aad.sample"
+
+[deps]
+
+source_file="res://audio/skull_party/Assets/Punch Landing.wav"
+dest_files=[ "res://.import/Punch Landing.wav-65e9a59d0a450b1e1ee69f1089085aad.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
