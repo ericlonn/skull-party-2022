@@ -29,7 +29,7 @@ func deactivate():
 
 
 func set_color():
-	var color = Rules.get_player_color(player.id)
+	var color = Globals.get_player_color(player.id)
 	var player_color_as_plane: Plane = Plane(color.r, color.g, color.b, color.a)
 	sprite.material.set_shader_param("outline_colour", player_color_as_plane)
 

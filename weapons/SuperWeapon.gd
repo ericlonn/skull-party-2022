@@ -19,6 +19,6 @@ func fire():
 	ammo_instance.global_position = bullet_spawn_point.global_position
 	ammo_instance.firing_direction = sign(player.orientation.scale.x)
 	ammo_instance.player = player
-	ammo_instance.color = Rules.get_player_color(player.id)
+	ammo_instance.color = Globals.get_player_color(player.id)
 	
-	add_child(ammo_instance)
+	bullet_spawn_point.add_child(ammo_instance)

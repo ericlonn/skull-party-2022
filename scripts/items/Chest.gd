@@ -85,7 +85,7 @@ func attacked(attack_direction, attacker= null):
 	
 	var particle_color
 	if attacked_by != null:
-		particle_color = Rules.get_player_color(attacked_by.id)
+		particle_color = Globals.get_player_color(attacked_by.id)
 	else:
 		particle_color = Color.white
 	

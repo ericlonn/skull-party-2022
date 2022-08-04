@@ -1,11 +1,11 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=2]
 [ext_resource path="res://scripts/Camera2D.gd" type="Script" id=3]
 [ext_resource path="res://scenes/SkullSpawnPoint.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/PowerSkull.tscn" type="PackedScene" id=5]
-[ext_resource path="res://PlayerInfo.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/PlayerInfo.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scripts/UI.gd" type="Script" id=7]
 [ext_resource path="res://scripts/skull spawner/SkullSpawner.gd" type="Script" id=8]
 [ext_resource path="res://scripts/FPSLabel.gd" type="Script" id=9]
@@ -18,6 +18,7 @@
 [ext_resource path="res://sprites/bg/space/Stars Small_2.png" type="Texture" id=16]
 [ext_resource path="res://sprites/explosions/splat2.png" type="Texture" id=17]
 [ext_resource path="res://sprites/explosions/splat3.png" type="Texture" id=18]
+[ext_resource path="res://scripts/CameraShake.gd" type="Script" id=19]
 
 [sub_resource type="StyleBoxFlat" id=1]
 resource_local_to_scene = true
@@ -129,9 +130,10 @@ position = Vector2( 1233, 157 )
 texture = ExtResource( 13 )
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2( 0.7, 0.8 )
+motion_scale = Vector2( 0.7, 0.7 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer3"]
+visible = false
 modulate = Color( 1, 1, 1, 0.427451 )
 position = Vector2( 1233, 157 )
 texture = ExtResource( 16 )
@@ -149,7 +151,6 @@ splat_textures = [ ExtResource( 15 ), ExtResource( 17 ), ExtResource( 18 ) ]
 
 [node name="SkullSpawner" type="Node" parent="."]
 script = ExtResource( 8 )
-skull_spawn_interval = 10000.0
 skull_spawn_variation = 1.0
 furthest_point_variation = 15
 powerskull_scene = ExtResource( 5 )
@@ -223,6 +224,7 @@ position = Vector2( 365, 117 )
 [node name="Camera2D" type="Camera2D" parent="." groups=["cameras"]]
 position = Vector2( 1250, 550 )
 offset = Vector2( 0, -50 )
+rotating = true
 current = true
 zoom = Vector2( 2.5, 2.5 )
 script = ExtResource( 3 )
@@ -235,20 +237,31 @@ min_zoom = 0.75
 max_zoom = 1000
 margin = Vector2( 250, 250 )
 
+[node name="CameraShake" type="Node" parent="Camera2D"]
+script = ExtResource( 19 )
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1679, 980 )
-
-[node name="PowerSkull" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1124, 932 )
-
-[node name="PowerSkull2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1221, 899 )
-
-[node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1353, 894 )
+position = Vector2( 1892, 977 )
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 2156, 975 )
-enabled = false
+
+[node name="PowerSkull" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1972, 993 )
+
+[node name="PowerSkull2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2267, 988 )
+
+[node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2326, 994 )
+
+[node name="PowerSkull4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 805, 507 )
+
+[node name="PowerSkull5" parent="." instance=ExtResource( 5 )]
+position = Vector2( 881, 510 )
+
+[node name="PowerSkull6" parent="." instance=ExtResource( 5 )]
+position = Vector2( 974, 536 )
 
 [connection signal="timeout" from="SkullSpawner/SkullSpawnTimer" to="SkullSpawner" method="_on_SkullSpawnTimer_timeout"]

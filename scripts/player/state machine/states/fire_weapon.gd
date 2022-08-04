@@ -11,6 +11,8 @@ func enter():
 	else:
 		player.weapon_slot.fire_weapon()
 	player.attack_limit_timer.start()
+	
+	player.lose_powerskull(true)
 
 func process(delta):
 	if weapon_state != null:

@@ -31,17 +31,20 @@ func _ready():
 	
 	rng.randomize()
 
-func _on_Player_skull_lost(player, skull_type):
+func _on_Player_skull_lost(player, skull_type, skull_as_ammo):
+	if skull_as_ammo:
+		return
+
 	var spawn_position = player.global_position
 	spawn_position.y += -32
-	spawn_skull(spawn_position, true)
+	spawn_skull(spawn_position, skull_type, true)
 
 
 
 func spawn_skull(spawn_position: Vector2, type: int = -1, launch_skull: bool = false):
 	var new_skull = powerskull_scene.instance()
 	if type == -1:
-		new_skull.powerskull_type = rng.randi_range(0, Rules.powerskull_types.size() - 1)
+		new_skull.powerskull_type = rng.randi_range(0, Globals.powerskull_types.size() - 1)
 	else:
 		new_skull.powerskull_type = type
 	

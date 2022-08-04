@@ -52,7 +52,7 @@ func _on_Player_skull_count_updated(player: Player, skulls):
 	var i = 0
 	for ui_skull in ui_skulls:
 		if i < skulls.size():
-			ui_skull.modulate = Rules.get_skull_color(skulls[i])
+			ui_skull.modulate = Globals.get_skull_color(skulls[i])
 			
 			if i + 1 > previous_skull_count:
 				tween.interpolate_property(ui_skull, "rect_scale", ui_skull.rect_scale, \
@@ -96,7 +96,7 @@ func _on_Player_health_updated(player, new_value):
 
 func set_assigned_player(value):
 	assigned_player = value
-	var player_color = Rules.get_player_color(assigned_player.id)
+	var player_color = Globals.get_player_color(assigned_player.id)
 	get_stylebox("panel", "").border_color = player_color
 	
 	_on_Player_health_updated(assigned_player, assigned_player.health)

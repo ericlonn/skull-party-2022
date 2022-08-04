@@ -2,6 +2,7 @@ tool
 extends Node
 
 enum powerskull_types {RED, GREEN, BLUE}
+var camera setget , get_camera
 
 func get_skull_color(skull_type: int = -1) -> Color:
 	if skull_type < 0 or skull_type > powerskull_types.size() - 1:
@@ -29,3 +30,13 @@ func get_player_color(player_id: int) -> Color:
 			return Color.mediumspringgreen
 	
 	return Color.brown
+
+
+func get_camera() -> Camera2D:
+	var cameras = get_tree().get_nodes_in_group("cameras")
+	
+	for camera in cameras:
+		if camera is Camera2D and camera.current:
+			return camera
+	
+	return null

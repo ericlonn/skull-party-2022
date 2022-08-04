@@ -15,9 +15,11 @@ func enter():
 	player.stun_triggered = false
 	player.play_animation("stunned")
 	player.stun_timer.start()
-	player.hit_stop()
 	player.sprite.modulate = Color(1,1,1,0.5)
 	stun_movement_x = sign(player.velocity.x)
+	player.orient_character(stun_movement_x)
+	
+	player.hit_stop()
 	
 	current_bounce_vector = initial_bounce_vector
 	

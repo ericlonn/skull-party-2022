@@ -9,8 +9,7 @@ func enter():
 	
 
 func physics_process(delta):
-	player.apply_gravity()
-	player.apply_velocity()
+	player.translate(Vector2(0, -30) * delta)
 	return State.Null
 
 
@@ -19,7 +18,7 @@ func emit_death_begun_signal():
 
 
 func emit_death_complete_signal():
-	Events.emit_signal("player_died", player, Rules.get_player_color(player.id), player.global_position)
+	Events.emit_signal("player_died", player, Globals.get_player_color(player.id), player.global_position)
 
 
 func spawn_death_particles():

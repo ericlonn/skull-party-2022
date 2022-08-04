@@ -86,6 +86,7 @@ var is_dead = false
 
 var is_powered_up = false
 var is_in_hit_stop = false
+var is_stunned setget ,get_is_stunned
 
 
 func _ready():
@@ -113,11 +114,11 @@ func _physics_process(delta):
 
 func gather_input():
 	if enabled:
-		move_left_input = Input.is_action_pressed("move_left") as int * -1
-		move_right_input = Input.is_action_pressed("move_right") as int
+		move_left_input = Input.is_action_pressed("move_left" + str(id)) as int * -1
+		move_right_input = Input.is_action_pressed("move_right" + str(id)) as int
 		move_direction =  sign(move_left_input + move_right_input)
-		jump_pressed = Input.is_action_just_pressed("jump")
-		attack_pressed = Input.is_action_just_pressed("attack")
+		jump_pressed = Input.is_action_just_pressed("jump" + str(id))
+		attack_pressed = Input.is_action_just_pressed("attack" + str(id))
 
 		if jump_pressed:
 			jump_buffer.start()
@@ -125,7 +126,7 @@ func gather_input():
 		if jump_pressed and is_on_floor():
 			is_jump_button_held = true
 
-		if is_jump_button_held and not Input.is_action_pressed("jump"):
+		if is_jump_button_held and not Input.is_action_pressed("jump" + str(id)):
 			is_jump_button_held = false
 
 
@@ -201,7 +202,7 @@ func handle_collision(collision):
 	if collider.is_in_group("players"):
 		bonk(collider.position)
 	if collider is Chest:
-		collider.attacked(global_position)
+		collider.attacked(collider.global_position.x - global_position.x)
 		bonk(collider.global_position)
 
 
@@ -226,7 +227,7 @@ func flip_orientation():
 
 
 func attacked(attack_direction: Vector2, attack_force: Vector2):
-	if state_manager.current_state.name == "stunned":
+	if is_stunned:
 		return
 
 	var knockback_x_direction = sign(position.x - attack_direction.x)
@@ -266,18 +267,29 @@ func add_powerskull(powerskull_type: int):
 		Events.emit_signal("skull_count_updated", self, powerskulls)
 
 
-func lose_powerskull():
-		if powerskulls.size() > 0:
-			var remove_from_front = true if rng.randi_range(0, 1) == 0 else false
-			var removed_skull
-			if remove_from_front:
-				removed_skull = powerskulls.pop_front()
-			else:
-				removed_skull = powerskulls.pop_back()
+func lose_powerskull(skull_as_ammo := false):
+	if powerskulls.size() == 0:
+		return
+	
+	var removed_skull
+	
+	if powerskulls.size() > 0 and not skull_as_ammo:
+		var remove_from_front = true if rng.randi_range(0, 1) == 0 else false
+		
+		if remove_from_front:
+			removed_skull = powerskulls.pop_front()
+		else:
+			removed_skull = powerskulls.pop_back()
+		
+		print("removed:" + str(removed_skull))
+	elif skull_as_ammo:
+		removed_skull = powerskulls.pop_back()
+		
+		if powerskulls.size() == 0:
+			power_down()
 
-			Events.emit_signal("skull_lost", self, removed_skull)
-			Events.emit_signal("skull_count_updated", self, powerskulls)
-
+	Events.emit_signal("skull_lost", self, removed_skull, skull_as_ammo)
+	Events.emit_signal("skull_count_updated", self, powerskulls)
 
 func set_health(value):
 	if stun_triggered:
@@ -292,7 +304,7 @@ func set_health(value):
 
 func set_id(value):
 	id = value
-	var color = Rules.get_player_color(id)
+	var color = Globals.get_player_color(id)
 	var player_color_as_plane: Plane = Plane(color.r, color.g, color.b, color.a)
 	sprite.material.set_shader_param("outline_colour", player_color_as_plane)
 	powerup_visuals.set_color(color)
@@ -307,7 +319,16 @@ func power_up():
 	is_powered_up = true
 
 
-func hit_stop(length := .15):
+func power_down():
+	var weapon_scene = null
+	powerup_visuals.enabled = false
+	
+	weapon_slot.remove_weapon()
+	
+	is_powered_up = false
+
+
+func hit_stop(length := .1):
 	set_process(false)
 	set_physics_process(false)
 	is_in_hit_stop = true
@@ -316,6 +337,9 @@ func hit_stop(length := .15):
 	
 	hit_stop_timer.wait_time = length
 	hit_stop_timer.start()
+	
+	Globals.camera.shake(length)
+	
 	yield(hit_stop_timer,"timeout")
 	
 	sprite.material.set_shader_param("hit_stop", false)
@@ -329,3 +353,7 @@ func play_animation(animation_name: String):
 		yield(hit_stop_timer, "timeout")
 	
 	animator.play(animation_name)
+
+
+func get_is_stunned():
+	return state_manager.current_state.name == "stunned"

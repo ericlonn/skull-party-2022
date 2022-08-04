@@ -2,7 +2,7 @@ tool
 extends RigidBody2D
 class_name Powerskull
 
-export(Rules.powerskull_types) var powerskull_type setget set_powerskull_type
+export(Globals.powerskull_types) var powerskull_type setget set_powerskull_type
 
 var collected = false
 var collected_by: Player
@@ -43,6 +43,8 @@ func _on_OverlapDetector_body_entered(body):
 	if body.is_in_group("players") and collected == false:
 		if body.powerskulls.size() >= 3:
 			return
+		elif body.is_stunned:
+			return
 		
 		collected = true
 		collected_by = body
@@ -82,11 +84,11 @@ func set_powerskull_type(value):
 	
 
 func set_sprite_color(type):
-	$PowerSkull.modulate = Rules.get_skull_color(type)
-	$Glow.modulate = Rules.get_skull_color(type)
-	$Trail2D.default_color = Rules.get_skull_color(type)
-	$Light2D.color = Rules.get_skull_color(type)
-	$Particles2D.process_material.color = Rules.get_skull_color(type)
+	$PowerSkull.modulate = Globals.get_skull_color(type)
+	$Glow.modulate = Globals.get_skull_color(type)
+	$Trail2D.default_color = Globals.get_skull_color(type)
+	$Light2D.color = Globals.get_skull_color(type)
+	$Particles2D.process_material.color = Globals.get_skull_color(type)
 
 
 func apply_force(force):

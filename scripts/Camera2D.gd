@@ -8,9 +8,10 @@ export var margin = Vector2(400, 200)  # include some buffer area around targets
 
 var targets = []  # Array of targets to be tracked.
 
-var placeholde_lifetime = 1
+var placeholder_lifetime = 1
 
 onready var screen_size = get_viewport_rect().size
+onready var camera_shake := $CameraShake
 
 func _ready():
 	Events.connect("skull_spawned", self, "on_skull_spawned")
@@ -63,7 +64,7 @@ func add_delay_placeholder(pos: Vector2):
 	add_child(placeholder_pos)
 	
 	var life_timer := Timer.new()
-	life_timer.wait_time = placeholde_lifetime
+	life_timer.wait_time = placeholder_lifetime
 	life_timer.one_shot = true
 	placeholder_pos.add_child(life_timer)
 	
@@ -74,3 +75,10 @@ func add_delay_placeholder(pos: Vector2):
 	
 	remove_target(placeholder_pos)
 	placeholder_pos.queue_free()
+
+
+func shake(duration: float = -1.0):
+	if duration == -1.0:
+		camera_shake.shake()
+	else:
+		camera_shake.shake(duration)
