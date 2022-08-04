@@ -1,6 +1,8 @@
 class_name Player
 extends KinematicBody2D
 
+signal set_as_root
+
 onready var debug_label: Label = $DebugLabel
 onready var sprite: Sprite = $Orientation/Sprite
 onready var sprite_echo_generator: Node2D = $SpriteEchoGenerator
@@ -18,13 +20,12 @@ onready var hit_stop_timer: Timer = $Timers/HitStopTimer
 onready var orientation: Node2D = $Orientation
 onready var punch: Area2D = $Orientation/Punch
 onready var debug_line: Line2D = $DebugLine
-onready var slide_particles: Particles2D = $Orientation/SlideParticles
+onready var slide_particles: Particles2D = $VisualElements/SlideParticles
 onready var right_wall_check = $RightWallCheck
 onready var left_wall_check = $LeftWallCheck
-onready var powerup_visuals = $PowerUpVisuals
+onready var powerup_visuals = $VisualElements/PowerUpVisuals
+onready var death_visuals := $VisualElements/DeathVisuals
 onready var weapon_slot = $Orientation/WeaponSlot
-
-#onready var powerup_flames: Particles2D = $PowerUpFlames
 
 onready var rng = RandomNumberGenerator.new()
 
@@ -81,7 +82,7 @@ var id: int setget set_id
 var powerskulls = []
 var chance_to_lose_skull = 0.5
 
-var health: int = 3 setget set_health
+var health: int = 1 setget set_health
 var is_dead = false
 
 var is_powered_up = false
@@ -90,6 +91,7 @@ var is_stunned setget ,get_is_stunned
 
 
 func _ready():
+	emit_signal("set_as_root", self)
 	rng.randomize()
 	state_manager.init(self)
 
@@ -304,12 +306,17 @@ func set_health(value):
 
 func set_id(value):
 	id = value
+	set_child_colors()
+	Events.emit_signal("player_id_assigned", self, id)
+
+
+func set_child_colors():
 	var color = Globals.get_player_color(id)
 	var player_color_as_plane: Plane = Plane(color.r, color.g, color.b, color.a)
 	sprite.material.set_shader_param("outline_colour", player_color_as_plane)
 	powerup_visuals.set_color(color)
+	death_visuals.set_color(color)
 	slide_particles.process_material.color = color
-	Events.emit_signal("player_id_assigned", self, id)
 
 
 func power_up():
@@ -356,4 +363,7 @@ func play_animation(animation_name: String):
 
 
 func get_is_stunned():
-	return state_manager.current_state.name == "stunned"
+	if state_manager.current_state != null:
+		return state_manager.current_state.name == "stunned"
+	else:
+		return false

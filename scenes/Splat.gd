@@ -1,18 +1,33 @@
 extends Node2D
 
+export(Array, SpriteFrames) var sprite_frames
+
 onready var bg_splat := $BGSplat
 onready var fg_splat := $FGSplat
 
-var bg_alpha = 0.4
-var fg_alpha = 0.9
+var bg_alpha = 0.8
+var fg_alpha = 0.4
 
-var texture setget set_texture
+var selected_frames setget set_frames
 var color setget set_color
 
-func set_texture(value):
-	texture = value
-	fg_splat.texture = texture
-	bg_splat.texture = texture
+var rng := RandomNumberGenerator.new()
+
+func _ready():
+	rotation = rng.randf_range(0,360)
+	
+	var random_frame_index = rng.randi_range(0, sprite_frames.size() - 1)
+	
+	set_frames(sprite_frames[random_frame_index])
+	
+	bg_splat.play()
+	fg_splat.play()
+
+
+func set_frames(value):
+	selected_frames = value
+	fg_splat.frames = selected_frames
+	bg_splat.frames = selected_frames
 	
 
 func set_color(value):

@@ -70,15 +70,10 @@ func _copy_tile_map_to_texture(tile_map: TileMap) -> ImageTexture:
 
 
 func on_Player_died(player, color, death_location):
-	var splat_texture_index = RNGTools.randi_range(0, splat_textures.size() - 1)
-	var splat_texture = splat_textures[splat_texture_index]
-	
 	var new_splat = splat_scene.instance()
 	add_child(new_splat)
 	
-	new_splat.texture = splat_texture
 	new_splat.color = color
-	new_splat.rotation = rng.randf_range(0,360)
 	new_splat.global_position = death_location
 	
 	

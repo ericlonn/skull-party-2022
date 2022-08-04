@@ -1,5 +1,15 @@
 class_name RNGTools
-extends Object
+extends Node
+
+onready var main_rng := RandomNumberGenerator.new()
+
+
+func _ready():
+	main_rng.randomize()
+	
+
+func randf_range(from: float, to: float) -> float:
+	return main_rng.randf_range(from, to)
 
 
 # Generates a random integer between `from` (inclusive) and `to` (exclusive).

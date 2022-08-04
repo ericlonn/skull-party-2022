@@ -1,5 +1,7 @@
 extends Node2D
 
+signal orientation_updated
+
 onready var squash_stretch: Tween = $SquashStretch
 
 export(float, 0.0, 1.0) var squash_amount = .4
@@ -36,19 +38,29 @@ func stretch():
 	squash_stretch.start()
 
 func face_left():
+	if sign(scale.x) == 1:
+		emit_signal("orientation_updated", -1)
+	
 	if sign(scale.x) == 1 and squash_stretch.is_active():
 		squash_stretch.remove_all()
 	scale.x = -1
 	scale.y = 1
 	
+	
 func face_right():
+	if sign(scale.x) == -1:
+		emit_signal("orientation_updated", 1)
+	
 	if sign(scale.x) == -1 and squash_stretch.is_active():
 		squash_stretch.remove_all()
 	scale.x = 1
 	scale.y = 1
 
+
 func flip_around():
 	if squash_stretch.is_active():
 		squash_stretch.remove_all()
-	scale.x = 1 * sign(scale.x)
+	scale.x = -sign(scale.x)
 	scale.y = 1
+	
+	emit_signal("orientation_updated", scale.x)

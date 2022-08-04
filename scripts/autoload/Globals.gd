@@ -1,8 +1,15 @@
 tool
 extends Node
 
+onready var rng := RandomNumberGenerator.new()
+
 enum powerskull_types {RED, GREEN, BLUE}
 var camera setget , get_camera
+
+
+func _ready():
+	rng.randomize()
+
 
 func get_skull_color(skull_type: int = -1) -> Color:
 	if skull_type < 0 or skull_type > powerskull_types.size() - 1:
