@@ -11,14 +11,16 @@ var fg_alpha = 0.4
 var selected_frames setget set_frames
 var color setget set_color
 
-var rng := RandomNumberGenerator.new()
+var rng := Globals.rng
 
 func _ready():
 	rotation = rng.randf_range(0,360)
 	
 	var random_frame_index = rng.randi_range(0, sprite_frames.size() - 1)
-	
 	set_frames(sprite_frames[random_frame_index])
+	
+	bg_splat.rotation_degrees = rotation_degrees
+	fg_splat.rotation_degrees = rotation_degrees
 	
 	bg_splat.play()
 	fg_splat.play()

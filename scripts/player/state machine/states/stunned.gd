@@ -58,6 +58,7 @@ func physics_process(delta):
 			stun_movement_x *= -1
 			bounce()
 			wall_bonk_triggered = true
+			Fmod.play_one_shot("event:/Player/Bonk", self)
 
 		if wall_bonk_triggered == false:
 			if collision.collider.get_collision_layer() == 2 and collision.normal.y < 0 and has_left_ground:

@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/PlayerInfoUI.gd" type="Script" id=1]
 [ext_resource path="res://sprites/ui/heart_full.png" type="Texture" id=2]
 [ext_resource path="res://sprites/ui/skull_full.png" type="Texture" id=3]
 [ext_resource path="res://sprites/ui/heart_empty.png" type="Texture" id=4]
+[ext_resource path="res://fonts/m5x7.tres" type="DynamicFont" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
 resource_local_to_scene = true
@@ -28,11 +29,11 @@ heart_full_texture = ExtResource( 2 )
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 18.0
 margin_top = 18.0
-margin_right = 218.0
-margin_bottom = 150.0
+margin_right = 175.0
+margin_bottom = 136.0
 
 [node name="PlayerHealthUI" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 200.0
+margin_right = 157.0
 margin_bottom = 48.0
 
 [node name="Heart1" type="TextureRect" parent="VBoxContainer/PlayerHealthUI"]
@@ -63,7 +64,7 @@ stretch_mode = 6
 
 [node name="PlayerSkullsUI" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 52.0
-margin_right = 200.0
+margin_right = 157.0
 margin_bottom = 100.0
 size_flags_vertical = 0
 
@@ -95,5 +96,13 @@ rect_pivot_offset = Vector2( 24, 24 )
 texture = ExtResource( 3 )
 expand = true
 stretch_mode = 6
+
+[node name="WeaponNameLabel" type="Label" parent="VBoxContainer"]
+margin_top = 104.0
+margin_right = 157.0
+margin_bottom = 117.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 5 )
+align = 1
 
 [node name="Tween" type="Tween" parent="."]

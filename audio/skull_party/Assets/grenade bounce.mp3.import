@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/grenade bounce.mp3-62a215e84d957ad5846e49c34f4c472b.mp3str"
+
+[deps]
+
+source_file="res://audio/skull_party/Assets/grenade bounce.mp3"
+dest_files=[ "res://.import/grenade bounce.mp3-62a215e84d957ad5846e49c34f4c472b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

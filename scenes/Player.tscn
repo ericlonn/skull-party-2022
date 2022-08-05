@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=81 format=2]
 
 [ext_resource path="res://scripts/player/state machine/states/attack.gd" type="Script" id=1]
 [ext_resource path="res://scripts/player/Player.gd" type="Script" id=2]
@@ -673,7 +673,6 @@ tracks/5/keys = {
 [sub_resource type="Animation" id=23]
 resource_name = "slide"
 length = 0.666667
-loop = true
 step = 0.0333333
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
@@ -1035,6 +1034,18 @@ tracks/9/keys = {
 "update": 1,
 "values": [ 0 ]
 }
+tracks/10/type = "value"
+tracks/10/path = NodePath("../..:collision_mask")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [sub_resource type="Animation" id=58]
 resource_name = "reset"
@@ -1111,17 +1122,119 @@ tracks/5/keys = {
 "update": 1,
 "values": [ 1 ]
 }
+tracks/6/type = "value"
+tracks/6/path = NodePath("../..:collision_mask")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
 
-[sub_resource type="VisualShaderNodeInput" id=39]
+[sub_resource type="VisualShaderNodeInput" id=49]
 input_name = "texture"
 
-[sub_resource type="VisualShaderNodeTexture" id=40]
+[sub_resource type="VisualShaderNodeTexture" id=59]
 source = 5
 
-[sub_resource type="VisualShaderNodeScalarFunc" id=41]
+[sub_resource type="VisualShaderNodeScalarFunc" id=60]
 function = 15
 
-[sub_resource type="VisualShader" id=42]
+[sub_resource type="VisualShader" id=61]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:2
+
+// Texture:3
+	vec3 n_out3p0;
+	float n_out3p1;
+	{
+		vec4 TEXTURE_tex_read = texture(TEXTURE, UV.xy);
+		n_out3p0 = TEXTURE_tex_read.rgb;
+		n_out3p1 = TEXTURE_tex_read.a;
+	}
+
+// ScalarFunc:4
+	float n_out4p0 = round(n_out3p1);
+
+// Output:0
+	COLOR.a = n_out4p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -811.556, -102.333 )
+mode = 1
+flags/light_only = false
+flags/unshaded = true
+nodes/fragment/0/position = Vector2( 560, 120 )
+nodes/fragment/2/node = SubResource( 49 )
+nodes/fragment/2/position = Vector2( -380, 0 )
+nodes/fragment/3/node = SubResource( 59 )
+nodes/fragment/3/position = Vector2( -120, 0 )
+nodes/fragment/4/node = SubResource( 60 )
+nodes/fragment/4/position = Vector2( 320, -20 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 3, 2, 3, 1, 4, 0, 4, 0, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=43]
+shader = SubResource( 61 )
+
+[sub_resource type="Curve" id=24]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.260736 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=33]
+curve = SubResource( 24 )
+
+[sub_resource type="ParticlesMaterial" id=26]
+resource_local_to_scene = true
+lifetime_randomness = 0.59
+flag_disable_z = true
+direction = Vector3( -1, -0.173, 0 )
+spread = 15.0
+gravity = Vector3( 0, 300, 0 )
+initial_velocity = 350.0
+initial_velocity_random = 0.32
+angular_velocity = 720.0
+angular_velocity_random = 0.52
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+tangential_accel = 24.33
+tangential_accel_random = 0.65
+angle = 42.7
+angle_random = 1.0
+scale = 0.35
+scale_random = 0.08
+scale_curve = SubResource( 33 )
+color = Color( 0.796078, 0.796078, 0.796078, 1 )
+
+[sub_resource type="VisualShaderNodeInput" id=62]
+input_name = "texture"
+
+[sub_resource type="VisualShaderNodeTexture" id=63]
+source = 5
+
+[sub_resource type="VisualShaderNodeScalarFunc" id=64]
+function = 15
+
+[sub_resource type="VisualShader" id=65]
 code = "shader_type canvas_item;
 render_mode unshaded;
 
@@ -1163,52 +1276,21 @@ mode = 1
 flags/light_only = false
 flags/unshaded = true
 nodes/fragment/0/position = Vector2( 560, 120 )
-nodes/fragment/2/node = SubResource( 39 )
+nodes/fragment/2/node = SubResource( 62 )
 nodes/fragment/2/position = Vector2( -380, 0 )
-nodes/fragment/3/node = SubResource( 40 )
+nodes/fragment/3/node = SubResource( 63 )
 nodes/fragment/3/position = Vector2( -120, 0 )
-nodes/fragment/4/node = SubResource( 41 )
+nodes/fragment/4/node = SubResource( 64 )
 nodes/fragment/4/position = Vector2( 320, -20 )
 nodes/fragment/connections = PoolIntArray( 2, 0, 3, 2, 3, 1, 4, 0, 4, 0, 0, 1 )
 
-[sub_resource type="ShaderMaterial" id=43]
-shader = SubResource( 42 )
-
-[sub_resource type="Curve" id=24]
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.260736 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=33]
-curve = SubResource( 24 )
-
-[sub_resource type="ParticlesMaterial" id=26]
-resource_local_to_scene = true
-lifetime_randomness = 0.59
-flag_disable_z = true
-direction = Vector3( -1, -0.173, 0 )
-spread = 15.0
-gravity = Vector3( 0, 300, 0 )
-initial_velocity = 350.0
-initial_velocity_random = 0.32
-angular_velocity = 720.0
-angular_velocity_random = 0.52
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-tangential_accel = 24.33
-tangential_accel_random = 0.65
-angle = 42.7
-angle_random = 1.0
-scale = 0.35
-scale_random = 0.08
-scale_curve = SubResource( 33 )
-color = Color( 0.796078, 0.796078, 0.796078, 1 )
-
 [sub_resource type="ShaderMaterial" id=44]
-shader = SubResource( 42 )
+shader = SubResource( 65 )
 
 [sub_resource type="Curve" id=36]
 _data = [ Vector2( 0, 0.968182 ), 0.0, -0.11405, 0, 0, Vector2( 1, 0 ), -2.74142, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=37]
+[sub_resource type="CurveTexture" id=66]
 curve = SubResource( 36 )
 
 [sub_resource type="ParticlesMaterial" id=38]
@@ -1227,11 +1309,11 @@ orbit_velocity_random = 0.0
 radial_accel = 0.53
 angle = 180.7
 angle_random = 1.0
-scale_curve = SubResource( 37 )
+scale_curve = SubResource( 66 )
 color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="ShaderMaterial" id=54]
-shader = SubResource( 42 )
+shader = SubResource( 61 )
 
 [sub_resource type="Curve" id=55]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
@@ -1261,7 +1343,7 @@ scale_curve = SubResource( 56 )
 [node name="Player" type="KinematicBody2D" groups=["players"]]
 position = Vector2( 0, -62 )
 collision_layer = 0
-collision_mask = 3
+collision_mask = 0
 collision/safe_margin = 0.16
 script = ExtResource( 2 )
 __meta__ = {
@@ -1381,6 +1463,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="StunTimer" type="Timer" parent="Timers"]
+wait_time = 2.0
 one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="Timers"]

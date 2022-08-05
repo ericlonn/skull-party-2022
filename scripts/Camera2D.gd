@@ -24,14 +24,12 @@ func _process(delta):
 	if !targets:
 		return
 	
-	targets = get_tree().get_nodes_in_group("players")
-	
 	# Keep the camera centered between the targets
 	var p = Vector2.ZERO
-	for target in targets:
-		p += target.position
-	p /= targets.size()
-	position = lerp(position, p, move_speed)
+#	for target in targets:
+#		p += target.position
+#	p /= targets.size()
+#	position = lerp(position, p, move_speed)
 	
 	# Find the zoom that will contain all targets
 	var r = Rect2(position, Vector2.ONE)
@@ -45,6 +43,7 @@ func _process(delta):
 	else:
 		z = clamp(r.size.y / screen_size.y, min_zoom, max_zoom)
 	zoom = lerp(zoom, Vector2.ONE * z, zoom_speed)
+	position = r.position + r.size / 2
 
 func add_target(t):
 	if not t in targets:
@@ -55,9 +54,9 @@ func remove_target(t):
 		targets.erase(t)
 
 
-#func on_Player_died(player, color, death_position):
-#	remove_target(player)
-#	add_delay_placeholder(death_position)
+func on_Player_died(player, color, death_position):
+	remove_target(player)
+	add_delay_placeholder(death_position)
 
 
 func add_delay_placeholder(pos: Vector2):

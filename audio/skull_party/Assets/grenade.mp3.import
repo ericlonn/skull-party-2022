@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/grenade.mp3-066e63913a7926dde222c2b4a4e5e869.mp3str"
+
+[deps]
+
+source_file="res://audio/skull_party/Assets/grenade.mp3"
+dest_files=[ "res://.import/grenade.mp3-066e63913a7926dde222c2b4a4e5e869.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -6,6 +6,12 @@ onready var rng := RandomNumberGenerator.new()
 enum powerskull_types {RED, GREEN, BLUE}
 var camera setget , get_camera
 
+var weapons = [
+	"res://weapons/bigpunch/BigPunchWeapon.tscn",
+	"res://weapons/fireball/FireBallWeapon.tscn",
+	"res://weapons/grenade/GrenadeWeapon.tscn",
+	"res://weapons/shotgun/ShotgunWeapon.tscn"
+]
 
 func _ready():
 	rng.randomize()
@@ -47,3 +53,8 @@ func get_camera() -> Camera2D:
 			return camera
 	
 	return null
+
+
+func get_weapon():
+	var rand_index = rng.randi_range(0, weapons.size() - 1)
+	return weapons[rand_index]

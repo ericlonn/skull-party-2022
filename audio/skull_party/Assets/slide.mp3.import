@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/slide.mp3-ee8b69f48b4687a41f9c5c2cb6f6c5e0.mp3str"
+
+[deps]
+
+source_file="res://audio/skull_party/Assets/slide.mp3"
+dest_files=[ "res://.import/slide.mp3-ee8b69f48b4687a41f9c5c2cb6f6c5e0.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

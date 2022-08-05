@@ -34,6 +34,7 @@ func emit_death_begun_signal():
 
 
 func emit_death_complete_signal():
+	Globals.camera.shake()
 	Events.emit_signal("player_died", player, Globals.get_player_color(player.id), player.global_position)
 
 

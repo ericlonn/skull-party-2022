@@ -74,6 +74,7 @@ func ledge_punch_correction():
 
 
 func _on_Punch_body_entered(body):
+	print(body.name)
 	if body != player and body is Player:
 		body.attacked(player.position, attack_force)
 		player.bonk(body.position)

@@ -16,6 +16,8 @@ onready var skull_tex2 = $VBoxContainer/PlayerSkullsUI/Skull2
 onready var skull_tex3 = $VBoxContainer/PlayerSkullsUI/Skull3
 onready var ui_skulls = [skull_tex1, skull_tex2, skull_tex3]
 
+onready var weapon_name_label := $VBoxContainer/WeaponNameLabel
+
 onready var empty_skull_color = Color.darkgray - Color(0,0,0,.3)
 var collected_anim_scale = 1.5
 var collected_anim_time = 0.5
@@ -34,6 +36,8 @@ func _ready():
 	Events.connect("skull_count_updated", self, "_on_Player_skull_count_updated")
 	Events.connect("player_health_updated", self, "_on_Player_health_updated")
 	Events.connect("player_died", self, "on_Player_died")
+	Events.connect("player_powered_up", self, "on_Player_powered_up")
+	Events.connect("player_powered_down", self, "on_Player_powered_down")
 
 
 func set_skull_count():
@@ -110,3 +114,13 @@ func on_Player_died(player, color, death_location):
 		tween.reset_all()
 		tween.interpolate_property(self, "modulate", modulate, dead_player_ui_color, death_fade_time, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 		tween.start()
+
+
+func on_Player_powered_up(powered_up_player: Player):
+	if powered_up_player == assigned_player:
+		weapon_name_label.text = powered_up_player.weapon_slot.super_weapon.name
+
+
+func on_Player_powered_down(powered_down_player: Player):
+	if powered_down_player == assigned_player:
+		weapon_name_label.text = ""

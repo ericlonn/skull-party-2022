@@ -2,9 +2,11 @@ extends Ammo
 
 onready var line: Line2D = $Line2D
 onready var destroy_particles: Particles2D = $DestroyedParticles
+onready var skull_sprite := $SkullSprite
+onready var flames := $FireballFlames
 
 var attack_force = Vector2(750,-750)
-var move_speed = 1500
+var move_speed = 1250
 
 func _ready():
 	if color is Color:
@@ -18,6 +20,8 @@ func _physics_process(delta):
 func set_color():
 	line.default_color = color
 	destroy_particles.process_material.color = color
+	skull_sprite.modulate = color
+	flames.process_material.color = color
 
 
 func _on_Area2D_body_entered(body):

@@ -5,7 +5,7 @@ onready var sprite := $BigPunch/BigPunchSprite
 onready var area := $BigPunch/Area2D
 
 var punch_speed = 1200.0
-var attack_force = Vector2(1500,-1500)
+var attack_force = Vector2(1750,-1750)
 
 func _ready():
 	big_punch_node.position = bullet_spawn_point.position
@@ -39,9 +39,13 @@ func _on_Area2D_body_entered(body):
 	
 	if body is Player and body != player:
 		body.attacked(global_position, attack_force, 1)
-		
+		Fmod.play_one_shot("event:/Player/Punch Landing", self)
+		used_state.attack_connected = true
+		player.hit_stop()
 	elif body.is_in_group("level"):
 		player.velocity.x = punch_speed * -sign(firing_direction)
+		Fmod.play_one_shot("event:/Player/Punch Landing", self)
+		player.hit_stop()
 		player.flip_orientation()
 	elif body is Chest:
 		body.attacked(firing_direction, player)

@@ -27,7 +27,7 @@ onready var powerup_visuals = $VisualElements/PowerUpVisuals
 onready var death_visuals := $VisualElements/DeathVisuals
 onready var weapon_slot = $Orientation/WeaponSlot
 
-onready var rng = RandomNumberGenerator.new()
+onready var rng = Globals.rng
 
 var velocity = Vector2.ZERO
 
@@ -87,10 +87,12 @@ var is_dead = false
 
 var is_powered_up = false
 var is_in_hit_stop = false
-var is_stunned
+var is_stunned = false
 
 
 func _ready():
+	add_powerskull()
+	
 	emit_signal("set_as_root", self)
 	rng.randomize()
 	state_manager.init(self)
@@ -229,8 +231,9 @@ func flip_orientation():
 
 
 func attacked(attack_direction: Vector2, attack_force: Vector2, health_lost: int = 0):
-	if is_stunned:
+	if stun_triggered:
 		return
+	
 	
 	self.health -= health_lost
 	
@@ -266,7 +269,10 @@ func get_is_wall_on_right():
 	return right_wall_check.is_colliding()
 
 
-func add_powerskull(powerskull_type: int):
+func add_powerskull(powerskull_type: int = -1):
+	if powerskull_type == -1:
+		powerskull_type = rng.randi_range(0, Globals.powerskull_types.size() - 1)
+	
 	if powerskulls.size() < 3:
 		powerskulls.append(powerskull_type)
 		Events.emit_signal("skull_count_updated", self, powerskulls)
@@ -324,10 +330,11 @@ func set_child_colors():
 
 
 func power_up():
-	var weapon_scene = load("res://weapons/shotgun/ShotgunWeapon.tscn")
+	var weapon_scene = load(Globals.get_weapon())
 	powerup_visuals.enabled = true
 	weapon_slot.add_weapon(weapon_scene.instance())
 	is_powered_up = true
+	Events.emit_signal("player_powered_up", self)
 
 
 func power_down():
@@ -337,6 +344,7 @@ func power_down():
 	weapon_slot.remove_weapon()
 	
 	is_powered_up = false
+	Events.emit_signal("player_powered_down", self)
 
 
 func hit_stop(length := .1):

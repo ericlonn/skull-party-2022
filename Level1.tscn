@@ -230,7 +230,7 @@ zoom = Vector2( 2.5, 2.5 )
 script = ExtResource( 3 )
 move_speed = 0.05
 zoom_speed = 0.05
-min_zoom = 0.75
+min_zoom = 1.0
 max_zoom = 1000
 margin = Vector2( 250, 250 )
 
@@ -248,23 +248,5 @@ position = Vector2( 2156, 975 )
 
 [node name="Player4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1839, 968 )
-
-[node name="PowerSkull" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1294, 931 )
-
-[node name="PowerSkull2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1297, 886 )
-
-[node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1294, 823 )
-
-[node name="PowerSkull4" parent="." instance=ExtResource( 5 )]
-position = Vector2( 805, 507 )
-
-[node name="PowerSkull5" parent="." instance=ExtResource( 5 )]
-position = Vector2( 881, 510 )
-
-[node name="PowerSkull6" parent="." instance=ExtResource( 5 )]
-position = Vector2( 974, 536 )
 
 [connection signal="timeout" from="SkullSpawner/SkullSpawnTimer" to="SkullSpawner" method="_on_SkullSpawnTimer_timeout"]

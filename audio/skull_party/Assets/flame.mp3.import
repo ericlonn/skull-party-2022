@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/flame.mp3-cccaba7f94d5636e7bbf1e09323fcac3.mp3str"
+
+[deps]
+
+source_file="res://audio/skull_party/Assets/flame.mp3"
+dest_files=[ "res://.import/flame.mp3-cccaba7f94d5636e7bbf1e09323fcac3.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

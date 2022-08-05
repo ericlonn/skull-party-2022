@@ -1,12 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://weapons/grenade/GrenadeAmmo.gd" type="Script" id=1]
-[ext_resource path="res://sprites/lights/light.png" type="Texture" id=2]
 [ext_resource path="res://sprites/weapons/grenade.png" type="Texture" id=3]
 [ext_resource path="res://sprites/explosions/explosion1.png" type="Texture" id=4]
 
 [sub_resource type="PhysicsMaterial" id=53]
-bounce = 0.7
+bounce = 1.0
 
 [sub_resource type="CircleShape2D" id=54]
 radius = 10.0499
@@ -170,9 +169,12 @@ radius = 205.0
 [node name="GrenadeAmmo" type="RigidBody2D"]
 collision_layer = 16
 collision_mask = 14
+mass = 5.10204
 physics_material_override = SubResource( 53 )
 gravity_scale = 10.0
 continuous_cd = 1
+contacts_reported = 1
+contact_monitor = true
 angular_velocity = 10.0
 script = ExtResource( 1 )
 
@@ -186,19 +188,13 @@ position = Vector2( -1, -4 )
 scale = Vector2( 0.326923, 0.326923 )
 texture = ExtResource( 3 )
 
-[node name="Light2D" type="Light2D" parent="."]
-scale = Vector2( 0.575195, 0.575195 )
-z_index = -1
-texture = ExtResource( 2 )
-texture_scale = 2.0
-energy = 2.0
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
 
 [node name="OverlapDetector" type="Area2D" parent="."]
 collision_layer = 2048
+collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OverlapDetector"]
 position = Vector2( -1, 0 )
@@ -226,4 +222,6 @@ shape = SubResource( 60 )
 cast_to = Vector2( 0, 0 )
 collision_mask = 2
 
+[connection signal="body_entered" from="." to="." method="_on_GrenadeAmmo_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="OverlapDetector" to="." method="_on_OverlapDetector_body_entered"]

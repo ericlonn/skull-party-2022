@@ -28,3 +28,7 @@ func physics_process(delta):
 	player.orient_character()
 	player.apply_velocity()
 	return State.Null
+
+
+func exit():
+	weapon_state = null

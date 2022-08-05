@@ -1,7 +1,12 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://weapons/fireball/FireballAmmo.gd" type="Script" id=1]
 [ext_resource path="res://sprites/particles/fire_01 (Custom).png" type="Texture" id=2]
+[ext_resource path="res://sprites/weapons/skull_side.png" type="Texture" id=3]
+[ext_resource path="res://sprites/particles/fire_02 (Custom).png" type="Texture" id=4]
+
+[sub_resource type="Curve" id=48]
+_data = [ Vector2( 0, 0.199386 ), 0.0, 1.4, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="RectangleShape2D" id=46]
 extents = Vector2( 20, 8.5 )
@@ -90,19 +95,112 @@ scale_curve = SubResource( 6 )
 [sub_resource type="RectangleShape2D" id=47]
 extents = Vector2( 20, 5 )
 
+[sub_resource type="VisualShaderNodeInput" id=49]
+input_name = "texture"
+
+[sub_resource type="VisualShaderNodeTexture" id=59]
+source = 5
+
+[sub_resource type="VisualShaderNodeScalarFunc" id=60]
+function = 15
+
+[sub_resource type="VisualShader" id=61]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:2
+
+// Texture:3
+	vec3 n_out3p0;
+	float n_out3p1;
+	{
+		vec4 TEXTURE_tex_read = texture(TEXTURE, UV.xy);
+		n_out3p0 = TEXTURE_tex_read.rgb;
+		n_out3p1 = TEXTURE_tex_read.a;
+	}
+
+// ScalarFunc:4
+	float n_out4p0 = round(n_out3p1);
+
+// Output:0
+	COLOR.a = n_out4p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -811.556, -102.333 )
+mode = 1
+flags/light_only = false
+flags/unshaded = true
+nodes/fragment/0/position = Vector2( 560, 120 )
+nodes/fragment/2/node = SubResource( 49 )
+nodes/fragment/2/position = Vector2( -380, 0 )
+nodes/fragment/3/node = SubResource( 59 )
+nodes/fragment/3/position = Vector2( -120, 0 )
+nodes/fragment/4/node = SubResource( 60 )
+nodes/fragment/4/position = Vector2( 320, -20 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 3, 2, 3, 1, 4, 0, 4, 0, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=62]
+shader = SubResource( 61 )
+
+[sub_resource type="Curve" id=54]
+_data = [ Vector2( 0, 0.968182 ), 0.0, -0.11405, 0, 0, Vector2( 1, 0 ), -2.74142, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=37]
+curve = SubResource( 54 )
+
+[sub_resource type="ParticlesMaterial" id=55]
+resource_local_to_scene = true
+emission_shape = 1
+emission_sphere_radius = 11.5
+flag_disable_z = true
+direction = Vector3( -1, 0, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 229.86
+angular_velocity = 165.52
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = 0.53
+angle = 180.7
+angle_random = 1.0
+scale_curve = SubResource( 37 )
+color = Color( 0, 0, 0, 1 )
+
 [node name="FireballAmmo" type="RigidBody2D"]
 collision_layer = 16
 mode = 3
 script = ExtResource( 1 )
 
 [node name="Line2D" type="Line2D" parent="."]
+visible = false
 points = PoolVector2Array( 0, 0, 40, 0 )
+width = 15.0
+width_curve = SubResource( 48 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="Area2D" type="Area2D" parent="." groups=["ammo"]]
 collision_layer = 2048
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 position = Vector2( 20, 0.5 )
 shape = SubResource( 46 )
 
@@ -117,7 +215,24 @@ process_material = SubResource( 45 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 20, 0 )
 shape = SubResource( 47 )
+
+[node name="SkullSprite" type="Sprite" parent="."]
+position = Vector2( 48.3029, -6.27694 )
+scale = Vector2( 0.488094, 0.488094 )
+texture = ExtResource( 3 )
+
+[node name="FireballFlames" type="Particles2D" parent="."]
+show_behind_parent = true
+material = SubResource( 62 )
+position = Vector2( 30.5364, -6.16066 )
+z_index = -1
+amount = 15
+lifetime = 0.25
+preprocess = 1.0
+process_material = SubResource( 55 )
+texture = ExtResource( 4 )
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

@@ -10,6 +10,7 @@ func _ready():
 	Events.connect("player_death_begun", self, "on_Player_death_begun")
 	Events.connect("player_died", self, "on_Player_died")
 	Events.connect("skull_collected", self, "on_Skull_collected")
+	Events.connect("chest_shattered", self, "on_Chest_shattered")
 
 
 func on_Player_death_begun(player):
@@ -22,3 +23,8 @@ func on_Player_died(player, color, death_location):
 
 func on_Skull_collected(skull):
 	Fmod.play_one_shot("event:/Items/Powerskulls/Collected", self)
+
+
+func on_Chest_shattered(chest):
+	print("chest shattered")
+	Fmod.play_one_shot("event:/Items/Chest/Break", self)

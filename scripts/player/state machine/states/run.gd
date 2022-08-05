@@ -1,6 +1,16 @@
 extends BaseState
 
+var running_sfx_event
+var sliding_sfx_event
+
 func enter():
+	running_sfx_event = Fmod.create_event_instance("event:/Player/Run")
+	sliding_sfx_event = Fmod.create_event_instance("event:/Player/Slide")
+	
+	Fmod.start_event(running_sfx_event)
+	Fmod.start_event(sliding_sfx_event)
+	Fmod.set_event_paused(sliding_sfx_event, true)
+	
 	player.play_animation("run")
 
 func process(delta: float):
@@ -38,11 +48,18 @@ func physics_process(delta: float):
 	
 func choose_animation():
 	if player.move_direction != sign(player.velocity.x) and abs(player.velocity.x) > 0.0:
+		if not Fmod.get_event_paused(running_sfx_event):
+			Fmod.set_event_paused(running_sfx_event, true)
+		
 		player.play_animation("slide")
 		player.slide_particles.emitting = true
 	else:
+		if Fmod.get_event_paused(running_sfx_event):
+			Fmod.set_event_paused(running_sfx_event, false)
+		
 		player.play_animation("run")
 		player.slide_particles.emitting = false
 
 func exit():
+	Fmod.stop_event(running_sfx_event, Fmod.FMOD_STUDIO_STOP_IMMEDIATE)
 	player.slide_particles.emitting = false

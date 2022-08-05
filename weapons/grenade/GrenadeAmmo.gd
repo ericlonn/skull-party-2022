@@ -10,13 +10,14 @@ onready var explosion_animplayer := $Explosion/ExplosionAnimPlayer
 onready var explosion_sprite := $Explosion/ExplosionsSprite
 onready var level_collision_check := $Explosion/LevelCollisionCheck
 
-onready var light := $Light2D
-
 var attack_force = Vector2(2000, -2000)
 var x_velocity = 1000
 var y_velocity = -400
 
-var rng := RandomNumberGenerator.new()
+var has_bounced =false
+
+var rng := Globals.rng
+
 
 func _ready():
 	if color is Color:
@@ -37,7 +38,6 @@ func set_color():
 	var player_color_as_plane: Plane = Plane(color.r, color.g, color.b, color.a)
 	sprite.material.set_shader_param("outline_colour", player_color_as_plane)
 	
-	light.color = color
 	explosion_sprite.modulate = color
 
 func explode():
@@ -45,6 +45,7 @@ func explode():
 	set_deferred("mode", RigidBody2D.MODE_STATIC)
 	
 	explosion_animplayer.play("explosion")
+	Fmod.play_one_shot("event:/Weapons/GrenadeExplosion", self)
 	
 	for body in explosion_hitbox.get_overlapping_bodies():
 		level_collision_check.cast_to = to_local(body.position)
@@ -77,3 +78,14 @@ func spawn_destroy_particles():
 
 func _on_Timer_timeout():
 	explode()
+
+
+func _on_GrenadeAmmo_body_entered(body):
+	if not has_bounced and body == player:
+		pass
+	else:
+		play_bounce_audio()
+		has_bounced = true
+	
+func play_bounce_audio():
+	Fmod.play_one_shot("event:/Weapons/GrenadeBounce", self)
