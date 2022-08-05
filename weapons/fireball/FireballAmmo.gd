@@ -21,9 +21,8 @@ func set_color():
 
 
 func _on_Area2D_body_entered(body):
-	if body is Player:
-		body.health -= 1
-		body.attacked(global_position, attack_force)
+	if body is Player and not body.is_stunned:
+		body.attacked(global_position, attack_force, 1)
 		spawn_destroy_particles()
 		queue_free()
 	elif body.is_in_group("level"):

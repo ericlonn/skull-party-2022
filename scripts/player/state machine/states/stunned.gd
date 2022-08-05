@@ -13,6 +13,7 @@ var has_left_ground = false
 
 func enter():
 	player.stun_triggered = false
+	player.is_stunned = true
 	player.play_animation("stunned")
 	player.stun_timer.start()
 	player.sprite.modulate = Color(1,1,1,0.5)
@@ -82,6 +83,7 @@ func bounce():
 	current_bounce_vector = current_bounce_vector.move_toward(Vector2.ZERO, bounce_degradation)
 
 func exit():
+	player.is_stunned = false
 	stun_over = false
 	player.sprite.modulate = Color.white
 	

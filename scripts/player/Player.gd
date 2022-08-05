@@ -82,12 +82,12 @@ var id: int setget set_id
 var powerskulls = []
 var chance_to_lose_skull = 0.5
 
-var health: int = 1 setget set_health
+var health: int = 3 setget set_health
 var is_dead = false
 
 var is_powered_up = false
 var is_in_hit_stop = false
-var is_stunned setget ,get_is_stunned
+var is_stunned
 
 
 func _ready():
@@ -228,10 +228,12 @@ func flip_orientation():
 	orientation.scale.x = -orientation.scale.x
 
 
-func attacked(attack_direction: Vector2, attack_force: Vector2):
+func attacked(attack_direction: Vector2, attack_force: Vector2, health_lost: int = 0):
 	if is_stunned:
 		return
-
+	
+	self.health -= health_lost
+	
 	var knockback_x_direction = sign(position.x - attack_direction.x)
 
 	knockback_x_direction = knockback_x_direction if knockback_x_direction != 0 else [-1,1][rng.randi_range(0,1)]
@@ -246,6 +248,7 @@ func attacked(attack_direction: Vector2, attack_force: Vector2):
 
 
 func bonk(bonked_from_position: Vector2):
+	print("bonk " + name as String)
 	var bonk_vector = position - bonked_from_position
 	var bonk_x_dir = sign(bonk_vector.x)
 	velocity.x =  bonk_speed.x * bonk_x_dir
@@ -294,9 +297,10 @@ func lose_powerskull(skull_as_ammo := false):
 	Events.emit_signal("skull_count_updated", self, powerskulls)
 
 func set_health(value):
-	if stun_triggered:
+	if is_stunned:
 		return
 	
+	print(str(is_stunned))
 	health = clamp(value, 0, 3)
 	Events.emit_signal("player_health_updated", self, health)
 	
@@ -320,7 +324,7 @@ func set_child_colors():
 
 
 func power_up():
-	var weapon_scene = load("res://weapons/fireball/FireBallWeapon.tscn")
+	var weapon_scene = load("res://weapons/shotgun/ShotgunWeapon.tscn")
 	powerup_visuals.enabled = true
 	weapon_slot.add_weapon(weapon_scene.instance())
 	is_powered_up = true
@@ -360,10 +364,3 @@ func play_animation(animation_name: String):
 		yield(hit_stop_timer, "timeout")
 	
 	animator.play(animation_name)
-
-
-func get_is_stunned():
-	if state_manager.current_state != null:
-		return state_manager.current_state.name == "stunned"
-	else:
-		return false

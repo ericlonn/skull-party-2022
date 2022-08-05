@@ -22,12 +22,14 @@ func enter():
 	player.play_animation("punch")
 	player.sprite_echo_generator.enabled = true
 	
+	player.set_collision_layer_bit(0, false)
+	player.set_collision_mask_bit(0, false)
+	
 	super_weapon.activate()
 
 
 func physics_process(delta):
 	if punch_timer.time_left == 0:
-		print("DONE")
 		return State.Idle
 	
 	ledge_punch_correction()
@@ -53,5 +55,8 @@ func ledge_punch_correction():
 
 
 func exit():
+	player.set_collision_layer_bit(0, true)
+	player.set_collision_mask_bit(0, true)
+	player.lose_powerskull(true)
 	player.sprite_echo_generator.enabled = false
 	super_weapon.deactivate()

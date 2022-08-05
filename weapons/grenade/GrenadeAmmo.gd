@@ -53,8 +53,7 @@ func explode():
 			continue
 		
 		if body is Player:
-			body.health -= 1
-			body.attacked(global_position, attack_force)
+			body.attacked(global_position, attack_force, 1)
 		elif body is Chest:
 			body.attacked(body.global_position.x - global_position.x, player)
 		elif body is Powerskull:

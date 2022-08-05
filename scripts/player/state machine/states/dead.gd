@@ -50,8 +50,6 @@ func vibrate():
 	var vibration_vector = vibrate_start_amplitude + amplitude_distance * anim_progress
 	vibration_vector.x = Globals.rng.randf_range(-vibration_vector.x, vibration_vector.x)
 	vibration_vector.y = Globals.rng.randf_range(-vibration_vector.y, vibration_vector.y)
-
-	print(str(vibration_vector))
 	
 	player.orientation.position = initial_orientation_pos + vibration_vector
 	

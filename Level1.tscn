@@ -228,9 +228,6 @@ rotating = true
 current = true
 zoom = Vector2( 2.5, 2.5 )
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_lock_": true
-}
 move_speed = 0.05
 zoom_speed = 0.05
 min_zoom = 0.75
@@ -241,19 +238,25 @@ margin = Vector2( 250, 250 )
 script = ExtResource( 19 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1892, 977 )
+position = Vector2( 1294, 985 )
+
+[node name="Player3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1971, 976 )
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
 position = Vector2( 2156, 975 )
 
+[node name="Player4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1839, 968 )
+
 [node name="PowerSkull" parent="." instance=ExtResource( 5 )]
-position = Vector2( 1972, 993 )
+position = Vector2( 1294, 931 )
 
 [node name="PowerSkull2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 2267, 988 )
+position = Vector2( 1297, 886 )
 
 [node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 2326, 994 )
+position = Vector2( 1294, 823 )
 
 [node name="PowerSkull4" parent="." instance=ExtResource( 5 )]
 position = Vector2( 805, 507 )

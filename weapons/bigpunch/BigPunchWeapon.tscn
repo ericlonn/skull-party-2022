@@ -13,6 +13,7 @@ shader_param/min_line_width = 5.0
 shader_param/freq = 1.0
 shader_param/block_size = 20.0
 shader_param/outline_colour = Plane( 0, 0, 0, 1 )
+shader_param/hit_stop = false
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 145.0

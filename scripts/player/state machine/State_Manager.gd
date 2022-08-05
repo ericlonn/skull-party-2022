@@ -22,7 +22,7 @@ func change_state(new_state: int) -> void:
 	if current_state:
 		current_state.exit()
 	
-
+	
 	current_state = states[new_state]
 	current_state.enter()
 

@@ -37,9 +37,9 @@ func set_color():
 func _on_Area2D_body_entered(body):
 	var firing_direction = sign(player.orientation.scale.x)
 	
-	if body is Player:
-		body.health -= 1
-		body.attacked(global_position, attack_force)
+	if body is Player and body != player:
+		body.attacked(global_position, attack_force, 1)
+		
 	elif body.is_in_group("level"):
 		player.velocity.x = punch_speed * -sign(firing_direction)
 		player.flip_orientation()

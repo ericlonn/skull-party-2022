@@ -926,38 +926,12 @@ tracks/0/keys = {
 } ]
 }
 tracks/1/type = "method"
-tracks/1/path = NodePath("../..")
+tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 2 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "queue_free"
-} ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("../../Orientation/Sprite:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 1.9 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
-}
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
 "times": PoolRealArray( 1.9 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -965,56 +939,81 @@ tracks/3/keys = {
 "method": "spawn_death_particles"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 tracks/4/type = "value"
-tracks/4/path = NodePath("../..:collision_layer")
+tracks/4/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 1.2 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:playing")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 1.2 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:frame")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
 "times": PoolRealArray( 0.9 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 0 ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath("../../VisualElements/DeathVisuals/DeathParticles")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("../../SpriteEchoGenerator:enabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath("../..")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
 tracks/8/type = "method"
-tracks/8/path = NodePath("../../VisualElements/DeathVisuals/DeathParticles")
+tracks/8/path = NodePath("../..")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -1023,6 +1022,18 @@ tracks/8/keys = {
 "times": PoolRealArray(  ),
 "transitions": PoolRealArray(  ),
 "values": [  ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("../..:collision_layer")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
 }
 
 [sub_resource type="Animation" id=58]
@@ -1041,7 +1052,7 @@ tracks/0/keys = {
 "values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("../..:collision_layer")
+tracks/1/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -1050,10 +1061,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 1 ]
+"values": [ false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:visible")
+tracks/2/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -1065,7 +1076,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:playing")
+tracks/3/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -1074,10 +1085,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ 0 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("../../VisualElements/DeathVisuals/DeathEnergy:frame")
+tracks/4/path = NodePath("../../SpriteEchoGenerator:enabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -1086,7 +1097,19 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 0 ]
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../..:collision_layer")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
 }
 
 [sub_resource type="VisualShaderNodeInput" id=39]
@@ -1237,6 +1260,7 @@ scale_curve = SubResource( 56 )
 
 [node name="Player" type="KinematicBody2D" groups=["players"]]
 position = Vector2( 0, -62 )
+collision_layer = 0
 collision_mask = 3
 collision/safe_margin = 0.16
 script = ExtResource( 2 )
@@ -1298,6 +1322,7 @@ collision_mask = 2
 [node name="SpriteEchoGenerator" parent="." instance=ExtResource( 27 )]
 sprite_path = NodePath("../Orientation/Sprite")
 x_orientation_path = NodePath("../Orientation")
+enabled = true
 fade_time = 0.2
 echo_gradient = SubResource( 29 )
 
@@ -1466,10 +1491,11 @@ texture = ExtResource( 34 )
 script = ExtResource( 41 )
 
 [node name="DeathEnergy" type="AnimatedSprite" parent="VisualElements/DeathVisuals"]
-visible = false
 position = Vector2( 0.222488, 25.292 )
 scale = Vector2( 0.427305, 0.427305 )
 frames = ExtResource( 40 )
+frame = 23
+playing = true
 
 [node name="DeathParticles" type="Particles2D" parent="VisualElements/DeathVisuals"]
 material = SubResource( 54 )

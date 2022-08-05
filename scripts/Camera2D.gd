@@ -23,7 +23,9 @@ func _ready():
 func _process(delta):
 	if !targets:
 		return
-		
+	
+	targets = get_tree().get_nodes_in_group("players")
+	
 	# Keep the camera centered between the targets
 	var p = Vector2.ZERO
 	for target in targets:
@@ -49,13 +51,13 @@ func add_target(t):
 		targets.append(t)
 
 func remove_target(t):
-	if t in targets:
+	if targets.has(t):
 		targets.erase(t)
 
 
-func on_Player_died(player, color, death_position):
-	remove_target(player)
-	add_delay_placeholder(death_position)
+#func on_Player_died(player, color, death_position):
+#	remove_target(player)
+#	add_delay_placeholder(death_position)
 
 
 func add_delay_placeholder(pos: Vector2):
@@ -82,3 +84,9 @@ func shake(duration: float = -1.0):
 		camera_shake.shake()
 	else:
 		camera_shake.shake(duration)
+
+
+func remove_invalid_instances():
+	for target in targets:
+		if not is_instance_valid(target):
+			targets.erase(target)
