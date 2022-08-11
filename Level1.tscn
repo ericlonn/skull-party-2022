@@ -238,7 +238,7 @@ margin = Vector2( 250, 250 )
 script = ExtResource( 19 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1294, 985 )
+position = Vector2( 1078, 984 )
 
 [node name="Player3" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1971, 976 )
@@ -248,5 +248,14 @@ position = Vector2( 2156, 975 )
 
 [node name="Player4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1839, 968 )
+
+[node name="PowerSkull" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1296, 931 )
+
+[node name="PowerSkull2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1291, 884 )
+
+[node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 1302, 825 )
 
 [connection signal="timeout" from="SkullSpawner/SkullSpawnTimer" to="SkullSpawner" method="_on_SkullSpawnTimer_timeout"]

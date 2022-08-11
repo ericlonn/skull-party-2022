@@ -3,12 +3,12 @@ extends BaseState
 
 
 func enter():
-	player.play_animation("fall")
-	var animation_length = player.animator.current_animation_length
+	player.visuals.play_animation("fall")
+	var animation_length = player.visuals.animator.current_animation_length
 	var rnd = RandomNumberGenerator.new()
 	rnd.randomize()
 	
-	player.animator.seek(rnd.randf_range(0.0, animation_length), true)
+	player.visuals.animator.seek(rnd.randf_range(0.0, animation_length), true)
 
 
 func process(delta: float):
@@ -23,31 +23,31 @@ func process(delta: float):
 	player.wall_jump_coyote_timer.time_left > 0 \
 	else false
 		
-	if player.jump_pressed and has_coyote_time:
+	if player.input.jump_pressed and has_coyote_time:
 		return State.Jump
 	
-	if player.is_wall_on_right and player.move_direction == 1:
+	if player.movement.is_wall_on_right and player.input.move_direction == 1:
 		return State.Wall_Slide
 	
-	if player.is_wall_on_left and player.move_direction == -1:
+	if player.movement.is_wall_on_left and player.input.move_direction == -1:
 		return State.Wall_Slide
 	
 	if player.is_on_floor():
 		if player.jump_buffer.time_left > 0:
 			return State.Jump
 		else:
-			player.orientation.squash()
+			player.visuals.squash()
 			return State.Idle
 	
-	if player.attack_pressed:
+	if player.input.attack_pressed:
 		return State.Attack
 	
 	return State.Null
 
 func physics_process(delta: float):
-	player.apply_gravity()
-	player.apply_x_movement()
-	player.orient_character()
-	player.apply_velocity()
+	player.movement.apply_gravity()
+	player.movement.apply_x_movement()
+	player.orientation.orient_character()
+	player.movement.apply_velocity()
 	
 	return State.Null

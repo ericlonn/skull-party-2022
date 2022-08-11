@@ -43,9 +43,9 @@ func _on_Area2D_body_entered(body):
 		used_state.attack_connected = true
 		player.hit_stop()
 	elif body.is_in_group("level"):
-		player.velocity.x = punch_speed * -sign(firing_direction)
+		player.movement.velocity.x = punch_speed * -sign(firing_direction)
 		Fmod.play_one_shot("event:/Player/Punch Landing", self)
 		player.hit_stop()
-		player.flip_orientation()
+		player.orientation.flip()
 	elif body is Chest:
 		body.attacked(firing_direction, player)

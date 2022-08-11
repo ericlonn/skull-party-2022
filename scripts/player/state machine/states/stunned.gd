@@ -14,11 +14,11 @@ var has_left_ground = false
 func enter():
 	player.stun_triggered = false
 	player.is_stunned = true
-	player.play_animation("stunned")
+	player.visuals.play_animation("stunned")
 	player.stun_timer.start()
-	player.sprite.modulate = Color(1,1,1,0.5)
-	stun_movement_x = sign(player.velocity.x)
-	player.orient_character(stun_movement_x)
+	player.visuals.sprite.modulate = Color(1,1,1,0.5)
+	stun_movement_x = sign(player.movement.velocity.x)
+	player.orientation.orient_character(stun_movement_x)
 	
 	player.hit_stop()
 	
@@ -68,25 +68,25 @@ func physics_process(delta):
 				if sign(collision.collider.position.x - player.position.x) == stun_movement_x:
 					stun_movement_x *= -1
 	
-	player.apply_gravity()
-#	player.apply_x_movement()
-	player.orient_character(stun_movement_x)
-	player.apply_velocity()
+	player.movement.apply_gravity()
+#	player.movement.apply_x_movement()
+	player.orientation.orient_character(stun_movement_x)
+	player.movement.apply_velocity()
 	
 	return State.Null
 
 
 func bounce():
 	var bounce_x_dir = sign(stun_movement_x)
-	player.velocity.x =  current_bounce_vector.x * bounce_x_dir
-	player.velocity.y = current_bounce_vector.y
+	player.movement.velocity.x =  current_bounce_vector.x * bounce_x_dir
+	player.movement.velocity.y = current_bounce_vector.y
 	
 	current_bounce_vector = current_bounce_vector.move_toward(Vector2.ZERO, bounce_degradation)
 
 func exit():
 	player.is_stunned = false
 	stun_over = false
-	player.sprite.modulate = Color.white
+	player.visuals.sprite.modulate = Color.white
 	
 	#no longer collide with chests
 	player.set_collision_mask_bit(3, true)

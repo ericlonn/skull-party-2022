@@ -12,6 +12,6 @@ func fire():
 	
 	
 	var knockback = knockback_x_force * player.orientation.scale.x * -1
-	player.velocity.x += knockback
+	player.movement.velocity.x += knockback
 	
 	Fmod.play_one_shot("event:/Weapons/Shotgun", self)

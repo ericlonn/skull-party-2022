@@ -16,7 +16,7 @@ func enter():
 	
 	initial_orientation_pos = player.orientation.position
 	
-	player.play_animation("death")
+	player.visuals.play_animation("death")
 	death_animator.play("death")
 
 

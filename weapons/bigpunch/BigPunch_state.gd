@@ -14,13 +14,13 @@ func enter():
 	
 	attack_direction = sign(player.orientation.scale.x)
 	
-	player.velocity = Vector2.ZERO
-	player.velocity.x = super_weapon.punch_speed * attack_direction
+	player.movement.velocity = Vector2.ZERO
+	player.movement.velocity.x = super_weapon.punch_speed * attack_direction
 
 	punch_timer.start()
 	
-	player.play_animation("punch")
-	player.sprite_echo_generator.enabled = true
+	player.visuals.play_animation("punch")
+	player.visuals.sprite_echo_generator.enabled = true
 	
 #	player.set_collision_layer_bit(0, false)
 #	player.set_collision_mask_bit(0, false)
@@ -36,13 +36,13 @@ func physics_process(delta):
 #	player.apply_gravity()
 #	player.apply_x_movement()
 #	player.orient_character()
-	player.apply_velocity()
+	player.movement.apply_velocity()
 	
 	return State.Null
 
 func ledge_punch_correction():
 	var delta = get_physics_process_delta_time()
-	var next_x_step = Vector2(player.velocity.x * delta, 0)
+	var next_x_step = Vector2(player.movement.velocity.x * delta, 0)
 	
 	if player.test_move(player.global_transform, next_x_step):
 		for i in x_move_margin_pixel:
@@ -60,6 +60,6 @@ func exit():
 
 	attack_connected = false
 	player.lose_powerskull(true)
-	player.sprite_echo_generator.enabled = false
+	player.visuals.sprite_echo_generator.enabled = false
 	super_weapon.deactivate()
 

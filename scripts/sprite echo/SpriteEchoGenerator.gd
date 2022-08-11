@@ -51,10 +51,19 @@ func spawn_new_echo():
 	new_echo.vframes = sprite_source.vframes
 	new_echo.frame = sprite_source.frame
 	new_echo.scale = sprite_source.scale
-	new_echo.scale.x *= sign(x_orientation_source.scale.x)
+#	new_echo.scale.x *= sign(x_orientation_source.scale.x)
 	
 	new_echo.fade_time = fade_time
 	
 	add_child(new_echo)
 	
 
+func set_color(color):
+	var alpha_point_0 = echo_gradient.get_color(0).a
+	var alpha_point_1 = echo_gradient.get_color(1).a
+	
+	var color_point_0 = Color(color.r, color.b, color.g, alpha_point_0)
+	var color_point_1 = Color(color.r, color.b, color.g, alpha_point_1)
+	
+	echo_gradient.set_color(0, color_point_0)
+	echo_gradient.set_color(1, color_point_1)

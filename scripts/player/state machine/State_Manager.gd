@@ -17,19 +17,19 @@ onready var states = {
 }
 
 var current_state: BaseState
+onready var player: Player = owner
 
 func change_state(new_state: int) -> void:
 	if current_state:
 		current_state.exit()
 
-	
 	current_state = states[new_state]
 	current_state.enter()
 
 # Initialize the state machine by giving each state a reference to the objects
 # owned by the parent that they should be able to take control of
 # and set a default state
-func init(player: Player) -> void:
+func init() -> void:
 	for child in get_children():
 		child.player = player
 

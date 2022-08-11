@@ -23,10 +23,10 @@ func process(delta):
 	return State.Idle
 
 func physics_process(delta):
-	player.apply_gravity()
-	player.apply_x_movement()
-	player.orient_character()
-	player.apply_velocity()
+	player.movement.apply_gravity()
+	player.movement.apply_x_movement()
+	player.orientation.orient_character()
+	player.movement.apply_velocity()
 	return State.Null
 
 

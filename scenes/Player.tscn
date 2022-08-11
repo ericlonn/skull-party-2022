@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=2]
+[gd_scene load_steps=85 format=2]
 
 [ext_resource path="res://scripts/player/state machine/states/attack.gd" type="Script" id=1]
 [ext_resource path="res://scripts/player/Player.gd" type="Script" id=2]
@@ -42,13 +42,14 @@
 [ext_resource path="res://sprites/splats/death_energy_spriteframes.tres" type="SpriteFrames" id=40]
 [ext_resource path="res://scenes/DeathVisuals.gd" type="Script" id=41]
 [ext_resource path="res://scenes/OrientationSync.gd" type="Script" id=42]
+[ext_resource path="res://scenes/SquashStretch.gd" type="Script" id=43]
+[ext_resource path="res://scenes/PlayerVisuals.gd" type="Script" id=44]
+[ext_resource path="res://scenes/PlayerInput.gd" type="Script" id=45]
+[ext_resource path="res://scenes/PlayerMovement.gd" type="Script" id=46]
 
 [sub_resource type="RectangleShape2D" id=30]
 resource_local_to_scene = true
 extents = Vector2( 24, 32 )
-
-[sub_resource type="Gradient" id=29]
-colors = PoolColorArray( 0, 1, 0.168627, 0.74902, 0.627451, 0, 1, 0.517647 )
 
 [sub_resource type="RectangleShape2D" id=28]
 extents = Vector2( 19.3333, 36.4009 )
@@ -200,7 +201,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 4.48984, -31.3333 ) ]
+"values": [ Vector2( 0, 66.22 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 34.53, -229 ) ]
 }
 
 [sub_resource type="Animation" id=52]
@@ -278,7 +291,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -0.634651, -33.8817 ) ]
+"values": [ Vector2( 0, 68.827 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -7.299, -229 ) ]
 }
 
 [sub_resource type="Animation" id=15]
@@ -356,7 +381,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 1, -33 ) ]
+"values": [ Vector2( 1, 64.66 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 12.213, -229 ) ]
 }
 
 [sub_resource type="Animation" id=16]
@@ -434,7 +471,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 5.52381, -30.6554 ) ]
+"values": [ Vector2( 0, 66.244 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 32.757, -229 ) ]
 }
 
 [sub_resource type="Animation" id=17]
@@ -511,7 +560,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 0.266666 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -5.04246, -33 ), Vector2( -3, -29.1851 ) ]
+"values": [ Vector2( 0, 70.642 ), Vector2( 0, 67.511 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -25.242, -229 ) ]
 }
 
 [sub_resource type="Animation" id=18]
@@ -589,7 +650,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 13.0561, -38.1973 ) ]
+"values": [ Vector2( 0.0161667, 58.796 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 90, -229 ) ]
 }
 
 [sub_resource type="Animation" id=19]
@@ -667,7 +740,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -2, -34.7081 ) ]
+"values": [ Vector2( 0, 62.416 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -18.9, -229 ) ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -744,7 +829,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -1.35979, -32.563 ) ]
+"values": [ Vector2( 0, 64.8 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -229 ) ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -821,7 +918,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -5.25513, -35.9396 ) ]
+"values": [ Vector2( 0, 61.423 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -38.117, -229 ) ]
 }
 
 [sub_resource type="StreamTexture" id=48]
@@ -901,7 +1010,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -6.47833, -31.7546 ) ]
+"values": [ Vector2( 0, 69.027 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:offset")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -41.965, -229 ) ]
 }
 
 [sub_resource type="Animation" id=53]
@@ -986,7 +1107,7 @@ tracks/5/keys = {
 "values": [  ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("../../SpriteEchoGenerator:enabled")
+tracks/6/path = NodePath("../../VisualElements/SpriteEchoGenerator:enabled")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -1051,7 +1172,7 @@ tracks/10/keys = {
 resource_name = "reset"
 length = 2.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("../../Orientation/Sprite:visible")
+tracks/0/path = NodePath("../../Sprite:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -1099,7 +1220,7 @@ tracks/3/keys = {
 "values": [ 0 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("../../SpriteEchoGenerator:enabled")
+tracks/4/path = NodePath("../../VisualElements/SpriteEchoGenerator:enabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -1340,6 +1461,9 @@ angle_random = 1.0
 scale_random = 0.36
 scale_curve = SubResource( 56 )
 
+[sub_resource type="Gradient" id=29]
+colors = PoolColorArray( 1, 1, 1, 0.74902, 1, 1, 1, 0.517647 )
+
 [node name="Player" type="KinematicBody2D" groups=["players"]]
 position = Vector2( 0, -62 )
 collision_layer = 0
@@ -1347,17 +1471,35 @@ collision_mask = 0
 collision/safe_margin = 0.16
 script = ExtResource( 2 )
 __meta__ = {
+"_edit_horizontal_guides_": [ -33.7211 ],
 "_edit_vertical_guides_": [ 100.0 ]
 }
-jump_height = 150.0
-jump_time_to_peak = 0.3
-jump_time_to_descent = 0.25
+
+[node name="Logic" type="Node" parent="."]
+
+[node name="Movement" type="Node" parent="Logic"]
+unique_name_in_owner = true
+script = ExtResource( 46 )
+
+[node name="Input" type="Node" parent="Logic"]
+unique_name_in_owner = true
+script = ExtResource( 45 )
+
+[node name="Orientation" type="Node2D" parent="Logic"]
+unique_name_in_owner = true
+position = Vector2( 0, 1 )
+script = ExtResource( 29 )
+
+[node name="Visuals" type="Node" parent="Logic"]
+unique_name_in_owner = true
+script = ExtResource( 44 )
 
 [node name="PhysicsColliderShape" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 30 )
 shape = SubResource( 30 )
 
 [node name="RightWallCheck" type="Node2D" parent="."]
+unique_name_in_owner = true
 visible = false
 position = Vector2( 0, 30 )
 script = ExtResource( 31 )
@@ -1380,6 +1522,7 @@ cast_to = Vector2( 50, 0 )
 collision_mask = 2
 
 [node name="LeftWallCheck" type="Node2D" parent="."]
+unique_name_in_owner = true
 visible = false
 position = Vector2( 0, 30 )
 script = ExtResource( 31 )
@@ -1401,47 +1544,47 @@ enabled = true
 cast_to = Vector2( -50, 0 )
 collision_mask = 2
 
-[node name="SpriteEchoGenerator" parent="." instance=ExtResource( 27 )]
-sprite_path = NodePath("../Orientation/Sprite")
-x_orientation_path = NodePath("../Orientation")
-enabled = true
-fade_time = 0.2
-echo_gradient = SubResource( 29 )
-
-[node name="Orientation" type="Node2D" parent="."]
+[node name="WeaponSlot" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2( 0, 63 )
-script = ExtResource( 29 )
-squash_amount = 0.1
-stretch_amount = 0.1
-
-[node name="WeaponSlot" type="Node2D" parent="Orientation"]
 script = ExtResource( 35 )
 
-[node name="BulletSpawnPoint" type="Node2D" parent="Orientation/WeaponSlot"]
+[node name="BulletSpawnPoint" type="Node2D" parent="WeaponSlot"]
 position = Vector2( 24, -32 )
 
-[node name="Punch" type="Area2D" parent="Orientation" groups=["attack_box"]]
+[node name="OrientationSync" type="Node" parent="WeaponSlot"]
+script = ExtResource( 42 )
+
+[node name="Punch" type="Area2D" parent="." groups=["attack_box"]]
+unique_name_in_owner = true
+position = Vector2( 0, 63 )
 collision_layer = 256
 collision_mask = 11
 monitoring = false
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Orientation/Punch"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Punch"]
 position = Vector2( 13.5991, -39.6668 )
 rotation = 1.5708
 shape = SubResource( 28 )
 
-[node name="Sprite" type="Sprite" parent="Orientation"]
+[node name="OrientationSync" type="Node" parent="Punch"]
+script = ExtResource( 42 )
+
+[node name="Sprite" type="Sprite" parent="."]
+unique_name_in_owner = true
 material = SubResource( 51 )
-position = Vector2( 4.48984, -31.3333 )
+position = Vector2( 0, 66.22 )
 scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 30 )
 normal_map = ExtResource( 28 )
+offset = Vector2( 34.53, -229 )
 hframes = 6
 vframes = 5
 region_rect = Rect2( 0, 0, 100, 100 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Orientation/Sprite"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+unique_name_in_owner = true
 autoplay = "RESET"
 anims/RESET = SubResource( 14 )
 anims/death = SubResource( 52 )
@@ -1454,36 +1597,48 @@ anims/slide = SubResource( 23 )
 anims/stunned = SubResource( 21 )
 anims/wall_slide = SubResource( 27 )
 
-[node name="SquashStretch" type="Tween" parent="Orientation"]
+[node name="OrientationSync" type="Node" parent="Sprite"]
+script = ExtResource( 42 )
+
+[node name="SquashStretch" type="Tween" parent="Sprite"]
+unique_name_in_owner = true
+script = ExtResource( 43 )
 
 [node name="Timers" type="Node" parent="."]
 
 [node name="JumpBuffer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
 
 [node name="StunTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 2.0
 one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 process_mode = 0
 wait_time = 0.075
 one_shot = true
 
 [node name="WallJumpCoyoteTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 0.2
 one_shot = true
 script = ExtResource( 24 )
 
 [node name="AttackLimitTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 0.3
 one_shot = true
 
 [node name="HitStopTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 one_shot = true
 
 [node name="State_Manager" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource( 5 )
 
 [node name="idle" type="Node" parent="State_Manager"]
@@ -1525,23 +1680,10 @@ autoplay = "reset"
 anims/death = SubResource( 53 )
 anims/reset = SubResource( 58 )
 
-[node name="DebugLabel" type="Label" parent="."]
-margin_left = -100.0
-margin_top = -30.0
-margin_right = 100.0
-margin_bottom = -4.0
-rect_pivot_offset = Vector2( 100, 0 )
-custom_fonts/font = ExtResource( 3 )
-align = 1
-
-[node name="DebugLine" type="Line2D" parent="."]
-points = PoolVector2Array( 0, 0, 0, 0 )
-width = 2.0
-default_color = Color( 1, 0, 1, 1 )
-
 [node name="VisualElements" type="Node2D" parent="."]
 
 [node name="SlideParticles" type="Particles2D" parent="VisualElements"]
+unique_name_in_owner = true
 material = SubResource( 43 )
 position = Vector2( -24.4055, 62 )
 emitting = false
@@ -1555,6 +1697,7 @@ texture = ExtResource( 33 )
 script = ExtResource( 42 )
 
 [node name="PowerUpVisuals" type="Node2D" parent="VisualElements"]
+unique_name_in_owner = true
 script = ExtResource( 10 )
 
 [node name="PowerUpFlames" type="Particles2D" parent="VisualElements/PowerUpVisuals"]
@@ -1571,10 +1714,11 @@ process_material = SubResource( 38 )
 texture = ExtResource( 34 )
 
 [node name="DeathVisuals" type="Node2D" parent="VisualElements"]
+unique_name_in_owner = true
 script = ExtResource( 41 )
 
 [node name="DeathEnergy" type="AnimatedSprite" parent="VisualElements/DeathVisuals"]
-position = Vector2( 0.222488, 25.292 )
+position = Vector2( -5.34216, 25.292 )
 scale = Vector2( 0.427305, 0.427305 )
 frames = ExtResource( 40 )
 frame = 23
@@ -1593,6 +1737,29 @@ texture = ExtResource( 39 )
 
 [node name="PunchVisuals" type="Node2D" parent="VisualElements"]
 
-[connection signal="orientation_updated" from="Orientation" to="VisualElements/SlideParticles/OrientationSync" method="_on_Orientation_orientation_updated"]
-[connection signal="body_entered" from="Orientation/Punch" to="State_Manager/punch" method="_on_Punch_body_entered"]
+[node name="DebugLabel" type="Label" parent="VisualElements"]
+unique_name_in_owner = true
+margin_left = -100.0
+margin_top = -30.0
+margin_right = 100.0
+margin_bottom = -4.0
+rect_pivot_offset = Vector2( 100, 0 )
+custom_fonts/font = ExtResource( 3 )
+align = 1
+
+[node name="DebugLine" type="Line2D" parent="VisualElements"]
+unique_name_in_owner = true
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 2.0
+default_color = Color( 1, 0, 1, 1 )
+
+[node name="SpriteEchoGenerator" parent="VisualElements" instance=ExtResource( 27 )]
+unique_name_in_owner = true
+sprite_path = NodePath("../../Sprite")
+x_orientation_path = NodePath("../../Logic/Orientation")
+enabled = true
+fade_time = 0.2
+echo_gradient = SubResource( 29 )
+
+[connection signal="body_entered" from="Punch" to="State_Manager/punch" method="_on_Punch_body_entered"]
 [connection signal="timeout" from="Timers/StunTimer" to="State_Manager/stunned" method="_on_StunTimer_timeout"]

@@ -2,7 +2,7 @@ extends BaseState
 
 
 func enter():
-	player.play_animation("idle")
+	player.visuals.play_animation("idle")
 
 func process(delta: float):
 	if player.is_dead:
@@ -11,11 +11,11 @@ func process(delta: float):
 	if player.stun_triggered:
 		return State.Stunned
 	
-	if player.jump_pressed:
+	if player.input.jump_pressed:
 		return State.Jump
-	if player.attack_pressed:
+	if player.input.attack_pressed:
 		return State.Attack
-	if player.move_direction != 0:
+	if player.input.move_direction != 0:
 		return State.Run
 	
 	if not player.is_on_floor():
@@ -25,8 +25,8 @@ func process(delta: float):
 	return State.Null
 
 func physics_process(delta: float):
-	player.apply_gravity()
-	player.apply_x_movement()
-	player.orient_character()
-	player.apply_velocity()
+	player.movement.apply_gravity()
+	player.movement.apply_x_movement()
+	player.orientation.orient_character()
+	player.movement.apply_velocity()
 	return State.Null

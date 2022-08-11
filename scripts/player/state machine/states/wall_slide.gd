@@ -5,46 +5,46 @@ var min_y_velocity_on_entry = -300.0
 var max_y_velocity_on_entry = 150.0
 
 func enter():
-	player.play_animation("wall_slide")
+	player.visuals.play_animation("wall_slide")
 	
-	if player.is_wall_on_right and player.move_direction == 1:
+	if player.movement.is_wall_on_right and player.input.move_direction == 1:
 		wall_slide_x_dir = 1
 	
-	if player.is_wall_on_left and player.move_direction == -1:
+	if player.movement.is_wall_on_left and player.input.move_direction == -1:
 		wall_slide_x_dir = -1
 	
-	if player.velocity.y < min_y_velocity_on_entry:
-		player.velocity.y = min_y_velocity_on_entry
+	if player.movement.velocity.y < min_y_velocity_on_entry:
+		player.movement.velocity.y = min_y_velocity_on_entry
 	
-	if player.velocity.y > max_y_velocity_on_entry:
-		player.velocity.y = max_y_velocity_on_entry
+	if player.movement.velocity.y > max_y_velocity_on_entry:
+		player.movement.velocity.y = max_y_velocity_on_entry
 	
 
 func process(delta):
 	if player.is_dead:
 		return State.Dead
 	
-	if player.is_wall_on_left == false and wall_slide_x_dir == -1:
+	if player.movement.is_wall_on_left == false and wall_slide_x_dir == -1:
 		return State.Idle
 		
-	if player.is_wall_on_right == false and wall_slide_x_dir == 1:
+	if player.movement.is_wall_on_right == false and wall_slide_x_dir == 1:
 		return State.Idle
 	
-	if player.move_direction == -wall_slide_x_dir:
+	if player.input.move_direction == -wall_slide_x_dir:
 		return State.Idle
 		
-	if player.move_direction == 0:
+	if player.input.move_direction == 0:
 		return State.Idle
 	
 	if player.is_on_floor():
 		return State.Idle
 	
-	if player.jump_pressed:
+	if player.input.jump_pressed:
 		player.position.x += -5 * wall_slide_x_dir
 		return State.Jump
 	
-	if player.attack_pressed:
-		player.flip_orientation()
+	if player.input.attack_pressed:
+		player.orientation.flip()
 		return State.Attack
 	
 	return State.Null
@@ -57,9 +57,9 @@ func exit():
 
 
 func physics_process(delta):
-	player.apply_gravity(true)
-	player.apply_x_movement()
-	player.orient_character()
-	player.apply_velocity()
+	player.movement.apply_gravity(true)
+	player.movement.apply_x_movement()
+	player.orientation.orient_character()
+	player.movement.apply_velocity()
 	
 	return State.Null

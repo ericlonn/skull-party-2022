@@ -2,14 +2,14 @@ extends BaseState
 
 func enter():
 	if player.wall_jump_coyote_timer.time_left > 0:
-		player.apply_jump(-player.wall_jump_coyote_timer.buffered_wall_slide_x_dir)
-	elif player.is_wall_on_right and player.move_direction == 1:
-		player.apply_jump(-1)
-	elif player.is_wall_on_left and player.move_direction == -1:
-		player.apply_jump(1)
+		player.movement.apply_jump(-player.wall_jump_coyote_timer.buffered_wall_slide_x_dir)
+	elif player.movement.is_wall_on_right and player.input.move_direction == 1:
+		player.movement.apply_jump(-1)
+	elif player.movement.is_wall_on_left and player.input.move_direction == -1:
+		player.movement.apply_jump(1)
 	else:
-		player.apply_jump()
-	player.play_animation("jump")
+		player.movement.apply_jump()
+	player.visuals.play_animation("jump")
 	Fmod.play_one_shot("event:/Player/Jump", self)
 
 func process(delta: float):
@@ -25,24 +25,24 @@ func process(delta: float):
 		else:
 			return State.Idle
 	
-	if player.is_wall_on_right and player.move_direction == 1:
+	if player.movement.is_wall_on_right and player.input.move_direction == 1:
 		return State.Wall_Slide
 	
-	if player.is_wall_on_left and player.move_direction == -1:
+	if player.movement.is_wall_on_left and player.input.move_direction == -1:
 		return State.Wall_Slide
 	
-	if player.attack_pressed:
+	if player.input.attack_pressed:
 		return State.Attack
 	
-	if player.velocity.y > 0:
+	if player.movement.velocity.y > 0:
 		return State.Fall
 	
 	return State.Null
 
 func physics_process(delta: float):
-	player.apply_gravity()
-	player.apply_x_movement()
-	player.orient_character()
-	player.apply_velocity()
+	player.movement.apply_gravity()
+	player.movement.apply_x_movement()
+	player.orientation.orient_character()
+	player.movement.apply_velocity()
 	
 	return State.Null

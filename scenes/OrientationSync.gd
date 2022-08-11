@@ -1,10 +1,14 @@
 extends Node
 
+onready var player = owner as Player
 onready var parent = get_parent()
 
 var current_orientation = 1
 
-func _on_Orientation_orientation_updated(orientation: int):
+func _ready():
+	$"%Orientation".connect("orientation_updated", self, "orientation_updated")
+
+func orientation_updated(orientation: int):
 	if orientation == 0:
 		return
 		

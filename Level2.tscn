@@ -1,0 +1,198 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Main.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Camera2D.gd" type="Script" id=3]
+[ext_resource path="res://scenes/SkullSpawnPoint.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/PowerSkull.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/PlayerInfo.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scripts/UI.gd" type="Script" id=7]
+[ext_resource path="res://scripts/skull spawner/SkullSpawner.gd" type="Script" id=8]
+[ext_resource path="res://scripts/FPSLabel.gd" type="Script" id=9]
+[ext_resource path="res://sprites/tiles/nature.tres" type="TileSet" id=10]
+[ext_resource path="res://scenes/Chest.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/SplatLayer.tscn" type="PackedScene" id=12]
+[ext_resource path="res://sprites/bg/space/Stars Small_1.png" type="Texture" id=13]
+[ext_resource path="res://sprites/bg/space/Nebula Gray.png" type="Texture" id=14]
+[ext_resource path="res://sprites/explosions/splat1.png" type="Texture" id=15]
+[ext_resource path="res://sprites/bg/space/Stars Small_2.png" type="Texture" id=16]
+[ext_resource path="res://sprites/explosions/splat2.png" type="Texture" id=17]
+[ext_resource path="res://sprites/explosions/splat3.png" type="Texture" id=18]
+[ext_resource path="res://scripts/CameraShake.gd" type="Script" id=19]
+
+[sub_resource type="StyleBoxFlat" id=1]
+resource_local_to_scene = true
+bg_color = Color( 0.992157, 0.74902, 0.482353, 0 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+resource_local_to_scene = true
+bg_color = Color( 0.992157, 0.74902, 0.482353, 0 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+resource_local_to_scene = true
+bg_color = Color( 0.992157, 0.74902, 0.482353, 0 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+resource_local_to_scene = true
+bg_color = Color( 0.992157, 0.74902, 0.482353, 0 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 1, 0, 0, 1 )
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="." groups=["cameras"]]
+position = Vector2( 1250, 549 )
+offset = Vector2( 0, -50 )
+rotating = true
+current = true
+zoom = Vector2( 2.5, 2.5 )
+script = ExtResource( 3 )
+move_speed = 0.05
+zoom_speed = 0.05
+min_zoom = 1.25
+max_zoom = 1000
+margin = Vector2( 250, 250 )
+
+[node name="CameraShake" type="Node" parent="Camera2D"]
+script = ExtResource( 19 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 7 )
+
+[node name="FPSLabel" type="Label" parent="UI"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "text"
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="UI" type="Control" parent="UI"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -986.0
+margin_top = 7.0
+margin_right = 934.0
+margin_bottom = 1062.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -486.0
+margin_right = 486.0
+margin_bottom = 169.0
+alignment = 1
+
+[node name="PlayerInfo1" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
+margin_left = 120.0
+margin_right = 300.0
+rect_clip_content = true
+custom_styles/panel = SubResource( 1 )
+
+[node name="PlayerInfo2" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
+margin_left = 304.0
+margin_right = 484.0
+rect_clip_content = true
+custom_styles/panel = SubResource( 2 )
+
+[node name="PlayerInfo3" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
+margin_left = 488.0
+margin_right = 668.0
+rect_clip_content = true
+custom_styles/panel = SubResource( 3 )
+
+[node name="PlayerInfo4" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
+margin_left = 672.0
+margin_right = 852.0
+rect_clip_content = true
+custom_styles/panel = SubResource( 4 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.2, 0.2 )
+motion_mirroring = Vector2( 1, 1 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 1233, 157 )
+texture = ExtResource( 14 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.5, 0.5 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+modulate = Color( 1, 1, 1, 0.427451 )
+position = Vector2( 1233, 157 )
+texture = ExtResource( 13 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.7, 0.7 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer3"]
+visible = false
+modulate = Color( 1, 1, 1, 0.427451 )
+position = Vector2( 1233, 157 )
+texture = ExtResource( 16 )
+
+[node name="TileMap2" type="TileMap" parent="." groups=["level"]]
+tile_set = ExtResource( 10 )
+cell_size = Vector2( 32, 32 )
+collision_layer = 2
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 21, 0, 1, 22, 0, 196610, 23, 0, 196610, 24, 0, 196610, 25, 0, 196610, 26, 0, 196610, 27, 0, 196610, 28, 0, 196610, 29, 0, 196610, 30, 0, 196610, 31, 0, 196610, 32, 0, 196610, 33, 0, 196610, 34, 0, 196610, 35, 0, 196610, 36, 0, 196610, 37, 0, 196610, 38, 0, 196610, 39, 0, 196610, 40, 0, 196610, 41, 0, 196610, 42, 0, 196610, 43, 0, 196610, 44, 0, 196610, 45, 0, 196610, 46, 0, 196610, 47, 0, 196610, 48, 0, 196610, 49, 0, 196610, 50, 0, 196610, 51, 0, 196610, 52, 0, 196610, 53, 0, 3, 65557, 0, 65536, 65589, 0, 65536, 131093, 0, 65536, 131125, 0, 65536, 196629, 0, 65536, 196661, 0, 65536, 262165, 0, 65536, 262197, 0, 65536, 327701, 0, 65536, 327733, 0, 65536, 393237, 0, 65536, 393269, 0, 65536, 458773, 0, 65536, 458805, 0, 65536, 524309, 0, 65536, 524341, 0, 65536, 589845, 0, 65536, 589877, 0, 65536, 655381, 0, 65536, 655413, 0, 65536, 720917, 0, 65536, 720949, 0, 65536, 786453, 0, 65536, 786485, 0, 65536, 851989, 0, 65536, 852021, 0, 65536, 917525, 0, 65536, 917557, 0, 65536, 983061, 0, 65536, 983093, 0, 65536, 1048597, 0, 65536, 1048629, 0, 65536, 1114133, 0, 65536, 1114165, 0, 65536, 1179669, 0, 65536, 1179701, 0, 65536, 1245205, 0, 65536, 1245237, 0, 65536, 1310741, 0, 65536, 1310773, 0, 65536, 1376277, 0, 65536, 1376309, 0, 65536, 1441813, 0, 65536, 1441845, 0, 65536, 1507349, 0, 65536, 1507381, 0, 65536, 1572885, 0, 65536, 1572917, 0, 65536, 1638421, 0, 65536, 1638453, 0, 65536, 1703957, 0, 65536, 1703989, 0, 65536, 1769493, 0, 65536, 1769498, 1, 196609, 1769499, 1, 196610, 1769500, 1, 196610, 1769501, 1, 196610, 1769502, 1, 196610, 1769503, 1, 196610, 1769504, 1, 196610, 1769505, 1, 196611, 1769513, 1, 196609, 1769514, 1, 196610, 1769515, 1, 196610, 1769516, 1, 196610, 1769517, 1, 196610, 1769518, 1, 196610, 1769519, 1, 196610, 1769520, 1, 196611, 1769525, 0, 65536, 1835029, 0, 65536, 1835061, 0, 65536, 1900565, 0, 65536, 1900597, 0, 65536, 1966101, 0, 65536, 1966133, 0, 65536, 2031637, 0, 65536, 2031669, 0, 65536, 2097173, 0, 65536, 2097205, 0, 65536, 2162709, 0, 131073, 2162710, 0, 196610, 2162711, 0, 196610, 2162712, 0, 196610, 2162713, 0, 196610, 2162714, 0, 196610, 2162715, 0, 196610, 2162716, 0, 196610, 2162717, 0, 196610, 2162718, 0, 196610, 2162719, 0, 196610, 2162720, 0, 196610, 2162721, 0, 196610, 2162722, 0, 196610, 2162723, 0, 196610, 2162724, 0, 196610, 2162725, 0, 196610, 2162726, 0, 196610, 2162727, 0, 196610, 2162728, 0, 196610, 2162729, 0, 196610, 2162730, 0, 196610, 2162731, 0, 196610, 2162732, 0, 196610, 2162733, 0, 196610, 2162734, 0, 196610, 2162735, 0, 196610, 2162736, 0, 196610, 2162737, 0, 196610, 2162738, 0, 196610, 2162739, 0, 196610, 2162740, 0, 196610, 2162741, 0, 131075 )
+
+[node name="SplatLayer" parent="TileMap2" instance=ExtResource( 12 )]
+splat_textures = [ ExtResource( 15 ), ExtResource( 17 ), ExtResource( 18 ) ]
+
+[node name="SkullSpawner" type="Node" parent="."]
+script = ExtResource( 8 )
+skull_spawn_variation = 1.0
+furthest_point_variation = 15
+powerskull_scene = ExtResource( 5 )
+chest_scene = ExtResource( 11 )
+
+[node name="SkullSpawnTimer" type="Timer" parent="SkullSpawner"]
+
+[node name="SkullSpawnPoint" parent="SkullSpawner" instance=ExtResource( 4 )]
+position = Vector2( 968, 768 )
+
+[node name="SkullSpawnPoint2" parent="SkullSpawner" instance=ExtResource( 4 )]
+position = Vector2( 1448, 771 )
+
+[node name="SkullSpawnPoint3" parent="SkullSpawner" instance=ExtResource( 4 )]
+position = Vector2( 1608, 978 )
+
+[node name="SkullSpawnPoint4" parent="SkullSpawner" instance=ExtResource( 4 )]
+position = Vector2( 1204, 974 )
+
+[node name="SkullSpawnPoint5" parent="SkullSpawner" instance=ExtResource( 4 )]
+position = Vector2( 769, 969 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1078, 984 )
+
+[node name="Player2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1489, 981 )
+
+[connection signal="timeout" from="SkullSpawner/SkullSpawnTimer" to="SkullSpawner" method="_on_SkullSpawnTimer_timeout"]

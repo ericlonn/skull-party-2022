@@ -13,17 +13,17 @@ var punch_speed = 1200.0
 func enter():
 	attack_direction = sign(player.orientation.scale.x)
 
-	player.velocity = Vector2.ZERO
-	player.velocity.x = punch_speed * attack_direction
+	player.movement.velocity = Vector2.ZERO
+	player.movement.velocity.x = punch_speed * attack_direction
 
 	punch_timer.start()
 	
 	player.punch.monitoring = true
 	player.punch.monitorable = true
 	player.punch.visible = true
-	player.play_animation("punch")
+	player.visuals.play_animation("punch")
 	
-	player.sprite_echo_generator.enabled = true
+	player.visuals.sprite_echo_generator.enabled = true
 
 func process(delta: float):
 	if player.is_dead:
@@ -46,7 +46,7 @@ func physics_process(delta):
 #	player.apply_gravity()
 #	player.apply_x_movement()
 #	player.orient_character()
-	player.apply_velocity()
+	player.movement.apply_velocity()
 	
 	return State.Null
 
@@ -55,13 +55,13 @@ func exit():
 	player.punch.monitoring = false
 	player.punch.monitorable = false
 	player.punch.visible = false
-	player.sprite_echo_generator.enabled = false
+	player.visuals.sprite_echo_generator.enabled = false
 	player.attack_limit_timer.start()
 
 
 func ledge_punch_correction():
 	var delta = get_physics_process_delta_time()
-	var next_x_step = Vector2(player.velocity.x * delta, 0)
+	var next_x_step = Vector2(player.movement.velocity.x * delta, 0)
 	
 	if player.test_move(player.global_transform, next_x_step):
 		for i in x_move_margin_pixel:
@@ -77,12 +77,12 @@ func _on_Punch_body_entered(body):
 	print(body.name)
 	if body != player and body is Player:
 		body.attacked(player.position, attack_force)
-		player.bonk(body.position)
+		player.movement.bonk(body.position)
 		attack_connected = true
 	elif body.is_in_group("level"):
-		player.bonk(player.position + Vector2.RIGHT * attack_direction )
+		player.movement.bonk(player.position + Vector2.RIGHT * attack_direction )
 		attack_connected = true
 	elif body is Chest:
-		body.attacked(player.velocity.x, player)
-		player.bonk(player.position + Vector2.RIGHT * attack_direction )
+		body.attacked(player.movement.velocity.x, player)
+		player.movement.bonk(player.position + Vector2.RIGHT * attack_direction )
 		attack_connected = true

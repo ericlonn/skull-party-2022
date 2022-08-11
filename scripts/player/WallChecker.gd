@@ -10,6 +10,10 @@ func _ready():
 func is_colliding() -> bool:
 	var result = false
 	var colliding_count = 0
+	
+	if wall_checkers.size() == 0:
+		return result
+	
 	for checker in wall_checkers:
 		if checker.is_colliding():
 			colliding_count += 1
