@@ -1,4 +1,4 @@
-extends Ammo
+extends Ammo_rigid
 
 onready var sprite: Sprite = $Sprite
 onready var destroy_particles: Particles2D = $DestroyedParticles

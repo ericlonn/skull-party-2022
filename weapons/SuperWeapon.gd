@@ -14,7 +14,7 @@ func _ready():
 
 
 func fire():
-	var ammo_instance: Ammo = ammo_scene.instance()
+	var ammo_instance = ammo_scene.instance()
 	ammo_instance.global_position = bullet_spawn_point.global_position
 	ammo_instance.firing_direction = sign(player.orientation.scale.x)
 	ammo_instance.player = player

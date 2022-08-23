@@ -1,12 +1,8 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://weapons/shotgun/ShotgunAmmo.gd" type="Script" id=1]
-
-[sub_resource type="Curve" id=48]
-_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 1.4, 0.0, 0, 0 ]
-
-[sub_resource type="RectangleShape2D" id=46]
-extents = Vector2( 20, 3 )
+[ext_resource path="res://weapons/seekingmissile/SeekingMissileAmmo.gd" type="Script" id=1]
+[ext_resource path="res://sprites/particles/fire_01 (Custom).png" type="Texture" id=2]
+[ext_resource path="res://sprites/white.png" type="Texture" id=4]
 
 [sub_resource type="VisualShaderNodeInput" id=39]
 input_name = "texture"
@@ -75,59 +71,73 @@ curve = SubResource( 44 )
 
 [sub_resource type="ParticlesMaterial" id=45]
 emission_shape = 1
-emission_sphere_radius = 0.01
+emission_sphere_radius = 18.57
 flag_disable_z = true
-spread = 180.0
-flatness = 0.74
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 286.85
+spread = 23.0
+gravity = Vector3( 0, 1000, 0 )
+initial_velocity = 750.0
 initial_velocity_random = 0.16
+angular_velocity = 1000.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 linear_accel = 3.92
-scale = 4.0
+scale = 0.65
 scale_random = 0.73
 scale_curve = SubResource( 6 )
 
-[sub_resource type="RectangleShape2D" id=47]
-extents = Vector2( 20, 3 )
+[sub_resource type="RectangleShape2D" id=46]
+extents = Vector2( 20, 8.5 )
 
-[node name="ShotgunAmmo" type="KinematicBody2D"]
-collision_layer = 0
-collision_mask = 0
+[node name="SeekingMissileAmmo" type="RigidBody2D"]
+collision_layer = 16
+gravity_scale = 0.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 40.0, -40.0 ]
+}
 
-[node name="Line2D" type="Line2D" parent="."]
-points = PoolVector2Array( 0, 0, 40, 0 )
-width = 5.0
-width_curve = SubResource( 48 )
-default_color = Color( 1, 0.992157, 0.4, 1 )
-end_cap_mode = 2
+[node name="DestroyedParticles" type="Particles2D" parent="."]
+material = SubResource( 43 )
+emitting = false
+amount = 35
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 45 )
+texture = ExtResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="." groups=["ammo"]]
 collision_layer = 2048
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 20, 0 )
+modulate = Color( 0, 0.752941, 1, 1 )
+position = Vector2( 20, 0.5 )
 shape = SubResource( 46 )
 
-[node name="DestroyedParticles" type="Particles2D" parent="."]
-material = SubResource( 43 )
-emitting = false
-amount = 15
-lifetime = 0.1
-one_shot = true
-explosiveness = 1.0
-process_material = SubResource( 45 )
+[node name="Line2D" type="Line2D" parent="."]
+width = 3.0
+joint_mode = 2
 
-[node name="LifeTimer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
-autostart = true
+[node name="sprite" type="Node2D" parent="."]
+position = Vector2( -40, 0 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Polygon2D" type="Polygon2D" parent="sprite"]
+color = Color( 0.627451, 0.627451, 0.627451, 1 )
+polygon = PoolVector2Array( 13, 3, 0, 8, 0, 2 )
+
+[node name="Polygon2D2" type="Polygon2D" parent="sprite"]
+scale = Vector2( 1, -1 )
+color = Color( 0.627451, 0.627451, 0.627451, 1 )
+polygon = PoolVector2Array( 13, 3, 0, 8, 0, 2 )
+
+[node name="White" type="Sprite" parent="sprite"]
 position = Vector2( 20, 0 )
-shape = SubResource( 47 )
+scale = Vector2( 10, 2 )
+texture = ExtResource( 4 )
+
+[node name="Polygon2D3" type="Polygon2D" parent="sprite"]
+color = Color( 0.627451, 0.627451, 0.627451, 1 )
+polygon = PoolVector2Array( 40, 4, 47, 0, 40, -4 )
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

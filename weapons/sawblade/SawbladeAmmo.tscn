@@ -1,12 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://weapons/shotgun/ShotgunAmmo.gd" type="Script" id=1]
+[ext_resource path="res://weapons/sawblade/SawbladeAmmo.gd" type="Script" id=1]
+[ext_resource path="res://sprites/particles/fire_01 (Custom).png" type="Texture" id=2]
+[ext_resource path="res://sprites/weapons/sawblade.png" type="Texture" id=3]
 
-[sub_resource type="Curve" id=48]
-_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 1.4, 0.0, 0, 0 ]
-
-[sub_resource type="RectangleShape2D" id=46]
-extents = Vector2( 20, 3 )
+[sub_resource type="CircleShape2D" id=46]
+radius = 17.0294
 
 [sub_resource type="VisualShaderNodeInput" id=39]
 input_name = "texture"
@@ -75,59 +74,50 @@ curve = SubResource( 44 )
 
 [sub_resource type="ParticlesMaterial" id=45]
 emission_shape = 1
-emission_sphere_radius = 0.01
+emission_sphere_radius = 18.57
 flag_disable_z = true
-spread = 180.0
-flatness = 0.74
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 286.85
+spread = 23.0
+gravity = Vector3( 0, 1000, 0 )
+initial_velocity = 750.0
 initial_velocity_random = 0.16
+angular_velocity = 1000.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 linear_accel = 3.92
-scale = 4.0
+scale = 0.65
 scale_random = 0.73
 scale_curve = SubResource( 6 )
 
-[sub_resource type="RectangleShape2D" id=47]
-extents = Vector2( 20, 3 )
+[sub_resource type="CircleShape2D" id=47]
+radius = 16.0
 
-[node name="ShotgunAmmo" type="KinematicBody2D"]
-collision_layer = 0
-collision_mask = 0
+[node name="SawbladeAmmo" type="KinematicBody2D"]
+collision_layer = 16
 script = ExtResource( 1 )
-
-[node name="Line2D" type="Line2D" parent="."]
-points = PoolVector2Array( 0, 0, 40, 0 )
-width = 5.0
-width_curve = SubResource( 48 )
-default_color = Color( 1, 0.992157, 0.4, 1 )
-end_cap_mode = 2
 
 [node name="Area2D" type="Area2D" parent="." groups=["ammo"]]
 collision_layer = 2048
 collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 20, 0 )
 shape = SubResource( 46 )
 
 [node name="DestroyedParticles" type="Particles2D" parent="."]
 material = SubResource( 43 )
 emitting = false
-amount = 15
-lifetime = 0.1
+amount = 35
+lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
 process_material = SubResource( 45 )
-
-[node name="LifeTimer" type="Timer" parent="."]
-wait_time = 0.1
-one_shot = true
-autostart = true
+texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 20, 0 )
 shape = SubResource( 47 )
+
+[node name="Sawblade" type="Sprite" parent="."]
+modulate = Color( 0.980392, 0, 1, 1 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

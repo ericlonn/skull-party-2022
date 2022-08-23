@@ -38,7 +38,7 @@ linear_accel = -61.72
 linear_accel_random = 1.0
 scale = 5.0
 scale_curve = SubResource( 7 )
-color = Color( 0.94, 0.5, 0.5, 1 )
+color = Color( 0.941176, 0.501961, 0.501961, 1 )
 
 [node name="PowerSkull" type="RigidBody2D" groups=["powerskulls"]]
 collision_layer = 4
@@ -55,18 +55,18 @@ position = Vector2( 0, 14 )
 points = PoolVector2Array( 0, -1 )
 width = 5.0
 width_curve = SubResource( 5 )
-default_color = Color( 0.94, 0.5, 0.5, 1 )
+default_color = Color( 0.941176, 0.501961, 0.501961, 1 )
 script = ExtResource( 5 )
 distance = 10.0
 
 [node name="Glow" type="Sprite" parent="."]
-modulate = Color( 0.94, 0.5, 0.5, 1 )
+modulate = Color( 0.941176, 0.501961, 0.501961, 1 )
 position = Vector2( 2.55, 0 )
 scale = Vector2( 0.05, 0.05 )
 texture = ExtResource( 3 )
 
 [node name="PowerSkull" type="Sprite" parent="."]
-modulate = Color( 0.94, 0.5, 0.5, 1 )
+modulate = Color( 0.941176, 0.501961, 0.501961, 1 )
 scale = Vector2( 0.335938, 0.335938 )
 z_index = 1
 texture = ExtResource( 2 )
@@ -77,9 +77,10 @@ position = Vector2( 0, -1 )
 shape = SubResource( 9 )
 
 [node name="Light2D" type="Light2D" parent="."]
+visible = false
 texture = ExtResource( 3 )
 texture_scale = 0.4
-color = Color( 0.94, 0.5, 0.5, 1 )
+color = Color( 0.941176, 0.501961, 0.501961, 1 )
 
 [node name="OverlapDetector" type="Area2D" parent="."]
 collision_mask = 5

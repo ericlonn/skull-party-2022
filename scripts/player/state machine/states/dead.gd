@@ -11,7 +11,7 @@ var vibrate_end_amplitude = Vector2(20,10)
 var vibrate_time = 0.0
 
 func enter():
-	death_visuals = player.death_visuals
+	death_visuals = player.visuals.death_visuals
 	death_particles = death_visuals.death_particles
 	
 	initial_orientation_pos = player.orientation.position

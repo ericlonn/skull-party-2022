@@ -1,4 +1,4 @@
-extends Ammo
+extends Ammo_kinematic
 
 onready var line: Line2D = $Line2D
 onready var destroy_particles: Particles2D = $DestroyedParticles
@@ -25,6 +25,7 @@ func set_color():
 
 
 func _on_Area2D_body_entered(body):
+	print("hit")
 	if body is Player and not body.is_stunned:
 		body.attacked(global_position, attack_force, 1)
 		spawn_destroy_particles()
