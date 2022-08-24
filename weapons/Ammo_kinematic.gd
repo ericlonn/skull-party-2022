@@ -8,7 +8,7 @@ var player
 
 func set_firing_direction(value):
 	if value == 0:
-		value = 1
+		firing_direction = 1
 		return
 	
-	value = sign(value)
+	firing_direction = sign(value)

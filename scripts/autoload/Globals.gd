@@ -8,9 +8,10 @@ var camera setget , get_camera
 
 var weapons = [
 #	"res://weapons/bigpunch/BigPunchWeapon.tscn",
-	"res://weapons/fireball/FireBallWeapon.tscn"
+#	"res://weapons/fireball/FireBallWeapon.tscn",
 #	"res://weapons/grenade/GrenadeWeapon.tscn",
 #	"res://weapons/shotgun/ShotgunWeapon.tscn"
+	"res://weapons/sawblade/SawbladeWeapon.tscn"
 ]
 
 func _ready():

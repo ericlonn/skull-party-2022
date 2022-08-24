@@ -1405,7 +1405,7 @@ nodes/fragment/4/node = SubResource( 64 )
 nodes/fragment/4/position = Vector2( 320, -20 )
 nodes/fragment/connections = PoolIntArray( 2, 0, 3, 2, 3, 1, 4, 0, 4, 0, 0, 1 )
 
-[sub_resource type="ShaderMaterial" id=44]
+[sub_resource type="ShaderMaterial" id=67]
 shader = SubResource( 65 )
 
 [sub_resource type="Curve" id=36]
@@ -1702,7 +1702,7 @@ script = ExtResource( 10 )
 
 [node name="PowerUpFlames" type="Particles2D" parent="VisualElements/PowerUpVisuals"]
 show_behind_parent = true
-material = SubResource( 44 )
+material = SubResource( 67 )
 position = Vector2( 0, 9.47462 )
 z_index = -1
 emitting = false
