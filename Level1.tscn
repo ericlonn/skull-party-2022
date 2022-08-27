@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Main.gd" type="Script" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://sprites/explosions/splat2.png" type="Texture" id=17]
 [ext_resource path="res://sprites/explosions/splat3.png" type="Texture" id=18]
 [ext_resource path="res://scripts/CameraShake.gd" type="Script" id=19]
+[ext_resource path="res://weapons/harpoon/HarpoonAmmo.tscn" type="PackedScene" id=20]
 [ext_resource path="res://PathFinder.gd" type="Script" id=21]
 [ext_resource path="res://LevelTileMap.gd" type="Script" id=22]
 
@@ -260,5 +261,8 @@ position = Vector2( 690, 159 )
 
 [node name="PowerSkull3" parent="." instance=ExtResource( 5 )]
 position = Vector2( 688, 89 )
+
+[node name="HarpoonAmmo" parent="." instance=ExtResource( 20 )]
+position = Vector2( 295, 196 )
 
 [connection signal="timeout" from="SkullSpawner/SkullSpawnTimer" to="SkullSpawner" method="_on_SkullSpawnTimer_timeout"]
