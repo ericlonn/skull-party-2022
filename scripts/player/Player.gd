@@ -16,30 +16,15 @@ onready var attack_limit_timer: Timer = $"%AttackLimitTimer"
 onready var hit_stop_timer: Timer = $"%HitStopTimer"
 onready var jump_buffer: Timer = $"%JumpBuffer"
 
-
 onready var punch: Area2D = $"%Punch"
-
-
 
 onready var weapon_slot = $"%WeaponSlot"
 
 onready var rng = Globals.rng
 
-
-
-
-
-
-
-
-
-
 var rigidbody_push = 300
 
-
-
 export var enabled = true
-
 
 var id: int setget set_id
 var powerskulls = []

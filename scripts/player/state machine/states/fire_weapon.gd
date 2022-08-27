@@ -10,6 +10,7 @@ func enter():
 		get_parent().states[BaseState.State.Weapon] = weapon_state
 	else:
 		player.weapon_slot.fire_weapon()
+	
 	player.attack_limit_timer.start()
 	
 
