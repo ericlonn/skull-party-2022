@@ -1478,16 +1478,20 @@ __meta__ = {
 [node name="Logic" type="Node" parent="."]
 
 [node name="Movement" type="Node" parent="Logic"]
+unique_name_in_owner = true
 script = ExtResource( 46 )
 
 [node name="Input" type="Node" parent="Logic"]
+unique_name_in_owner = true
 script = ExtResource( 45 )
 
 [node name="Orientation" type="Node2D" parent="Logic"]
+unique_name_in_owner = true
 position = Vector2( 0, 1 )
 script = ExtResource( 29 )
 
 [node name="Visuals" type="Node" parent="Logic"]
+unique_name_in_owner = true
 script = ExtResource( 44 )
 
 [node name="PhysicsColliderShape" type="CollisionShape2D" parent="."]
@@ -1495,6 +1499,7 @@ position = Vector2( 0, 30 )
 shape = SubResource( 30 )
 
 [node name="RightWallCheck" type="Node2D" parent="."]
+unique_name_in_owner = true
 visible = false
 position = Vector2( 0, 30 )
 script = ExtResource( 31 )
@@ -1517,6 +1522,7 @@ cast_to = Vector2( 50, 0 )
 collision_mask = 2
 
 [node name="LeftWallCheck" type="Node2D" parent="."]
+unique_name_in_owner = true
 visible = false
 position = Vector2( 0, 30 )
 script = ExtResource( 31 )
@@ -1539,6 +1545,7 @@ cast_to = Vector2( -50, 0 )
 collision_mask = 2
 
 [node name="WeaponSlot" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2( 0, 63 )
 script = ExtResource( 35 )
 
@@ -1549,6 +1556,7 @@ position = Vector2( 24, -32 )
 script = ExtResource( 42 )
 
 [node name="Punch" type="Area2D" parent="." groups=["attack_box"]]
+unique_name_in_owner = true
 position = Vector2( 0, 63 )
 collision_layer = 256
 collision_mask = 11
@@ -1564,6 +1572,7 @@ shape = SubResource( 28 )
 script = ExtResource( 42 )
 
 [node name="Sprite" type="Sprite" parent="."]
+unique_name_in_owner = true
 material = SubResource( 51 )
 position = Vector2( 0, 66.22 )
 scale = Vector2( 0.15, 0.15 )
@@ -1575,6 +1584,7 @@ vframes = 5
 region_rect = Rect2( 0, 0, 100, 100 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+unique_name_in_owner = true
 autoplay = "RESET"
 anims/RESET = SubResource( 14 )
 anims/death = SubResource( 52 )
@@ -1591,36 +1601,44 @@ anims/wall_slide = SubResource( 27 )
 script = ExtResource( 42 )
 
 [node name="SquashStretch" type="Tween" parent="Sprite"]
+unique_name_in_owner = true
 script = ExtResource( 43 )
 
 [node name="Timers" type="Node" parent="."]
 
 [node name="JumpBuffer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
 
 [node name="StunTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 2.0
 one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 process_mode = 0
 wait_time = 0.075
 one_shot = true
 
 [node name="WallJumpCoyoteTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 0.2
 one_shot = true
 script = ExtResource( 24 )
 
 [node name="AttackLimitTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 wait_time = 0.3
 one_shot = true
 
 [node name="HitStopTimer" type="Timer" parent="Timers"]
+unique_name_in_owner = true
 one_shot = true
 
 [node name="State_Manager" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource( 5 )
 
 [node name="idle" type="Node" parent="State_Manager"]
@@ -1663,8 +1681,10 @@ anims/death = SubResource( 53 )
 anims/reset = SubResource( 58 )
 
 [node name="VisualElements" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="SlideParticles" type="Particles2D" parent="VisualElements"]
+unique_name_in_owner = true
 material = SubResource( 43 )
 position = Vector2( -24.4055, 62 )
 emitting = false
@@ -1678,6 +1698,7 @@ texture = ExtResource( 33 )
 script = ExtResource( 42 )
 
 [node name="PowerUpVisuals" type="Node2D" parent="VisualElements"]
+unique_name_in_owner = true
 script = ExtResource( 10 )
 
 [node name="PowerUpFlames" type="Particles2D" parent="VisualElements/PowerUpVisuals"]
@@ -1694,6 +1715,7 @@ process_material = SubResource( 38 )
 texture = ExtResource( 34 )
 
 [node name="DeathVisuals" type="Node2D" parent="VisualElements"]
+unique_name_in_owner = true
 script = ExtResource( 41 )
 
 [node name="DeathEnergy" type="AnimatedSprite" parent="VisualElements/DeathVisuals"]
@@ -1717,6 +1739,7 @@ texture = ExtResource( 39 )
 [node name="PunchVisuals" type="Node2D" parent="VisualElements"]
 
 [node name="DebugLabel" type="Label" parent="VisualElements"]
+unique_name_in_owner = true
 margin_left = -100.0
 margin_top = -30.0
 margin_right = 100.0
@@ -1726,11 +1749,13 @@ custom_fonts/font = ExtResource( 3 )
 align = 1
 
 [node name="DebugLine" type="Line2D" parent="VisualElements"]
+unique_name_in_owner = true
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 2.0
 default_color = Color( 1, 0, 1, 1 )
 
 [node name="SpriteEchoGenerator" parent="VisualElements" instance=ExtResource( 27 )]
+unique_name_in_owner = true
 sprite_path = NodePath("../../Sprite")
 x_orientation_path = NodePath("../../Logic/Orientation")
 enabled = true

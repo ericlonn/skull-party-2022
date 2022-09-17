@@ -9,7 +9,7 @@
 [ext_resource path="res://scripts/UI.gd" type="Script" id=7]
 [ext_resource path="res://scripts/skull spawner/SkullSpawner.gd" type="Script" id=8]
 [ext_resource path="res://scripts/FPSLabel.gd" type="Script" id=9]
-[ext_resource path="res://sprites/tiles/nature.tres" type="TileSet" id=10]
+[ext_resource path="res://sprites/tiles/bw_tiles.tres" type="TileSet" id=10]
 [ext_resource path="res://scenes/Chest.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/SplatLayer.tscn" type="PackedScene" id=12]
 [ext_resource path="res://sprites/bg/space/Stars Small_1.png" type="Texture" id=13]
@@ -60,17 +60,12 @@ border_color = Color( 1, 0, 0, 1 )
 script = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["cameras"]]
-position = Vector2( 1250, 549 )
-offset = Vector2( 0, -50 )
 rotating = true
 current = true
-zoom = Vector2( 2.5, 2.5 )
+zoom = Vector2( 1.5, 1.53 )
 script = ExtResource( 3 )
-move_speed = 0.05
-zoom_speed = 0.05
-min_zoom = 2.0
-max_zoom = 1000
-margin = Vector2( 250, 250 )
+move_speed = 0.0
+zoom_speed = 0.0
 
 [node name="CameraShake" type="Node" parent="Camera2D"]
 script = ExtResource( 19 )
@@ -100,30 +95,34 @@ anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -486.0
 margin_right = 486.0
-margin_bottom = 169.0
+margin_bottom = 65.0
 alignment = 1
 
 [node name="PlayerInfo1" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
-margin_left = 120.0
-margin_right = 300.0
+margin_left = 286.0
+margin_right = 383.0
+margin_bottom = 65.0
 rect_clip_content = true
 custom_styles/panel = SubResource( 1 )
 
 [node name="PlayerInfo2" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
-margin_left = 304.0
+margin_left = 387.0
 margin_right = 484.0
+margin_bottom = 65.0
 rect_clip_content = true
 custom_styles/panel = SubResource( 2 )
 
 [node name="PlayerInfo3" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
 margin_left = 488.0
-margin_right = 668.0
+margin_right = 585.0
+margin_bottom = 65.0
 rect_clip_content = true
 custom_styles/panel = SubResource( 3 )
 
 [node name="PlayerInfo4" parent="UI/UI/HBoxContainer" instance=ExtResource( 6 )]
-margin_left = 672.0
-margin_right = 852.0
+margin_left = 589.0
+margin_right = 686.0
+margin_bottom = 65.0
 rect_clip_content = true
 custom_styles/panel = SubResource( 4 )
 
@@ -134,7 +133,7 @@ motion_scale = Vector2( 0.2, 0.2 )
 motion_mirroring = Vector2( 1, 1 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2( 1233, 157 )
+position = Vector2( 561, 499 )
 texture = ExtResource( 14 )
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -142,7 +141,7 @@ motion_scale = Vector2( 0.5, 0.5 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
 modulate = Color( 1, 1, 1, 0.427451 )
-position = Vector2( 1233, 157 )
+position = Vector2( 561, 499 )
 texture = ExtResource( 13 )
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -160,7 +159,7 @@ cell_size = Vector2( 32, 32 )
 collision_layer = 2
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 21, 0, 1, 22, 0, 196610, 23, 0, 196610, 24, 0, 196610, 25, 0, 196610, 26, 0, 196610, 27, 0, 196610, 28, 0, 196610, 29, 0, 196610, 30, 0, 196610, 31, 0, 196610, 32, 0, 196610, 33, 0, 196610, 34, 0, 196610, 35, 0, 196610, 36, 0, 196610, 37, 0, 196610, 38, 0, 196610, 39, 0, 196610, 40, 0, 196610, 41, 0, 196610, 42, 0, 196610, 43, 0, 196610, 44, 0, 196610, 45, 0, 196610, 46, 0, 196610, 47, 0, 196610, 48, 0, 196610, 49, 0, 196610, 50, 0, 196610, 51, 0, 196610, 52, 0, 196610, 53, 0, 3, 65557, 0, 65536, 65589, 0, 65536, 131093, 0, 65536, 131125, 0, 65536, 196629, 0, 65536, 196661, 0, 65536, 262165, 0, 65536, 262197, 0, 65536, 327701, 0, 65536, 327733, 0, 65536, 393237, 0, 65536, 393238, 1, 196609, 393239, 1, 196610, 393240, 1, 196610, 393241, 1, 196610, 393242, 1, 196610, 393243, 1, 196610, 393244, 1, 196611, 393261, 1, 196609, 393262, 1, 196610, 393263, 1, 196610, 393264, 1, 196610, 393265, 1, 196610, 393266, 1, 196610, 393267, 1, 196610, 393268, 1, 196611, 393269, 0, 65536, 458773, 0, 65536, 458805, 0, 65536, 524309, 0, 65536, 524341, 0, 65536, 589845, 0, 65536, 589859, 1, 196609, 589860, 1, 196610, 589861, 1, 196610, 589862, 1, 196610, 589863, 1, 196611, 589877, 0, 65536, 655381, 0, 65536, 655413, 0, 65536, 720917, 0, 65536, 720949, 0, 65536, 786453, 0, 65536, 786485, 0, 65536, 851989, 0, 65536, 852021, 0, 65536, 917525, 0, 65536, 917557, 0, 65536, 983061, 0, 65536, 983066, 1, 196609, 983067, 1, 196610, 983068, 1, 196610, 983069, 1, 196610, 983070, 1, 196610, 983071, 1, 196610, 983072, 1, 196610, 983073, 1, 196611, 983081, 1, 196609, 983082, 1, 196610, 983083, 1, 196610, 983084, 1, 196610, 983085, 1, 196610, 983086, 1, 196610, 983087, 1, 196610, 983088, 1, 196611, 983093, 0, 65536, 1048597, 0, 65536, 1048629, 0, 65536, 1114133, 0, 65536, 1114165, 0, 65536, 1179669, 0, 65536, 1179701, 0, 65536, 1245205, 0, 65536, 1245237, 0, 65536, 1310741, 0, 65536, 1310773, 0, 65536, 1376277, 0, 65536, 1376291, 1, 196609, 1376292, 1, 196610, 1376293, 1, 196610, 1376294, 1, 196610, 1376295, 1, 196611, 1376309, 0, 65536, 1441813, 0, 65536, 1441845, 0, 65536, 1507349, 0, 65536, 1507381, 0, 65536, 1572885, 0, 65536, 1572917, 0, 65536, 1638421, 0, 65536, 1638453, 0, 65536, 1703957, 0, 65536, 1703989, 0, 65536, 1769493, 0, 65536, 1769498, 1, 196609, 1769499, 1, 196610, 1769500, 1, 196610, 1769501, 1, 196610, 1769502, 1, 196610, 1769503, 1, 196610, 1769504, 1, 196610, 1769505, 1, 196611, 1769513, 1, 196609, 1769514, 1, 196610, 1769515, 1, 196610, 1769516, 1, 196610, 1769517, 1, 196610, 1769518, 1, 196610, 1769519, 1, 196610, 1769520, 1, 196611, 1769525, 0, 65536, 1835029, 0, 65536, 1835061, 0, 65536, 1900565, 0, 65536, 1900597, 0, 65536, 1966101, 0, 65536, 1966133, 0, 65536, 2031637, 0, 65536, 2031669, 0, 65536, 2097173, 0, 65536, 2097205, 0, 65536, 2162709, 0, 131073, 2162710, 0, 196610, 2162711, 0, 196610, 2162712, 0, 196610, 2162713, 0, 196610, 2162714, 0, 196610, 2162715, 0, 196610, 2162716, 0, 196610, 2162717, 0, 196610, 2162718, 0, 196610, 2162719, 0, 196610, 2162720, 0, 196610, 2162721, 0, 196610, 2162722, 0, 196610, 2162723, 0, 196610, 2162724, 0, 196610, 2162725, 0, 196610, 2162726, 0, 196610, 2162727, 0, 196610, 2162728, 0, 196610, 2162729, 0, 196610, 2162730, 0, 196610, 2162731, 0, 196610, 2162732, 0, 196610, 2162733, 0, 196610, 2162734, 0, 196610, 2162735, 0, 196610, 2162736, 0, 196610, 2162737, 0, 196610, 2162738, 0, 196610, 2162739, 0, 196610, 2162740, 0, 196610, 2162741, 0, 131075 )
+tile_data = PoolIntArray( 0, 0, 1, 1, 0, 196610, 2, 0, 196610, 3, 0, 196610, 4, 0, 196610, 5, 0, 196610, 6, 0, 196610, 7, 0, 196610, 8, 0, 196610, 9, 0, 196610, 10, 0, 196610, 11, 0, 196610, 12, 0, 196610, 13, 0, 196610, 14, 0, 196610, 15, 0, 196610, 16, 0, 196610, 17, 0, 196610, 18, 0, 196610, 19, 0, 196610, 20, 0, 196610, 21, 0, 196610, 22, 0, 196610, 23, 0, 196610, 24, 0, 196610, 25, 0, 196610, 26, 0, 196610, 27, 0, 196610, 28, 0, 196610, 29, 0, 196610, 30, 0, 196610, 31, 0, 196610, 32, 0, 3, 65536, 0, 65536, 65568, 0, 65536, 131072, 0, 65536, 131104, 0, 65536, 196608, 0, 65536, 196640, 0, 65536, 262144, 0, 65536, 262176, 0, 65536, 327680, 0, 65536, 327712, 0, 65536, 393216, 0, 65537, 393217, 0, 196610, 393218, 0, 196610, 393219, 0, 196610, 393220, 0, 196610, 393221, 0, 196610, 393222, 0, 196610, 393223, 0, 196610, 393224, 0, 196611, 393240, 0, 196609, 393241, 0, 196610, 393242, 0, 196610, 393243, 0, 196610, 393244, 0, 196610, 393245, 0, 196610, 393246, 0, 196610, 393247, 0, 196610, 393248, 0, 65539, 458752, 0, 65536, 458784, 0, 65536, 524288, 0, 65536, 524320, 0, 65536, 589824, 0, 65536, 589856, 0, 65536, 655360, 0, 65536, 655392, 0, 65536, 720896, 0, 65536, 720928, 0, 65536, 786432, 0, 65536, 786437, 0, 196609, 786438, 0, 196610, 786439, 0, 196610, 786440, 0, 196610, 786441, 0, 196610, 786442, 0, 196610, 786443, 0, 196610, 786444, 0, 196611, 786452, 0, 196609, 786453, 0, 196610, 786454, 0, 196610, 786455, 0, 196610, 786456, 0, 196610, 786457, 0, 196610, 786458, 0, 196610, 786459, 0, 196611, 786464, 0, 65536, 851968, 0, 65536, 852000, 0, 65536, 917504, 0, 65536, 917536, 0, 65536, 983040, 0, 65536, 983072, 0, 65536, 1048576, 0, 65536, 1048608, 0, 65536, 1114112, 0, 65536, 1114144, 0, 65536, 1179648, 0, 65536, 1179662, 0, 196609, 1179663, 0, 196610, 1179664, 0, 196610, 1179665, 0, 196610, 1179666, 0, 196611, 1179680, 0, 65536, 1245184, 0, 65536, 1245216, 0, 65536, 1310720, 0, 65536, 1310752, 0, 65536, 1376256, 0, 65536, 1376288, 0, 65536, 1441792, 0, 65536, 1441824, 0, 65536, 1507328, 0, 65536, 1507360, 0, 65536, 1572864, 0, 65536, 1572869, 0, 196609, 1572870, 0, 196610, 1572871, 0, 196610, 1572872, 0, 196610, 1572873, 0, 196610, 1572874, 0, 196610, 1572875, 0, 196610, 1572876, 0, 196611, 1572884, 0, 196609, 1572885, 0, 196610, 1572886, 0, 196610, 1572887, 0, 196610, 1572888, 0, 196610, 1572889, 0, 196610, 1572890, 0, 196610, 1572891, 0, 196611, 1572896, 0, 65536, 1638400, 0, 65536, 1638432, 0, 65536, 1703936, 0, 65536, 1703968, 0, 65536, 1769472, 0, 65536, 1769504, 0, 65536, 1835008, 0, 65536, 1835040, 0, 65536, 1900544, 0, 65536, 1900576, 0, 65536, 1966080, 0, 131073, 1966081, 0, 196610, 1966082, 0, 196610, 1966083, 0, 196610, 1966084, 0, 196610, 1966085, 0, 196610, 1966086, 0, 196610, 1966087, 0, 196610, 1966088, 0, 196610, 1966089, 0, 196610, 1966090, 0, 196610, 1966091, 0, 196610, 1966092, 0, 196610, 1966093, 0, 196610, 1966094, 0, 196610, 1966095, 0, 196610, 1966096, 0, 196610, 1966097, 0, 196610, 1966098, 0, 196610, 1966099, 0, 196610, 1966100, 0, 196610, 1966101, 0, 196610, 1966102, 0, 196610, 1966103, 0, 196610, 1966104, 0, 196610, 1966105, 0, 196610, 1966106, 0, 196610, 1966107, 0, 196610, 1966108, 0, 196610, 1966109, 0, 196610, 1966110, 0, 196610, 1966111, 0, 196610, 1966112, 0, 131075 )
 
 [node name="SplatLayer" parent="TileMap2" instance=ExtResource( 12 )]
 splat_textures = [ ExtResource( 15 ), ExtResource( 17 ), ExtResource( 18 ) ]
@@ -175,30 +174,32 @@ chest_scene = ExtResource( 11 )
 [node name="SkullSpawnTimer" type="Timer" parent="SkullSpawner"]
 
 [node name="SkullSpawnPoint" parent="SkullSpawner" instance=ExtResource( 4 )]
-position = Vector2( 968, 768 )
+position = Vector2( 303, 690 )
 
 [node name="SkullSpawnPoint2" parent="SkullSpawner" instance=ExtResource( 4 )]
-position = Vector2( 1448, 771 )
+position = Vector2( 783, 693 )
 
 [node name="SkullSpawnPoint3" parent="SkullSpawner" instance=ExtResource( 4 )]
-position = Vector2( 1608, 978 )
+position = Vector2( 943, 900 )
 
 [node name="SkullSpawnPoint4" parent="SkullSpawner" instance=ExtResource( 4 )]
-position = Vector2( 1204, 974 )
+position = Vector2( 539, 896 )
 
 [node name="SkullSpawnPoint5" parent="SkullSpawner" instance=ExtResource( 4 )]
-position = Vector2( 769, 969 )
-
-[node name="PowerSkull" parent="SkullSpawner" instance=ExtResource( 5 )]
-position = Vector2( 1201, 591 )
-
-[node name="PowerSkull2" parent="SkullSpawner" instance=ExtResource( 5 )]
-position = Vector2( 1204, 517 )
+position = Vector2( 104, 891 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1078, 984 )
+position = Vector2( 307, 876 )
 
 [node name="Player2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1489, 981 )
+position = Vector2( 753, 300 )
+
+[node name="PowerSkull" parent="." instance=ExtResource( 5 )]
+position = Vector2( 868, 482 )
+powerskull_type = 2
+
+[node name="PowerSkull2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 677, 472 )
+mass = 0.102041
 
 [connection signal="timeout" from="SkullSpawner/SkullSpawnTimer" to="SkullSpawner" method="_on_SkullSpawnTimer_timeout"]

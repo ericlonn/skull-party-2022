@@ -9,6 +9,7 @@ onready var mask_tilemap: TileMap = $MaskTileMap
 onready var _bg_mask: Light2D = $BGMask
 onready var _mask = $Mask
 
+
 onready var rng := RandomNumberGenerator.new()
 
 var _tile_map: TileMap
@@ -58,8 +59,11 @@ func _copy_tile_map_to_texture(tile_map: TileMap) -> ImageTexture:
 	
 	for tile in tile_map.get_used_cells():
 		var tile_id := tile_map.get_cellv(tile)
-		var tile_tex := Image.new()
-		tile_tex.load(tile_set.tile_get_texture(tile_id).resource_path)
+		
+		var tile_tex = Image.new()
+		tile_tex.create(tile_map.cell_size.x, tile_map.cell_size.y, false, Image.FORMAT_RGBA8)
+		tile_tex.fill(Color.white)
+		
 		var dst = tile*cell_size - used_rect.position * cell_size
 		img.blit_rect(tile_tex, Rect2(Vector2.ZERO, tile_tex.get_size()), dst)
 	

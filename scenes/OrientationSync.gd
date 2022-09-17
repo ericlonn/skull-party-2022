@@ -6,7 +6,8 @@ onready var parent = get_parent()
 var current_orientation = 1
 
 func _ready():
-	$"%Orientation".connect("orientation_updated", self, "orientation_updated")
+	yield(player, "ready")
+	player.orientation.connect("orientation_updated", self, "orientation_updated")
 
 func orientation_updated(orientation: int):
 	if orientation == 0:

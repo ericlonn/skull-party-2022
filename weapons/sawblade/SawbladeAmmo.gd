@@ -67,15 +67,7 @@ func spawn_destroy_particles():
 
 
 func level_collision(collision: KinematicCollision2D):
-	velocity = velocity.bounce(collision.normal)
-		
-	var new_bounce_part = bounce_particles.instance()
-	new_bounce_part.global_position = collision.position
-	new_bounce_part.rotation = collision.normal.angle()
-	
-	get_tree().root.add_child(new_bounce_part)
-	
-	Fmod.play_one_shot("event:/Weapons/SawRicochet", self)
+	bounce(collision)
 
 
 func player_collision(collision: KinematicCollision2D):
@@ -85,6 +77,9 @@ func player_collision(collision: KinematicCollision2D):
 		body.attacked(global_position, attack_force, 1)
 		spawn_destroy_particles()
 		queue_free()
+		Fmod.play_one_shot("event:/Player/Punch Landing", self)
+	elif body is Player and body.is_stunned:
+		bounce(collision)
 
 
 func chest_collision(collision: KinematicCollision2D):
@@ -93,6 +88,18 @@ func chest_collision(collision: KinematicCollision2D):
 	body.attacked(firing_direction, player)
 	spawn_destroy_particles()
 	queue_free()
+
+
+func bounce(collision: KinematicCollision2D):
+	velocity = velocity.bounce(collision.normal)
+		
+	var new_bounce_part = bounce_particles.instance()
+	new_bounce_part.global_position = collision.position
+	new_bounce_part.rotation = collision.normal.angle()
+	
+	get_tree().root.add_child(new_bounce_part)
+	
+	Fmod.play_one_shot("event:/Weapons/SawRicochet", self)
 
 
 func _on_PlayerDetector_body_exited(body):

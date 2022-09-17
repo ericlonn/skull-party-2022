@@ -1,0 +1,1 @@
+{"class_name":null,"signals":{},"named_enums":{},"constants":{},"variables":{"move_weight":{"value":"move_weight","row":2,"column":4,"type":4},"rot_weight":{"value":"rot_weight","row":3,"column":4,"type":4},"target_node":{"value":"target_node","row":5,"column":4,"type":4}},"functions":{"_physics_process":{"value":"_physics_process","row":7,"column":5,"type":5}}}

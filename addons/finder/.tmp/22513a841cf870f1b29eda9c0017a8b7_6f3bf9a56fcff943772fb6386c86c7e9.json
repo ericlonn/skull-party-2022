@@ -1,0 +1,1 @@
+{"class_name":{"value":"DirWalker","row":0,"column":11,"type":0},"signals":{},"named_enums":{},"constants":{},"variables":{"_path":{"value":"_path","row":2,"column":4,"type":4}},"functions":{"_init":{"value":"_init","row":5,"column":5,"type":5},"walk":{"value":"walk","row":9,"column":5,"type":5},"delete_every_file":{"value":"delete_every_file","row":30,"column":12,"type":5}}}

@@ -1,0 +1,1 @@
+{"class_name":null,"signals":{},"named_enums":{},"constants":{},"variables":{"timeout":{"value":"timeout","row":2,"column":12,"type":4}},"functions":{"_ready":{"value":"_ready","row":4,"column":5,"type":5},"_on_Timer_timeout":{"value":"_on_Timer_timeout","row":8,"column":5,"type":5}}}
